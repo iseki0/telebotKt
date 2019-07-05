@@ -24,4 +24,4 @@ data class InputMediaPhoto @JsonCreator constructor(
     val caption: String?,
     @JsonProperty("parse_mode")
     val parseMode: String?
-) : InputMedia
+) : InputMedia, MediaGroupable

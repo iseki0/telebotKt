@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class InlineKeyboardMarkup @JsonCreator constructor(
     @JsonProperty("inline_keyboard")
     val inlineKeyboard: Array<Array<InlineKeyboardButton>>
-) {
+) : ReplyMarkup {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

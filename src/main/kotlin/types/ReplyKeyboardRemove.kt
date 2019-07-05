@@ -19,4 +19,4 @@ data class ReplyKeyboardRemove @JsonCreator constructor(
     val removeKeyboard: Boolean,
     @JsonProperty("selective")
     val selective: Boolean?
-)
+) : ReplyMarkup
