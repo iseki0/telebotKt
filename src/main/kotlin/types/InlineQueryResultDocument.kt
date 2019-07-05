@@ -52,4 +52,4 @@ data class InlineQueryResultDocument @JsonCreator constructor(
     val thumbWidth: Int?,
     @JsonProperty("thumb_height")
     val thumbHeight: Int?
-)
+) : InlineQueryResult

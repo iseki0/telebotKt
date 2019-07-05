@@ -21,4 +21,4 @@ data class InputLocationMessageContent @JsonCreator constructor(
     val longitude: Float,
     @JsonProperty("live_period")
     val livePeriod: Int?
-)
+) : InputMessageContent

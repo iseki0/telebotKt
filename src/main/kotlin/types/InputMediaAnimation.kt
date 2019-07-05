@@ -36,4 +36,4 @@ data class InputMediaAnimation @JsonCreator constructor(
     val height: Int?,
     @JsonProperty("duration")
     val duration: Int?
-)
+) : InputMedia

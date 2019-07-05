@@ -55,4 +55,4 @@ data class InlineQueryResultVideo @JsonCreator constructor(
     val replyMarkup: InlineKeyboardMarkup?,
     @JsonProperty("input_message_content")
     val inputMessageContent: InputMessageContent?
-)
+) : InlineQueryResult

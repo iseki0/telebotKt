@@ -24,4 +24,4 @@ data class InputContactMessageContent @JsonCreator constructor(
     val lastName: String?,
     @JsonProperty("vcard")
     val vcard: String?
-)
+) : InputMessageContent

@@ -21,4 +21,4 @@ data class InputTextMessageContent @JsonCreator constructor(
     val parseMode: String?,
     @JsonProperty("disable_web_page_preview")
     val disableWebPagePreview: Boolean?
-)
+) : InputMessageContent

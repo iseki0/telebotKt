@@ -30,4 +30,4 @@ data class InputVenueMessageContent @JsonCreator constructor(
     val foursquareId: String?,
     @JsonProperty("foursquare_type")
     val foursquareType: String?
-)
+) : InputMessageContent

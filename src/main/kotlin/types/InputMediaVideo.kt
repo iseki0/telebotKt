@@ -39,4 +39,4 @@ data class InputMediaVideo @JsonCreator constructor(
     val duration: Int?,
     @JsonProperty("supports_streaming")
     val supportsStreaming: Boolean?
-)
+) : InputMedia

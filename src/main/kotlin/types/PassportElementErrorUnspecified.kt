@@ -25,4 +25,4 @@ data class PassportElementErrorUnspecified @JsonCreator constructor(
     val elementHash: String,
     @JsonProperty("message")
     val message: String
-)
+) : PassportElementError

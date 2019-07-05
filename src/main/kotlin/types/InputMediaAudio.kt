@@ -36,4 +36,4 @@ data class InputMediaAudio @JsonCreator constructor(
     val performer: String?,
     @JsonProperty("title")
     val title: String?
-)
+) : InputMedia

@@ -24,4 +24,4 @@ data class PassportElementErrorFile @JsonCreator constructor(
     val fileHash: String,
     @JsonProperty("message")
     val message: String
-)
+) : PassportElementError

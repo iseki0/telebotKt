@@ -27,4 +27,4 @@ data class InputMediaDocument @JsonCreator constructor(
     val caption: String?,
     @JsonProperty("parse_mode")
     val parseMode: String?
-)
+) : InputMedia

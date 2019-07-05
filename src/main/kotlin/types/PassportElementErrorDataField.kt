@@ -27,4 +27,4 @@ data class PassportElementErrorDataField @JsonCreator constructor(
     val dataHash: String,
     @JsonProperty("message")
     val message: String
-)
+) : PassportElementError

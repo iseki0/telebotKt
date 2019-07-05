@@ -25,4 +25,4 @@ data class InlineQueryResultGame @JsonCreator constructor(
     val gameShortName: String,
     @JsonProperty("reply_markup")
     val replyMarkup: InlineKeyboardMarkup?
-)
+) : InlineQueryResult

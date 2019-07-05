@@ -36,4 +36,4 @@ data class InlineQueryResultCachedMpeg4Gif @JsonCreator constructor(
     val replyMarkup: InlineKeyboardMarkup?,
     @JsonProperty("input_message_content")
     val inputMessageContent: InputMessageContent?
-)
+) : InlineQueryResult

@@ -24,7 +24,7 @@ data class PassportElementErrorTranslationFiles @JsonCreator constructor(
     val fileHashes: Array<String>,
     @JsonProperty("message")
     val message: String
-) {
+) : PassportElementError {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
