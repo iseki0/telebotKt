@@ -17,6 +17,8 @@ dependencies {
 
     compile "io.vertx:vertx-core:3.7.1"
     compile "io.vertx:vertx-lang-kotlin:3.7.1"
+    compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8"
+
 
 }
 
