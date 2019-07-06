@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 
 class FieldExistDeserializer<T>(private val typeClass: Class<T>, val list: List<Class<out T>>) :
     StdDeserializer<T>(typeClass) {
-    val map = list.map { clazz ->
+    private val map = list.map { clazz ->
         clazz.constructors.filter { it.isAnnotationPresent(JsonCreator::class.java) }
             .map { it.parameterAnnotations }
             .flatMap { it.toList() }
