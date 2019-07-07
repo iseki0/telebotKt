@@ -33,7 +33,7 @@ data class InlineQueryResultVoice @JsonCreator constructor(
     @JsonProperty("caption")
     val caption: String?,
     @JsonProperty("parse_mode")
-    val parseMode: String?,
+    val parseMode: ParseMode?,
     @JsonProperty("voice_duration")
     val voiceDuration: Int?,
     @JsonProperty("reply_markup")

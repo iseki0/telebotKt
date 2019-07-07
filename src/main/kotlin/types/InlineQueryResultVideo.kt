@@ -42,7 +42,7 @@ data class InlineQueryResultVideo @JsonCreator constructor(
     @JsonProperty("caption")
     val caption: String?,
     @JsonProperty("parse_mode")
-    val parseMode: String?,
+    val parseMode: ParseMode?,
     @JsonProperty("video_width")
     val videoWidth: Int?,
     @JsonProperty("video_height")

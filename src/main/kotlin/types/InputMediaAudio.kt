@@ -29,7 +29,7 @@ data class InputMediaAudio @JsonCreator constructor(
     @JsonProperty("caption")
     val caption: String?,
     @JsonProperty("parse_mode")
-    val parseMode: String?,
+    val parseMode: ParseMode?,
     @JsonProperty("duration")
     val duration: Int?,
     @JsonProperty("performer")

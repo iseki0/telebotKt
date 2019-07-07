@@ -29,7 +29,7 @@ data class InputMediaAnimation @JsonCreator constructor(
     @JsonProperty("caption")
     val caption: String?,
     @JsonProperty("parse_mode")
-    val parseMode: String?,
+    val parseMode: ParseMode?,
     @JsonProperty("width")
     val width: Int?,
     @JsonProperty("height")

@@ -35,7 +35,7 @@ data class InlineQueryResultCachedDocument @JsonCreator constructor(
     @JsonProperty("caption")
     val caption: String?,
     @JsonProperty("parse_mode")
-    val parseMode: String?,
+    val parseMode: ParseMode?,
     @JsonProperty("reply_markup")
     val replyMarkup: InlineKeyboardMarkup?,
     @JsonProperty("input_message_content")

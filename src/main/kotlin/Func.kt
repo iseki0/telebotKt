@@ -78,7 +78,7 @@ fun getMe(): BotRequest = genBotRequest("getMe")
 fun sendMessage(
     chatId: Int,
     text: String,
-    parseMode: String?,
+    parseMode: ParseMode?,
     disableWebPagePreview: Boolean?,
     disableNotification: Boolean?,
     replyToMessageId: Int?,
@@ -126,7 +126,7 @@ fun sendPhoto(
     chatId: Int,
     photo: String,
     caption: String?,
-    parseMode: String?,
+    parseMode: ParseMode?,
     disableNotification: Boolean?,
     replyToMessageId: Int?,
     replyMarkup: ReplyMarkup?
@@ -161,7 +161,7 @@ fun sendAudio(
     chatId: Int,
     audio: String,
     caption: String?,
-    parseMode: String?,
+    parseMode: ParseMode?,
     duration: Int?,
     performer: String?,
     title: String?,
@@ -201,7 +201,7 @@ fun sendDocument(
     document: String,
     thumb: String?,
     caption: String?,
-    parseMode: String?,
+    parseMode: ParseMode?,
     disableNotification: Boolean?,
     replyToMessageId: Int?,
     replyMarkup: ReplyMarkup?
@@ -241,7 +241,7 @@ fun sendVideo(
     height: Int?,
     thumb: String?,
     caption: String?,
-    parseMode: String?,
+    parseMode: ParseMode?,
     supportsStreaming: Boolean?,
     disableNotification: Boolean?,
     replyToMessageId: Int?,
@@ -285,7 +285,7 @@ fun sendAnimation(
     height: Int?,
     thumb: String?,
     caption: String?,
-    parseMode: String?,
+    parseMode: ParseMode?,
     disableNotification: Boolean?,
     replyToMessageId: Int?,
     replyMarkup: ReplyMarkup?
@@ -320,7 +320,7 @@ fun sendVoice(
     chatId: Int,
     voice: String,
     caption: String?,
-    parseMode: String?,
+    parseMode: ParseMode?,
     duration: Int?,
     disableNotification: Boolean?,
     replyToMessageId: Int?,
@@ -847,7 +847,7 @@ fun editMessageText(
     messageId: Int?,
     inlineMessageId: String?,
     text: String,
-    parseMode: String?,
+    parseMode: ParseMode?,
     disableWebPagePreview: Boolean?,
     replyMarkup: InlineKeyboardMarkup?
 ): BotRequest = genBotRequest(
@@ -876,7 +876,7 @@ fun editMessageCaption(
     messageId: Int?,
     inlineMessageId: String?,
     caption: String?,
-    parseMode: String?,
+    parseMode: ParseMode?,
     replyMarkup: InlineKeyboardMarkup?
 ): BotRequest = genBotRequest(
     "editMessageCaption",

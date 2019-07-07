@@ -35,7 +35,7 @@ data class InlineQueryResultDocument @JsonCreator constructor(
     @JsonProperty("caption")
     val caption: String?,
     @JsonProperty("parse_mode")
-    val parseMode: String?,
+    val parseMode: ParseMode?,
     @JsonProperty("document_url")
     val documentUrl: String,
     @JsonProperty("mime_type")
