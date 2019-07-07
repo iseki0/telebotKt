@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
+import deserializer.ValueMustBe
 
 /**
  * Represents a link to a voice recording in an .ogg container encoded with OPUS. By default, this voice recording will be sent by the user. Alternatively, you can use *input_message_content* to send a message with the specified content instead of the the voice message.
@@ -23,7 +24,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class InlineQueryResultVoice @JsonCreator constructor(
     @JsonProperty("type")
-    val type: String,
+    @ValueMustBe("voice")
+    val type: String = "voice",
     @JsonProperty("id")
     val id: String,
     @JsonProperty("voice_url")

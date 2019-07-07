@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
+import deserializer.ValueMustBe
 
 /**
  * Represents a link to a voice message stored on the Telegram servers. By default, this voice message will be sent by the user. Alternatively, you can use *input_message_content* to send a message with the specified content instead of the voice message.
@@ -21,8 +22,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class InlineQueryResultCachedVoice @JsonCreator constructor(
+    @ValueMustBe("voice")
     @JsonProperty("type")
-    val type: String,
+    val type: String = "voice",
     @JsonProperty("id")
     val id: String,
     @JsonProperty("voice_file_id")

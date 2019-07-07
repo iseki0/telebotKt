@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
+import deserializer.ValueMustBe
 
 /**
  * Represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can use *input_message_content* to send a message with the specified content instead of the contact.
@@ -24,8 +25,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class InlineQueryResultContact @JsonCreator constructor(
+    @ValueMustBe("contact")
     @JsonProperty("type")
-    val type: String,
+    val type: String = "contact",
     @JsonProperty("id")
     val id: String,
     @JsonProperty("phone_number")

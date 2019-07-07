@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
+import deserializer.ValueMustBe
 
 /**
  * Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively, you can use *input_message_content* to send a message with the specified content instead of the file. Currently, only **.PDF** and **.ZIP** files can be sent using this method.
@@ -27,7 +28,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class InlineQueryResultDocument @JsonCreator constructor(
     @JsonProperty("type")
-    val type: String,
+    @ValueMustBe("document")
+    val type: String = "document",
     @JsonProperty("id")
     val id: String,
     @JsonProperty("title")

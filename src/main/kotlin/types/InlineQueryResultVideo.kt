@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
+import deserializer.ValueMustBe
 
 /**
  * Represents a link to a page containing an embedded video player or a video file. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use *input_message_content* to send a message with the specified content instead of the video.
@@ -28,7 +29,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class InlineQueryResultVideo @JsonCreator constructor(
     @JsonProperty("type")
-    val type: String,
+    @ValueMustBe("video")
+    val type: String = "video",
     @JsonProperty("id")
     val id: String,
     @JsonProperty("video_url")

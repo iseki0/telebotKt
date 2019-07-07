@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
+import deserializer.ValueMustBe
 
 /**
  * Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use *input_message_content* to send a message with the specified content instead of the location.
@@ -25,7 +26,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class InlineQueryResultLocation @JsonCreator constructor(
     @JsonProperty("type")
-    val type: String,
+    @ValueMustBe("location")
+    val type: String = "location",
     @JsonProperty("id")
     val id: String,
     @JsonProperty("latitude")

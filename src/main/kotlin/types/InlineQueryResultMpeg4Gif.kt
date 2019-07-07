@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
+import deserializer.ValueMustBe
 
 /**
  * Represents a link to a video animation (H.264/MPEG-4 AVC video without sound). By default, this animated MPEG-4 file will be sent by the user with optional caption. Alternatively, you can use *input_message_content* to send a message with the specified content instead of the animation.
@@ -25,7 +26,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class InlineQueryResultMpeg4Gif @JsonCreator constructor(
     @JsonProperty("type")
-    val type: String,
+    @ValueMustBe("mpeg4_gif")
+    val type: String = "mpeg4_gif",
     @JsonProperty("id")
     val id: String,
     @JsonProperty("mpeg4_url")
