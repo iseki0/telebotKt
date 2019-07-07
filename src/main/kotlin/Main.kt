@@ -1,17 +1,21 @@
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import deserializer.FieldExistDeserializer
 import io.vertx.core.Vertx
 import io.vertx.core.json.Json
-import io.vertx.core.json.JsonObject
 import types.*
 
 fun main() {
-    Json.mapper.registerKotlinModule()
-    Json.mapper.registerKotlinModule()
+    registerObjectMapperModule(Json.mapper)
+    registerObjectMapperModule(Json.prettyMapper)
     val vertx = Vertx.vertx()
     println("Hello world.")
+}
 
-    val a = FieldExistDeserializer.create(
+
+fun registerObjectMapperModule(mapper: ObjectMapper) {
+    val inlineQueryResultDeserializer = FieldExistDeserializer.create(
         listOf(
             InlineQueryResultArticle::class.java,
             InlineQueryResultAudio::class.java,
@@ -35,10 +39,6 @@ fun main() {
             InlineQueryResultVoice::class.java
         )
     )
+    mapper.registerKotlinModule()
+        .registerModule(SimpleModule().addDeserializer(InlineQueryResult::class.java, inlineQueryResultDeserializer))
 }
-
-
-fun genBotRequest(api: String, vararg pairs: Pair<String, Any?>): BotRequest =
-    BotRequest(api, JsonObject(mapOf(*pairs).filterNot { it.value == null }))
-
-data class BotRequest(val api: String, val jsonObject: JsonObject)
