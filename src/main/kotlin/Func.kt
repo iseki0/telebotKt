@@ -12,7 +12,12 @@ import types.*
  * @param[allowedUpdates] List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See [Update][Update] for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used. \
  * Please note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time.
  */
-fun getUpdates(offset: Int?, limit: Int?, timeout: Int?, allowedUpdates: Array<String>?): BotRequest = genBotRequest(
+fun getUpdates(
+    offset: Int? = null,
+    limit: Int? = null,
+    timeout: Int? = null,
+    allowedUpdates: Array<String>?
+): BotRequest = genBotRequest(
     "getUpdates",
     Pair("offset", offset),
     Pair("limit", limit),
@@ -34,7 +39,12 @@ fun getUpdates(offset: Int?, limit: Int?, timeout: Int?, allowedUpdates: Array<S
  * @param[allowedUpdates] List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See [Update][Update] for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used. \
  * Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
  */
-fun setWebhook(url: String, certificate: InputFile?, maxConnections: Int?, allowedUpdates: Array<String>?): BotRequest =
+fun setWebhook(
+    url: String,
+    certificate: InputFile? = null,
+    maxConnections: Int? = null,
+    allowedUpdates: Array<String>?
+): BotRequest =
     genBotRequest(
         "setWebhook",
         Pair("url", url),
@@ -78,11 +88,11 @@ fun getMe(): BotRequest = genBotRequest("getMe")
 fun sendMessage(
     chatId: Int,
     text: String,
-    parseMode: ParseMode?,
-    disableWebPagePreview: Boolean?,
-    disableNotification: Boolean?,
-    replyToMessageId: Int?,
-    replyMarkup: ReplyMarkup?
+    parseMode: ParseMode? = null,
+    disableWebPagePreview: Boolean? = null,
+    disableNotification: Boolean? = null,
+    replyToMessageId: Int? = null,
+    replyMarkup: ReplyMarkup? = null
 ): BotRequest = genBotRequest(
     "sendMessage",
     Pair("chat_id", chatId),
@@ -102,7 +112,7 @@ fun sendMessage(
  * @param[disableNotification] Sends the message [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive a notification with no sound.
  * @param[messageId] Message identifier in the chat specified in *from_chat_id*
  */
-fun forwardMessage(chatId: Int, fromChatId: Int, disableNotification: Boolean?, messageId: Int): BotRequest =
+fun forwardMessage(chatId: Int, fromChatId: Int, disableNotification: Boolean? = null, messageId: Int): BotRequest =
     genBotRequest(
         "forwardMessage",
         Pair("chat_id", chatId),
@@ -125,11 +135,11 @@ fun forwardMessage(chatId: Int, fromChatId: Int, disableNotification: Boolean?, 
 fun sendPhoto(
     chatId: Int,
     photo: String,
-    caption: String?,
-    parseMode: ParseMode?,
-    disableNotification: Boolean?,
-    replyToMessageId: Int?,
-    replyMarkup: ReplyMarkup?
+    caption: String? = null,
+    parseMode: ParseMode? = null,
+    disableNotification: Boolean? = null,
+    replyToMessageId: Int? = null,
+    replyMarkup: ReplyMarkup? = null
 ): BotRequest = genBotRequest(
     "sendPhoto",
     Pair("chat_id", chatId),
@@ -160,15 +170,15 @@ fun sendPhoto(
 fun sendAudio(
     chatId: Int,
     audio: String,
-    caption: String?,
-    parseMode: ParseMode?,
-    duration: Int?,
-    performer: String?,
-    title: String?,
-    thumb: String?,
-    disableNotification: Boolean?,
-    replyToMessageId: Int?,
-    replyMarkup: ReplyMarkup?
+    caption: String? = null,
+    parseMode: ParseMode? = null,
+    duration: Int? = null,
+    performer: String? = null,
+    title: String? = null,
+    thumb: String? = null,
+    disableNotification: Boolean? = null,
+    replyToMessageId: Int? = null,
+    replyMarkup: ReplyMarkup? = null
 ): BotRequest = genBotRequest(
     "sendAudio",
     Pair("chat_id", chatId),
@@ -199,12 +209,12 @@ fun sendAudio(
 fun sendDocument(
     chatId: Int,
     document: String,
-    thumb: String?,
-    caption: String?,
-    parseMode: ParseMode?,
-    disableNotification: Boolean?,
-    replyToMessageId: Int?,
-    replyMarkup: ReplyMarkup?
+    thumb: String? = null,
+    caption: String? = null,
+    parseMode: ParseMode? = null,
+    disableNotification: Boolean? = null,
+    replyToMessageId: Int? = null,
+    replyMarkup: ReplyMarkup? = null
 ): BotRequest = genBotRequest(
     "sendDocument",
     Pair("chat_id", chatId),
@@ -236,16 +246,16 @@ fun sendDocument(
 fun sendVideo(
     chatId: Int,
     video: String,
-    duration: Int?,
-    width: Int?,
-    height: Int?,
-    thumb: String?,
-    caption: String?,
-    parseMode: ParseMode?,
-    supportsStreaming: Boolean?,
-    disableNotification: Boolean?,
-    replyToMessageId: Int?,
-    replyMarkup: ReplyMarkup?
+    duration: Int? = null,
+    width: Int? = null,
+    height: Int? = null,
+    thumb: String? = null,
+    caption: String? = null,
+    parseMode: ParseMode? = null,
+    supportsStreaming: Boolean? = null,
+    disableNotification: Boolean? = null,
+    replyToMessageId: Int? = null,
+    replyMarkup: ReplyMarkup? = null
 ): BotRequest = genBotRequest(
     "sendVideo",
     Pair("chat_id", chatId),
@@ -280,15 +290,15 @@ fun sendVideo(
 fun sendAnimation(
     chatId: Int,
     animation: String,
-    duration: Int?,
-    width: Int?,
-    height: Int?,
-    thumb: String?,
-    caption: String?,
-    parseMode: ParseMode?,
-    disableNotification: Boolean?,
-    replyToMessageId: Int?,
-    replyMarkup: ReplyMarkup?
+    duration: Int? = null,
+    width: Int? = null,
+    height: Int? = null,
+    thumb: String? = null,
+    caption: String? = null,
+    parseMode: ParseMode? = null,
+    disableNotification: Boolean? = null,
+    replyToMessageId: Int? = null,
+    replyMarkup: ReplyMarkup? = null
 ): BotRequest = genBotRequest(
     "sendAnimation",
     Pair("chat_id", chatId),
@@ -319,12 +329,12 @@ fun sendAnimation(
 fun sendVoice(
     chatId: Int,
     voice: String,
-    caption: String?,
-    parseMode: ParseMode?,
-    duration: Int?,
-    disableNotification: Boolean?,
-    replyToMessageId: Int?,
-    replyMarkup: ReplyMarkup?
+    caption: String? = null,
+    parseMode: ParseMode? = null,
+    duration: Int? = null,
+    disableNotification: Boolean? = null,
+    replyToMessageId: Int? = null,
+    replyMarkup: ReplyMarkup? = null
 ): BotRequest = genBotRequest(
     "sendVoice",
     Pair("chat_id", chatId),
@@ -352,12 +362,12 @@ fun sendVoice(
 fun sendVideoNote(
     chatId: Int,
     videoNote: String,
-    duration: Int?,
-    length: Int?,
-    thumb: String?,
-    disableNotification: Boolean?,
-    replyToMessageId: Int?,
-    replyMarkup: ReplyMarkup?
+    duration: Int? = null,
+    length: Int? = null,
+    thumb: String? = null,
+    disableNotification: Boolean? = null,
+    replyToMessageId: Int? = null,
+    replyMarkup: ReplyMarkup? = null
 ): BotRequest = genBotRequest(
     "sendVideoNote",
     Pair("chat_id", chatId),
@@ -381,8 +391,8 @@ fun sendVideoNote(
 fun sendMediaGroup(
     chatId: Int,
     media: MediaGroupable,
-    disableNotification: Boolean?,
-    replyToMessageId: Int?
+    disableNotification: Boolean? = null,
+    replyToMessageId: Int? = null
 ): BotRequest = genBotRequest(
     "sendMediaGroup",
     Pair("chat_id", chatId),
@@ -406,10 +416,10 @@ fun sendLocation(
     chatId: Int,
     latitude: Double,
     longitude: Double,
-    livePeriod: Int?,
-    disableNotification: Boolean?,
-    replyToMessageId: Int?,
-    replyMarkup: ReplyMarkup?
+    livePeriod: Int? = null,
+    disableNotification: Boolean? = null,
+    replyToMessageId: Int? = null,
+    replyMarkup: ReplyMarkup? = null
 ): BotRequest = genBotRequest(
     "sendLocation",
     Pair("chat_id", chatId),
@@ -432,12 +442,12 @@ fun sendLocation(
  * @param[replyMarkup] A JSON-serialized object for a new [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
 fun editMessageLiveLocation(
-    chatId: Int?,
-    messageId: Int?,
-    inlineMessageId: String?,
+    chatId: Int? = null,
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
     latitude: Double,
     longitude: Double,
-    replyMarkup: InlineKeyboardMarkup?
+    replyMarkup: InlineKeyboardMarkup? = null
 ): BotRequest = genBotRequest(
     "editMessageLiveLocation",
     Pair("chat_id", chatId),
@@ -457,10 +467,10 @@ fun editMessageLiveLocation(
  * @param[replyMarkup] A JSON-serialized object for a new [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
 fun stopMessageLiveLocation(
-    chatId: Int?,
-    messageId: Int?,
-    inlineMessageId: String?,
-    replyMarkup: InlineKeyboardMarkup?
+    chatId: Int? = null,
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
 ): BotRequest = genBotRequest(
     "stopMessageLiveLocation",
     Pair("chat_id", chatId),
@@ -489,11 +499,11 @@ fun sendVenue(
     longitude: Double,
     title: String,
     address: String,
-    foursquareId: String?,
-    foursquareType: String?,
-    disableNotification: Boolean?,
-    replyToMessageId: Int?,
-    replyMarkup: ReplyMarkup?
+    foursquareId: String? = null,
+    foursquareType: String? = null,
+    disableNotification: Boolean? = null,
+    replyToMessageId: Int? = null,
+    replyMarkup: ReplyMarkup? = null
 ): BotRequest = genBotRequest(
     "sendVenue",
     Pair("chat_id", chatId),
@@ -524,11 +534,11 @@ fun sendContact(
     chatId: Int,
     phoneNumber: String,
     firstName: String,
-    lastName: String?,
-    vcard: String?,
-    disableNotification: Boolean?,
-    replyToMessageId: Int?,
-    replyMarkup: ReplyMarkup?
+    lastName: String? = null,
+    vcard: String? = null,
+    disableNotification: Boolean? = null,
+    replyToMessageId: Int? = null,
+    replyMarkup: ReplyMarkup? = null
 ): BotRequest = genBotRequest(
     "sendContact",
     Pair("chat_id", chatId),
@@ -555,9 +565,9 @@ fun sendPoll(
     chatId: Int,
     question: String,
     options: Array<String>,
-    disableNotification: Boolean?,
-    replyToMessageId: Int?,
-    replyMarkup: ReplyMarkup?
+    disableNotification: Boolean? = null,
+    replyToMessageId: Int? = null,
+    replyMarkup: ReplyMarkup? = null
 ): BotRequest = genBotRequest(
     "sendPoll",
     Pair("chat_id", chatId),
@@ -586,7 +596,7 @@ fun sendChatAction(chatId: Int, action: String): BotRequest =
  * @param[offset] Sequential number of the first photo to be returned. By default, all photos are returned.
  * @param[limit] Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100.
  */
-fun getUserProfilePhotos(userId: Int, offset: Int?, limit: Int?): BotRequest =
+fun getUserProfilePhotos(userId: Int, offset: Int? = null, limit: Int?): BotRequest =
     genBotRequest("getUserProfilePhotos", Pair("user_id", userId), Pair("offset", offset), Pair("limit", limit))
 
 /**
@@ -631,11 +641,11 @@ fun unbanChatMember(chatId: Int, userId: Int): BotRequest =
 fun restrictChatMember(
     chatId: Int,
     userId: Int,
-    untilDate: Int?,
-    canSendMessages: Boolean?,
-    canSendMediaMessages: Boolean?,
-    canSendOtherMessages: Boolean?,
-    canAddWebPagePreviews: Boolean?
+    untilDate: Int? = null,
+    canSendMessages: Boolean? = null,
+    canSendMediaMessages: Boolean? = null,
+    canSendOtherMessages: Boolean? = null,
+    canAddWebPagePreviews: Boolean? = null
 ): BotRequest = genBotRequest(
     "restrictChatMember",
     Pair("chat_id", chatId),
@@ -664,14 +674,14 @@ fun restrictChatMember(
 fun promoteChatMember(
     chatId: Int,
     userId: Int,
-    canChangeInfo: Boolean?,
-    canPostMessages: Boolean?,
-    canEditMessages: Boolean?,
-    canDeleteMessages: Boolean?,
-    canInviteUsers: Boolean?,
-    canRestrictMembers: Boolean?,
-    canPinMessages: Boolean?,
-    canPromoteMembers: Boolean?
+    canChangeInfo: Boolean? = null,
+    canPostMessages: Boolean? = null,
+    canEditMessages: Boolean? = null,
+    canDeleteMessages: Boolean? = null,
+    canInviteUsers: Boolean? = null,
+    canRestrictMembers: Boolean? = null,
+    canPinMessages: Boolean? = null,
+    canPromoteMembers: Boolean? = null
 ): BotRequest = genBotRequest(
     "promoteChatMember",
     Pair("chat_id", chatId),
@@ -818,10 +828,10 @@ fun deleteChatStickerSet(chatId: Int): BotRequest = genBotRequest("deleteChatSti
  */
 fun answerCallbackQuery(
     callbackQueryId: String,
-    text: String?,
-    showAlert: Boolean?,
-    url: String?,
-    cacheTime: Int?
+    text: String? = null,
+    showAlert: Boolean? = null,
+    url: String? = null,
+    cacheTime: Int? = null
 ): BotRequest = genBotRequest(
     "answerCallbackQuery",
     Pair("callback_query_id", callbackQueryId),
@@ -843,13 +853,13 @@ fun answerCallbackQuery(
  * @param[replyMarkup] A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
 fun editMessageText(
-    chatId: Int?,
-    messageId: Int?,
-    inlineMessageId: String?,
+    chatId: Int? = null,
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
     text: String,
-    parseMode: ParseMode?,
-    disableWebPagePreview: Boolean?,
-    replyMarkup: InlineKeyboardMarkup?
+    parseMode: ParseMode? = null,
+    disableWebPagePreview: Boolean? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
 ): BotRequest = genBotRequest(
     "editMessageText",
     Pair("chat_id", chatId),
@@ -872,12 +882,12 @@ fun editMessageText(
  * @param[replyMarkup] A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
 fun editMessageCaption(
-    chatId: Int?,
-    messageId: Int?,
-    inlineMessageId: String?,
-    caption: String?,
-    parseMode: ParseMode?,
-    replyMarkup: InlineKeyboardMarkup?
+    chatId: Int? = null,
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    caption: String? = null,
+    parseMode: ParseMode? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
 ): BotRequest = genBotRequest(
     "editMessageCaption",
     Pair("chat_id", chatId),
@@ -898,11 +908,11 @@ fun editMessageCaption(
  * @param[replyMarkup] A JSON-serialized object for a new [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
 fun editMessageMedia(
-    chatId: Int?,
-    messageId: Int?,
-    inlineMessageId: String?,
+    chatId: Int? = null,
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
     media: InputMedia,
-    replyMarkup: InlineKeyboardMarkup?
+    replyMarkup: InlineKeyboardMarkup? = null
 ): BotRequest = genBotRequest(
     "editMessageMedia",
     Pair("chat_id", chatId),
@@ -921,10 +931,10 @@ fun editMessageMedia(
  * @param[replyMarkup] A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
 fun editMessageReplyMarkup(
-    chatId: Int?,
-    messageId: Int?,
-    inlineMessageId: String?,
-    replyMarkup: InlineKeyboardMarkup?
+    chatId: Int? = null,
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
 ): BotRequest = genBotRequest(
     "editMessageReplyMarkup",
     Pair("chat_id", chatId),
@@ -972,9 +982,9 @@ fun deleteMessage(chatId: Int, messageId: Int): BotRequest =
 fun sendSticker(
     chatId: Int,
     sticker: String,
-    disableNotification: Boolean?,
-    replyToMessageId: Int?,
-    replyMarkup: ReplyMarkup?
+    disableNotification: Boolean? = null,
+    replyToMessageId: Int? = null,
+    replyMarkup: ReplyMarkup? = null
 ): BotRequest = genBotRequest(
     "sendSticker",
     Pair("chat_id", chatId),
@@ -1017,8 +1027,8 @@ fun createNewStickerSet(
     title: String,
     pngSticker: String,
     emojis: String,
-    containsMasks: Boolean?,
-    maskPosition: MaskPosition?
+    containsMasks: Boolean? = null,
+    maskPosition: MaskPosition? = null
 ): BotRequest = genBotRequest(
     "createNewStickerSet",
     Pair("user_id", userId),
@@ -1044,7 +1054,7 @@ fun addStickerToSet(
     name: String,
     pngSticker: String,
     emojis: String,
-    maskPosition: MaskPosition?
+    maskPosition: MaskPosition? = null
 ): BotRequest = genBotRequest(
     "addStickerToSet",
     Pair("user_id", userId),
@@ -1089,11 +1099,11 @@ fun deleteStickerFromSet(sticker: String): BotRequest = genBotRequest("deleteSti
 fun answerInlineQuery(
     inlineQueryId: String,
     results: Array<InlineQueryResult>,
-    cacheTime: Int?,
-    isPersonal: Boolean?,
-    nextOffset: String?,
-    switchPmText: String?,
-    switchPmParameter: String?
+    cacheTime: Int? = null,
+    isPersonal: Boolean? = null,
+    nextOffset: String? = null,
+    switchPmText: String? = null,
+    switchPmParameter: String? = null
 ): BotRequest = genBotRequest(
     "answerInlineQuery",
     Pair("inline_query_id", inlineQueryId),
@@ -1141,21 +1151,21 @@ fun sendInvoice(
     startParameter: String,
     currency: String,
     prices: Array<LabeledPrice>,
-    providerData: String?,
-    photoUrl: String?,
-    photoSize: Int?,
-    photoWidth: Int?,
-    photoHeight: Int?,
-    needName: Boolean?,
-    needPhoneNumber: Boolean?,
-    needEmail: Boolean?,
-    needShippingAddress: Boolean?,
-    sendPhoneNumberToProvider: Boolean?,
-    sendEmailToProvider: Boolean?,
-    isFlexible: Boolean?,
-    disableNotification: Boolean?,
-    replyToMessageId: Int?,
-    replyMarkup: InlineKeyboardMarkup?
+    providerData: String? = null,
+    photoUrl: String? = null,
+    photoSize: Int? = null,
+    photoWidth: Int? = null,
+    photoHeight: Int? = null,
+    needName: Boolean? = null,
+    needPhoneNumber: Boolean? = null,
+    needEmail: Boolean? = null,
+    needShippingAddress: Boolean? = null,
+    sendPhoneNumberToProvider: Boolean? = null,
+    sendEmailToProvider: Boolean? = null,
+    isFlexible: Boolean? = null,
+    disableNotification: Boolean? = null,
+    replyToMessageId: Int? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
 ): BotRequest = genBotRequest(
     "sendInvoice",
     Pair("chat_id", chatId),
@@ -1195,7 +1205,7 @@ fun answerShippingQuery(
     shippingQueryId: String,
     ok: Boolean,
     shippingOptions: Array<ShippingOption>?,
-    errorMessage: String?
+    errorMessage: String? = null
 ): BotRequest = genBotRequest(
     "answerShippingQuery",
     Pair("shipping_query_id", shippingQueryId),
@@ -1240,9 +1250,9 @@ fun setPassportDataErrors(userId: Int, errors: Array<PassportElementError>): Bot
 fun sendGame(
     chatId: Int,
     gameShortName: String,
-    disableNotification: Boolean?,
-    replyToMessageId: Int?,
-    replyMarkup: InlineKeyboardMarkup?
+    disableNotification: Boolean? = null,
+    replyToMessageId: Int? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
 ): BotRequest = genBotRequest(
     "sendGame",
     Pair("chat_id", chatId),
@@ -1266,11 +1276,11 @@ fun sendGame(
 fun setGameScore(
     userId: Int,
     score: Int,
-    force: Boolean?,
-    disableEditMessage: Boolean?,
-    chatId: Int?,
-    messageId: Int?,
-    inlineMessageId: String?
+    force: Boolean? = null,
+    disableEditMessage: Boolean? = null,
+    chatId: Int? = null,
+    messageId: Int? = null,
+    inlineMessageId: String? = null
 ): BotRequest = genBotRequest(
     "setGameScore",
     Pair("user_id", userId),
@@ -1291,10 +1301,11 @@ fun setGameScore(
  * @param[messageId] Required if *inline_message_id* is not specified. Identifier of the sent message
  * @param[inlineMessageId] Required if *chat_id* and *message_id* are not specified. Identifier of the inline message
  */
-fun getGameHighScores(userId: Int, chatId: Int?, messageId: Int?, inlineMessageId: String?): BotRequest = genBotRequest(
-    "getGameHighScores",
-    Pair("user_id", userId),
-    Pair("chat_id", chatId),
-    Pair("message_id", messageId),
-    Pair("inline_message_id", inlineMessageId)
-)
+fun getGameHighScores(userId: Int, chatId: Int? = null, messageId: Int? = null, inlineMessageId: String?): BotRequest =
+    genBotRequest(
+        "getGameHighScores",
+        Pair("user_id", userId),
+        Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId)
+    )

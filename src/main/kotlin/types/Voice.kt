@@ -21,7 +21,7 @@ data class Voice @JsonCreator constructor(
     @JsonProperty("duration")
     val duration: Int,
     @JsonProperty("mime_type")
-    val mimeType: String?,
+    val mimeType: String? = null,
     @JsonProperty("file_size")
-    val fileSize: Int?
+    val fileSize: Int? = null
 )

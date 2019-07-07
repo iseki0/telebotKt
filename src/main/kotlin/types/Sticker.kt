@@ -27,13 +27,13 @@ data class Sticker @JsonCreator constructor(
     @JsonProperty("height")
     val height: Int,
     @JsonProperty("thumb")
-    val thumb: PhotoSize?,
+    val thumb: PhotoSize? = null,
     @JsonProperty("emoji")
-    val emoji: String?,
+    val emoji: String? = null,
     @JsonProperty("set_name")
-    val setName: String?,
+    val setName: String? = null,
     @JsonProperty("mask_position")
-    val maskPosition: MaskPosition?,
+    val maskPosition: MaskPosition? = null,
     @JsonProperty("file_size")
-    val fileSize: Int?
+    val fileSize: Int? = null
 )

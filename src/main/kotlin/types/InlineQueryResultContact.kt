@@ -35,17 +35,17 @@ data class InlineQueryResultContact @JsonCreator constructor(
     @JsonProperty("first_name")
     val firstName: String,
     @JsonProperty("last_name")
-    val lastName: String?,
+    val lastName: String? = null,
     @JsonProperty("vcard")
-    val vcard: String?,
+    val vcard: String? = null,
     @JsonProperty("reply_markup")
-    val replyMarkup: InlineKeyboardMarkup?,
+    val replyMarkup: InlineKeyboardMarkup? = null,
     @JsonProperty("input_message_content")
-    val inputMessageContent: InputMessageContent?,
+    val inputMessageContent: InputMessageContent? = null,
     @JsonProperty("thumb_url")
-    val thumbUrl: String?,
+    val thumbUrl: String? = null,
     @JsonProperty("thumb_width")
-    val thumbWidth: Int?,
+    val thumbWidth: Int? = null,
     @JsonProperty("thumb_height")
-    val thumbHeight: Int?
+    val thumbHeight: Int? = null
 ) : InlineQueryResult

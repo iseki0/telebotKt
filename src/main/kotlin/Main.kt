@@ -10,6 +10,7 @@ fun main() {
     registerObjectMapperModule(Json.mapper)
     registerObjectMapperModule(Json.prettyMapper)
     val vertx = Vertx.vertx()
+
     println("Hello world.")
 }
 

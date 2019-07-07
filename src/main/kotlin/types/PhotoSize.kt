@@ -23,5 +23,5 @@ data class PhotoSize @JsonCreator constructor(
     @JsonProperty("height")
     val height: Int,
     @JsonProperty("file_size")
-    val fileSize: Int?
+    val fileSize: Int? = null
 )

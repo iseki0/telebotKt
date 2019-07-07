@@ -31,7 +31,7 @@ data class PreCheckoutQuery @JsonCreator constructor(
     @JsonProperty("invoice_payload")
     val invoicePayload: String,
     @JsonProperty("shipping_option_id")
-    val shippingOptionId: String?,
+    val shippingOptionId: String? = null,
     @JsonProperty("order_info")
-    val orderInfo: OrderInfo?
+    val orderInfo: OrderInfo? = null
 )

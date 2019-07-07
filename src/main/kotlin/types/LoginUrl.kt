@@ -22,9 +22,9 @@ data class LoginUrl @JsonCreator constructor(
     @JsonProperty("url")
     val url: String,
     @JsonProperty("forward_text")
-    val forwardText: String?,
+    val forwardText: String? = null,
     @JsonProperty("bot_username")
-    val botUsername: String?,
+    val botUsername: String? = null,
     @JsonProperty("request_write_access")
-    val requestWriteAccess: Boolean?
+    val requestWriteAccess: Boolean? = null
 )

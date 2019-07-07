@@ -19,7 +19,7 @@ data class File @JsonCreator constructor(
     @JsonProperty("file_id")
     val fileId: String,
     @JsonProperty("file_size")
-    val fileSize: Int?,
+    val fileSize: Int? = null,
     @JsonProperty("file_path")
-    val filePath: String?
+    val filePath: String? = null
 )

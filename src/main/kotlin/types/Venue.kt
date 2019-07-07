@@ -24,7 +24,7 @@ data class Venue @JsonCreator constructor(
     @JsonProperty("address")
     val address: String,
     @JsonProperty("foursquare_id")
-    val foursquareId: String?,
+    val foursquareId: String? = null,
     @JsonProperty("foursquare_type")
-    val foursquareType: String?
+    val foursquareType: String? = null
 )

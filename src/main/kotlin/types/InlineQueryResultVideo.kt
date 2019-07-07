@@ -42,19 +42,19 @@ data class InlineQueryResultVideo @JsonCreator constructor(
     @JsonProperty("title")
     val title: String,
     @JsonProperty("caption")
-    val caption: String?,
+    val caption: String? = null,
     @JsonProperty("parse_mode")
-    val parseMode: ParseMode?,
+    val parseMode: ParseMode? = null,
     @JsonProperty("video_width")
-    val videoWidth: Int?,
+    val videoWidth: Int? = null,
     @JsonProperty("video_height")
-    val videoHeight: Int?,
+    val videoHeight: Int? = null,
     @JsonProperty("video_duration")
-    val videoDuration: Int?,
+    val videoDuration: Int? = null,
     @JsonProperty("description")
-    val description: String?,
+    val description: String? = null,
     @JsonProperty("reply_markup")
-    val replyMarkup: InlineKeyboardMarkup?,
+    val replyMarkup: InlineKeyboardMarkup? = null,
     @JsonProperty("input_message_content")
-    val inputMessageContent: InputMessageContent?
+    val inputMessageContent: InputMessageContent? = null
 ) : InlineQueryResult

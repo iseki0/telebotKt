@@ -25,11 +25,11 @@ data class Game @JsonCreator constructor(
     @JsonProperty("photo")
     val photo: Array<PhotoSize>,
     @JsonProperty("text")
-    val text: String?,
+    val text: String? = null,
     @JsonProperty("text_entities")
     val textEntities: Array<MessageEntity>?,
     @JsonProperty("animation")
-    val animation: Animation?
+    val animation: Animation? = null
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

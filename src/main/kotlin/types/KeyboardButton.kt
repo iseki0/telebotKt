@@ -19,7 +19,7 @@ data class KeyboardButton @JsonCreator constructor(
     @JsonProperty("text")
     val text: String,
     @JsonProperty("request_contact")
-    val requestContact: Boolean?,
+    val requestContact: Boolean? = null,
     @JsonProperty("request_location")
-    val requestLocation: Boolean?
+    val requestLocation: Boolean? = null
 )

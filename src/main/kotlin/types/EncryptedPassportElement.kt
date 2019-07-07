@@ -25,19 +25,19 @@ data class EncryptedPassportElement @JsonCreator constructor(
     @JsonProperty("type")
     val type: String,
     @JsonProperty("data")
-    val data: String?,
+    val data: String? = null,
     @JsonProperty("phone_number")
-    val phoneNumber: String?,
+    val phoneNumber: String? = null,
     @JsonProperty("email")
-    val email: String?,
+    val email: String? = null,
     @JsonProperty("files")
     val files: Array<PassportFile>?,
     @JsonProperty("front_side")
-    val frontSide: PassportFile?,
+    val frontSide: PassportFile? = null,
     @JsonProperty("reverse_side")
-    val reverseSide: PassportFile?,
+    val reverseSide: PassportFile? = null,
     @JsonProperty("selfie")
-    val selfie: PassportFile?,
+    val selfie: PassportFile? = null,
     @JsonProperty("translation")
     val translation: Array<PassportFile>?,
     @JsonProperty("hash")

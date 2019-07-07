@@ -24,7 +24,7 @@ data class MessageEntity @JsonCreator constructor(
     @JsonProperty("length")
     val length: Int,
     @JsonProperty("url")
-    val url: String?,
+    val url: String? = null,
     @JsonProperty("user")
-    val user: User?
+    val user: User? = null
 )

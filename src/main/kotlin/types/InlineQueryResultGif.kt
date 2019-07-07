@@ -33,21 +33,21 @@ data class InlineQueryResultGif @JsonCreator constructor(
     @JsonProperty("gif_url")
     val gifUrl: String,
     @JsonProperty("gif_width")
-    val gifWidth: Int?,
+    val gifWidth: Int? = null,
     @JsonProperty("gif_height")
-    val gifHeight: Int?,
+    val gifHeight: Int? = null,
     @JsonProperty("gif_duration")
-    val gifDuration: Int?,
+    val gifDuration: Int? = null,
     @JsonProperty("thumb_url")
     val thumbUrl: String,
     @JsonProperty("title")
-    val title: String?,
+    val title: String? = null,
     @JsonProperty("caption")
-    val caption: String?,
+    val caption: String? = null,
     @JsonProperty("parse_mode")
-    val parseMode: ParseMode?,
+    val parseMode: ParseMode? = null,
     @JsonProperty("reply_markup")
-    val replyMarkup: InlineKeyboardMarkup?,
+    val replyMarkup: InlineKeyboardMarkup? = null,
     @JsonProperty("input_message_content")
-    val inputMessageContent: InputMessageContent?
+    val inputMessageContent: InputMessageContent? = null
 ) : InlineQueryResult

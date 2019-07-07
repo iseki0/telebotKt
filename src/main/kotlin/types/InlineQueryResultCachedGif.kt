@@ -29,13 +29,13 @@ data class InlineQueryResultCachedGif @JsonCreator constructor(
     @JsonProperty("gif_file_id")
     val gifFileId: String,
     @JsonProperty("title")
-    val title: String?,
+    val title: String? = null,
     @JsonProperty("caption")
-    val caption: String?,
+    val caption: String? = null,
     @JsonProperty("parse_mode")
-    val parseMode: ParseMode?,
+    val parseMode: ParseMode? = null,
     @JsonProperty("reply_markup")
-    val replyMarkup: InlineKeyboardMarkup?,
+    val replyMarkup: InlineKeyboardMarkup? = null,
     @JsonProperty("input_message_content")
-    val inputMessageContent: InputMessageContent?
+    val inputMessageContent: InputMessageContent? = null
 ) : InlineQueryResult

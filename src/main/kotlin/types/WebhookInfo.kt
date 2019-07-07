@@ -31,11 +31,11 @@ data class WebhookInfo @JsonCreator constructor(
     @JsonProperty("pending_update_count")
     val pendingUpdateCount: Int,
     @JsonProperty("last_error_date")
-    val lastErrorDate: Int?,
+    val lastErrorDate: Int? = null,
     @JsonProperty("last_error_message")
-    val lastErrorMessage: String?,
+    val lastErrorMessage: String? = null,
     @JsonProperty("max_connections")
-    val maxConnections: Int?,
+    val maxConnections: Int? = null,
     @JsonProperty("allowed_updates")
     val allowedUpdates: Array<String>?
 ) {

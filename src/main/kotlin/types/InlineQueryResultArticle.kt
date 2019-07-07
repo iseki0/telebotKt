@@ -34,17 +34,17 @@ data class InlineQueryResultArticle @JsonCreator constructor(
     @JsonProperty("input_message_content")
     val inputMessageContent: InputMessageContent,
     @JsonProperty("reply_markup")
-    val replyMarkup: InlineKeyboardMarkup?,
+    val replyMarkup: InlineKeyboardMarkup? = null,
     @JsonProperty("url")
-    val url: String?,
+    val url: String? = null,
     @JsonProperty("hide_url")
-    val hideUrl: Boolean?,
+    val hideUrl: Boolean? = null,
     @JsonProperty("description")
-    val description: String?,
+    val description: String? = null,
     @JsonProperty("thumb_url")
-    val thumbUrl: String?,
+    val thumbUrl: String? = null,
     @JsonProperty("thumb_width")
-    val thumbWidth: Int?,
+    val thumbWidth: Int? = null,
     @JsonProperty("thumb_height")
-    val thumbHeight: Int?
+    val thumbHeight: Int? = null
 ) : InlineQueryResult

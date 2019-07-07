@@ -37,15 +37,15 @@ data class InlineQueryResultLocation @JsonCreator constructor(
     @JsonProperty("title")
     val title: String,
     @JsonProperty("live_period")
-    val livePeriod: Int?,
+    val livePeriod: Int? = null,
     @JsonProperty("reply_markup")
-    val replyMarkup: InlineKeyboardMarkup?,
+    val replyMarkup: InlineKeyboardMarkup? = null,
     @JsonProperty("input_message_content")
-    val inputMessageContent: InputMessageContent?,
+    val inputMessageContent: InputMessageContent? = null,
     @JsonProperty("thumb_url")
-    val thumbUrl: String?,
+    val thumbUrl: String? = null,
     @JsonProperty("thumb_width")
-    val thumbWidth: Int?,
+    val thumbWidth: Int? = null,
     @JsonProperty("thumb_height")
-    val thumbHeight: Int?
+    val thumbHeight: Int? = null
 ) : InlineQueryResult

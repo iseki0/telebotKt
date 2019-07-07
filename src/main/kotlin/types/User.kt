@@ -25,9 +25,9 @@ data class User @JsonCreator constructor(
     @JsonProperty("first_name")
     val firstName: String,
     @JsonProperty("last_name")
-    val lastName: String?,
+    val lastName: String? = null,
     @JsonProperty("username")
-    val username: String?,
+    val username: String? = null,
     @JsonProperty("language_code")
-    val languageCode: String?
+    val languageCode: String? = null
 )

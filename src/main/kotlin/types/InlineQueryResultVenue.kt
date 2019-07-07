@@ -41,17 +41,17 @@ data class InlineQueryResultVenue @JsonCreator constructor(
     @JsonProperty("address")
     val address: String,
     @JsonProperty("foursquare_id")
-    val foursquareId: String?,
+    val foursquareId: String? = null,
     @JsonProperty("foursquare_type")
-    val foursquareType: String?,
+    val foursquareType: String? = null,
     @JsonProperty("reply_markup")
-    val replyMarkup: InlineKeyboardMarkup?,
+    val replyMarkup: InlineKeyboardMarkup? = null,
     @JsonProperty("input_message_content")
-    val inputMessageContent: InputMessageContent?,
+    val inputMessageContent: InputMessageContent? = null,
     @JsonProperty("thumb_url")
-    val thumbUrl: String?,
+    val thumbUrl: String? = null,
     @JsonProperty("thumb_width")
-    val thumbWidth: Int?,
+    val thumbWidth: Int? = null,
     @JsonProperty("thumb_height")
-    val thumbHeight: Int?
+    val thumbHeight: Int? = null
 ) : InlineQueryResult

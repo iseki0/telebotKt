@@ -22,7 +22,7 @@ data class InlineQuery @JsonCreator constructor(
     @JsonProperty("from")
     val from: User,
     @JsonProperty("location")
-    val location: Location?,
+    val location: Location? = null,
     @JsonProperty("query")
     val query: String,
     @JsonProperty("offset")

@@ -34,15 +34,15 @@ data class InlineQueryResultAudio @JsonCreator constructor(
     @JsonProperty("title")
     val title: String,
     @JsonProperty("caption")
-    val caption: String?,
+    val caption: String? = null,
     @JsonProperty("parse_mode")
-    val parseMode: ParseMode?,
+    val parseMode: ParseMode? = null,
     @JsonProperty("performer")
-    val performer: String?,
+    val performer: String? = null,
     @JsonProperty("audio_duration")
-    val audioDuration: Int?,
+    val audioDuration: Int? = null,
     @JsonProperty("reply_markup")
-    val replyMarkup: InlineKeyboardMarkup?,
+    val replyMarkup: InlineKeyboardMarkup? = null,
     @JsonProperty("input_message_content")
-    val inputMessageContent: InputMessageContent?
+    val inputMessageContent: InputMessageContent? = null
 ) : InlineQueryResult

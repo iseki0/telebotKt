@@ -24,7 +24,7 @@ data class VideoNote @JsonCreator constructor(
     @JsonProperty("duration")
     val duration: Int,
     @JsonProperty("thumb")
-    val thumb: PhotoSize?,
+    val thumb: PhotoSize? = null,
     @JsonProperty("file_size")
-    val fileSize: Int?
+    val fileSize: Int? = null
 )

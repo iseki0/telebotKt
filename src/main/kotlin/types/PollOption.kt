@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class PollOption @JsonCreator constructor(
     @JsonProperty("text")
-    val text: String?,
+    val text: String? = null,
     @JsonProperty("voter_count")
     val voterCount: Int
 )

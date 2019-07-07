@@ -27,17 +27,17 @@ data class InlineKeyboardButton @JsonCreator constructor(
     @JsonProperty("text")
     val text: String,
     @JsonProperty("url")
-    val url: String?,
+    val url: String? = null,
     @JsonProperty("login_url")
-    val loginUrl: LoginUrl?,
+    val loginUrl: LoginUrl? = null,
     @JsonProperty("callback_data")
-    val callbackData: String?,
+    val callbackData: String? = null,
     @JsonProperty("switch_inline_query")
-    val switchInlineQuery: String?,
+    val switchInlineQuery: String? = null,
     @JsonProperty("switch_inline_query_current_chat")
-    val switchInlineQueryCurrentChat: String?,
+    val switchInlineQueryCurrentChat: String? = null,
     @JsonProperty("callback_game")
-    val callbackGame: CallbackGame?,
+    val callbackGame: CallbackGame? = null,
     @JsonProperty("pay")
-    val pay: Boolean?
+    val pay: Boolean? = null
 )

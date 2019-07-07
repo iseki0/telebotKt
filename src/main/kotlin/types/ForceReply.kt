@@ -19,5 +19,5 @@ data class ForceReply @JsonCreator constructor(
     @JsonProperty("force_reply")
     val forceReply: Boolean,
     @JsonProperty("selective")
-    val selective: Boolean?
+    val selective: Boolean? = null
 ) : ReplyMarkup

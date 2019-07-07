@@ -26,9 +26,9 @@ data class SuccessfulPayment @JsonCreator constructor(
     @JsonProperty("invoice_payload")
     val invoicePayload: String,
     @JsonProperty("shipping_option_id")
-    val shippingOptionId: String?,
+    val shippingOptionId: String? = null,
     @JsonProperty("order_info")
-    val orderInfo: OrderInfo?,
+    val orderInfo: OrderInfo? = null,
     @JsonProperty("telegram_payment_charge_id")
     val telegramPaymentChargeId: String,
     @JsonProperty("provider_payment_charge_id")

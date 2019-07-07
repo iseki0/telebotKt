@@ -25,15 +25,15 @@ data class InputMediaAnimation @JsonCreator constructor(
     @JsonProperty("media")
     val media: String,
     @JsonProperty("thumb")
-    val thumb: String?,
+    val thumb: String? = null,
     @JsonProperty("caption")
-    val caption: String?,
+    val caption: String? = null,
     @JsonProperty("parse_mode")
-    val parseMode: ParseMode?,
+    val parseMode: ParseMode? = null,
     @JsonProperty("width")
-    val width: Int?,
+    val width: Int? = null,
     @JsonProperty("height")
-    val height: Int?,
+    val height: Int? = null,
     @JsonProperty("duration")
-    val duration: Int?
+    val duration: Int? = null
 ) : InputMedia

@@ -22,9 +22,9 @@ data class Contact @JsonCreator constructor(
     @JsonProperty("first_name")
     val firstName: String,
     @JsonProperty("last_name")
-    val lastName: String?,
+    val lastName: String? = null,
     @JsonProperty("user_id")
-    val userId: Int?,
+    val userId: Int? = null,
     @JsonProperty("vcard")
-    val vcard: String?
+    val vcard: String? = null
 )

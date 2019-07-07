@@ -20,11 +20,11 @@ data class ReplyKeyboardMarkup @JsonCreator constructor(
     @JsonProperty("keyboard")
     val keyboard: Array<Array<KeyboardButton>>,
     @JsonProperty("resize_keyboard")
-    val resizeKeyboard: Boolean?,
+    val resizeKeyboard: Boolean? = null,
     @JsonProperty("one_time_keyboard")
-    val oneTimeKeyboard: Boolean?,
+    val oneTimeKeyboard: Boolean? = null,
     @JsonProperty("selective")
-    val selective: Boolean?
+    val selective: Boolean? = null
 ) : ReplyMarkup {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

@@ -35,19 +35,19 @@ data class InlineQueryResultPhoto @JsonCreator constructor(
     @JsonProperty("thumb_url")
     val thumbUrl: String,
     @JsonProperty("photo_width")
-    val photoWidth: Int?,
+    val photoWidth: Int? = null,
     @JsonProperty("photo_height")
-    val photoHeight: Int?,
+    val photoHeight: Int? = null,
     @JsonProperty("title")
-    val title: String?,
+    val title: String? = null,
     @JsonProperty("description")
-    val description: String?,
+    val description: String? = null,
     @JsonProperty("caption")
-    val caption: String?,
+    val caption: String? = null,
     @JsonProperty("parse_mode")
-    val parseMode: ParseMode?,
+    val parseMode: ParseMode? = null,
     @JsonProperty("reply_markup")
-    val replyMarkup: InlineKeyboardMarkup?,
+    val replyMarkup: InlineKeyboardMarkup? = null,
     @JsonProperty("input_message_content")
-    val inputMessageContent: InputMessageContent?
+    val inputMessageContent: InputMessageContent? = null
 ) : InlineQueryResult

@@ -30,15 +30,15 @@ data class InlineQueryResultCachedPhoto @JsonCreator constructor(
     @JsonProperty("photo_file_id")
     val photoFileId: String,
     @JsonProperty("title")
-    val title: String?,
+    val title: String? = null,
     @JsonProperty("description")
-    val description: String?,
+    val description: String? = null,
     @JsonProperty("caption")
-    val caption: String?,
+    val caption: String? = null,
     @JsonProperty("parse_mode")
-    val parseMode: ParseMode?,
+    val parseMode: ParseMode? = null,
     @JsonProperty("reply_markup")
-    val replyMarkup: InlineKeyboardMarkup?,
+    val replyMarkup: InlineKeyboardMarkup? = null,
     @JsonProperty("input_message_content")
-    val inputMessageContent: InputMessageContent?
+    val inputMessageContent: InputMessageContent? = null
 ) : InlineQueryResult

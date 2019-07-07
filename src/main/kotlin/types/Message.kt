@@ -62,97 +62,97 @@ data class Message @JsonCreator constructor(
     @JsonProperty("message_id")
     val messageId: Int,
     @JsonProperty("from")
-    val from: User?,
+    val from: User? = null,
     @JsonProperty("date")
     val date: Int,
     @JsonProperty("chat")
     val chat: Chat,
     @JsonProperty("forward_from")
-    val forwardFrom: User?,
+    val forwardFrom: User? = null,
     @JsonProperty("forward_from_chat")
-    val forwardFromChat: Chat?,
+    val forwardFromChat: Chat? = null,
     @JsonProperty("forward_from_message_id")
-    val forwardFromMessageId: Int?,
+    val forwardFromMessageId: Int? = null,
     @JsonProperty("forward_signature")
-    val forwardSignature: String?,
+    val forwardSignature: String? = null,
     @JsonProperty("forward_sender_name")
-    val forwardSenderName: String?,
+    val forwardSenderName: String? = null,
     @JsonProperty("forward_date")
-    val forwardDate: Int?,
+    val forwardDate: Int? = null,
     @JsonProperty("reply_to_message")
-    val replyToMessage: Message?,
+    val replyToMessage: Message? = null,
     @JsonProperty("edit_date")
-    val editDate: Int?,
+    val editDate: Int? = null,
     @JsonProperty("media_group_id")
-    val mediaGroupId: String?,
+    val mediaGroupId: String? = null,
     @JsonProperty("author_signature")
-    val authorSignature: String?,
+    val authorSignature: String? = null,
     @JsonProperty("text")
-    val text: String?,
+    val text: String? = null,
     @JsonProperty("entities")
     val entities: Array<MessageEntity>?,
     @JsonProperty("caption_entities")
     val captionEntities: Array<MessageEntity>?,
     @JsonProperty("audio")
-    val audio: Audio?,
+    val audio: Audio? = null,
     @JsonProperty("document")
-    val document: Document?,
+    val document: Document? = null,
     @JsonProperty("animation")
-    val animation: Animation?,
+    val animation: Animation? = null,
     @JsonProperty("game")
-    val game: Game?,
+    val game: Game? = null,
     @JsonProperty("photo")
     val photo: Array<PhotoSize>?,
     @JsonProperty("sticker")
-    val sticker: Sticker?,
+    val sticker: Sticker? = null,
     @JsonProperty("video")
-    val video: Video?,
+    val video: Video? = null,
     @JsonProperty("voice")
-    val voice: Voice?,
+    val voice: Voice? = null,
     @JsonProperty("video_note")
-    val videoNote: VideoNote?,
+    val videoNote: VideoNote? = null,
     @JsonProperty("caption")
-    val caption: String?,
+    val caption: String? = null,
     @JsonProperty("contact")
-    val contact: Contact?,
+    val contact: Contact? = null,
     @JsonProperty("location")
-    val location: Location?,
+    val location: Location? = null,
     @JsonProperty("venue")
-    val venue: Venue?,
+    val venue: Venue? = null,
     @JsonProperty("poll")
-    val poll: Poll?,
+    val poll: Poll? = null,
     @JsonProperty("new_chat_members")
     val newChatMembers: Array<User>?,
     @JsonProperty("left_chat_member")
-    val leftChatMember: User?,
+    val leftChatMember: User? = null,
     @JsonProperty("new_chat_title")
-    val newChatTitle: String?,
+    val newChatTitle: String? = null,
     @JsonProperty("new_chat_photo")
     val newChatPhoto: Array<PhotoSize>?,
     @JsonProperty("delete_chat_photo")
-    val deleteChatPhoto: Boolean?,
+    val deleteChatPhoto: Boolean? = null,
     @JsonProperty("group_chat_created")
-    val groupChatCreated: Boolean?,
+    val groupChatCreated: Boolean? = null,
     @JsonProperty("supergroup_chat_created")
-    val supergroupChatCreated: Boolean?,
+    val supergroupChatCreated: Boolean? = null,
     @JsonProperty("channel_chat_created")
-    val channelChatCreated: Boolean?,
+    val channelChatCreated: Boolean? = null,
     @JsonProperty("migrate_to_chat_id")
-    val migrateToChatId: Int?,
+    val migrateToChatId: Int? = null,
     @JsonProperty("migrate_from_chat_id")
-    val migrateFromChatId: Int?,
+    val migrateFromChatId: Int? = null,
     @JsonProperty("pinned_message")
-    val pinnedMessage: Message?,
+    val pinnedMessage: Message? = null,
     @JsonProperty("invoice")
-    val invoice: Invoice?,
+    val invoice: Invoice? = null,
     @JsonProperty("successful_payment")
-    val successfulPayment: SuccessfulPayment?,
+    val successfulPayment: SuccessfulPayment? = null,
     @JsonProperty("connected_website")
-    val connectedWebsite: String?,
+    val connectedWebsite: String? = null,
     @JsonProperty("passport_data")
-    val passportData: PassportData?,
+    val passportData: PassportData? = null,
     @JsonProperty("reply_markup")
-    val replyMarkup: InlineKeyboardMarkup?
+    val replyMarkup: InlineKeyboardMarkup? = null
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

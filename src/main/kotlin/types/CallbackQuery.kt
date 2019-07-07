@@ -25,13 +25,13 @@ data class CallbackQuery @JsonCreator constructor(
     @JsonProperty("from")
     val from: User,
     @JsonProperty("message")
-    val message: Message?,
+    val message: Message? = null,
     @JsonProperty("inline_message_id")
-    val inlineMessageId: String?,
+    val inlineMessageId: String? = null,
     @JsonProperty("chat_instance")
     val chatInstance: String,
     @JsonProperty("data")
-    val data: String?,
+    val data: String? = null,
     @JsonProperty("game_short_name")
-    val gameShortName: String?
+    val gameShortName: String? = null
 )

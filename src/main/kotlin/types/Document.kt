@@ -20,11 +20,11 @@ data class Document @JsonCreator constructor(
     @JsonProperty("file_id")
     val fileId: String,
     @JsonProperty("thumb")
-    val thumb: PhotoSize?,
+    val thumb: PhotoSize? = null,
     @JsonProperty("file_name")
-    val fileName: String?,
+    val fileName: String? = null,
     @JsonProperty("mime_type")
-    val mimeType: String?,
+    val mimeType: String? = null,
     @JsonProperty("file_size")
-    val fileSize: Int?
+    val fileSize: Int? = null
 )

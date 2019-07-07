@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class ResponseParameters @JsonCreator constructor(
     @JsonProperty("migrate_to_chat_id")
-    val migrateToChatId: Int?,
+    val migrateToChatId: Int? = null,
     @JsonProperty("retry_after")
-    val retryAfter: Int?
+    val retryAfter: Int? = null
 )

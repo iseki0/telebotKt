@@ -34,33 +34,33 @@ data class ChatMember @JsonCreator constructor(
     @JsonProperty("status")
     val status: String,
     @JsonProperty("until_date")
-    val untilDate: Int?,
+    val untilDate: Int? = null,
     @JsonProperty("can_be_edited")
-    val canBeEdited: Boolean?,
+    val canBeEdited: Boolean? = null,
     @JsonProperty("can_change_info")
-    val canChangeInfo: Boolean?,
+    val canChangeInfo: Boolean? = null,
     @JsonProperty("can_post_messages")
-    val canPostMessages: Boolean?,
+    val canPostMessages: Boolean? = null,
     @JsonProperty("can_edit_messages")
-    val canEditMessages: Boolean?,
+    val canEditMessages: Boolean? = null,
     @JsonProperty("can_delete_messages")
-    val canDeleteMessages: Boolean?,
+    val canDeleteMessages: Boolean? = null,
     @JsonProperty("can_invite_users")
-    val canInviteUsers: Boolean?,
+    val canInviteUsers: Boolean? = null,
     @JsonProperty("can_restrict_members")
-    val canRestrictMembers: Boolean?,
+    val canRestrictMembers: Boolean? = null,
     @JsonProperty("can_pin_messages")
-    val canPinMessages: Boolean?,
+    val canPinMessages: Boolean? = null,
     @JsonProperty("can_promote_members")
-    val canPromoteMembers: Boolean?,
+    val canPromoteMembers: Boolean? = null,
     @JsonProperty("is_member")
-    val isMember: Boolean?,
+    val isMember: Boolean? = null,
     @JsonProperty("can_send_messages")
-    val canSendMessages: Boolean?,
+    val canSendMessages: Boolean? = null,
     @JsonProperty("can_send_media_messages")
-    val canSendMediaMessages: Boolean?,
+    val canSendMediaMessages: Boolean? = null,
     @JsonProperty("can_send_other_messages")
-    val canSendOtherMessages: Boolean?,
+    val canSendOtherMessages: Boolean? = null,
     @JsonProperty("can_add_web_page_previews")
-    val canAddWebPagePreviews: Boolean?
+    val canAddWebPagePreviews: Boolean? = null
 )

@@ -18,7 +18,7 @@ data class ShippingOption @JsonCreator constructor(
     @JsonProperty("id")
     val id: String,
     @JsonProperty("title")
-    val title: String?,
+    val title: String? = null,
     @JsonProperty("prices")
     val prices: Array<LabeledPrice>
 ) {

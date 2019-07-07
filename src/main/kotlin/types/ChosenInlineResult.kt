@@ -24,9 +24,9 @@ data class ChosenInlineResult @JsonCreator constructor(
     @JsonProperty("from")
     val from: User,
     @JsonProperty("location")
-    val location: Location?,
+    val location: Location? = null,
     @JsonProperty("inline_message_id")
-    val inlineMessageId: String?,
+    val inlineMessageId: String? = null,
     @JsonProperty("query")
     val query: String
 )

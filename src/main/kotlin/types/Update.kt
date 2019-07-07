@@ -29,23 +29,23 @@ data class Update @JsonCreator constructor(
     @JsonProperty("update_id")
     val updateId: Int,
     @JsonProperty("message")
-    val message: Message?,
+    val message: Message? = null,
     @JsonProperty("edited_message")
-    val editedMessage: Message?,
+    val editedMessage: Message? = null,
     @JsonProperty("channel_post")
-    val channelPost: Message?,
+    val channelPost: Message? = null,
     @JsonProperty("edited_channel_post")
-    val editedChannelPost: Message?,
+    val editedChannelPost: Message? = null,
     @JsonProperty("inline_query")
-    val inlineQuery: InlineQuery?,
+    val inlineQuery: InlineQuery? = null,
     @JsonProperty("chosen_inline_result")
-    val chosenInlineResult: ChosenInlineResult?,
+    val chosenInlineResult: ChosenInlineResult? = null,
     @JsonProperty("callback_query")
-    val callbackQuery: CallbackQuery?,
+    val callbackQuery: CallbackQuery? = null,
     @JsonProperty("shipping_query")
-    val shippingQuery: ShippingQuery?,
+    val shippingQuery: ShippingQuery? = null,
     @JsonProperty("pre_checkout_query")
-    val preCheckoutQuery: PreCheckoutQuery?,
+    val preCheckoutQuery: PreCheckoutQuery? = null,
     @JsonProperty("poll")
-    val poll: Poll?
+    val poll: Poll? = null
 )

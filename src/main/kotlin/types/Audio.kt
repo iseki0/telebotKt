@@ -24,13 +24,13 @@ data class Audio @JsonCreator constructor(
     @JsonProperty("duration")
     val duration: Int,
     @JsonProperty("performer")
-    val performer: String?,
+    val performer: String? = null,
     @JsonProperty("title")
-    val title: String?,
+    val title: String? = null,
     @JsonProperty("mime_type")
-    val mimeType: String?,
+    val mimeType: String? = null,
     @JsonProperty("file_size")
-    val fileSize: Int?,
+    val fileSize: Int? = null,
     @JsonProperty("thumb")
-    val thumb: PhotoSize?
+    val thumb: PhotoSize? = null
 )

@@ -28,9 +28,9 @@ data class Video @JsonCreator constructor(
     @JsonProperty("duration")
     val duration: Int,
     @JsonProperty("thumb")
-    val thumb: PhotoSize?,
+    val thumb: PhotoSize? = null,
     @JsonProperty("mime_type")
-    val mimeType: String?,
+    val mimeType: String? = null,
     @JsonProperty("file_size")
-    val fileSize: Int?
+    val fileSize: Int? = null
 )

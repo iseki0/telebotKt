@@ -17,11 +17,11 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class OrderInfo @JsonCreator constructor(
     @JsonProperty("name")
-    val name: String?,
+    val name: String? = null,
     @JsonProperty("phone_number")
-    val phoneNumber: String?,
+    val phoneNumber: String? = null,
     @JsonProperty("email")
-    val email: String?,
+    val email: String? = null,
     @JsonProperty("shipping_address")
-    val shippingAddress: ShippingAddress?
+    val shippingAddress: ShippingAddress? = null
 )
