@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
+import deserializer.ValueMustBe
 
 /**
  * Represents an issue with a document scan. The error is considered resolved when the file with the document scan changes.
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class PassportElementErrorFile @JsonCreator constructor(
     @JsonProperty("source")
+    @ValueMustBe("file")
     val source: String,
     @JsonProperty("type")
     val type: String,

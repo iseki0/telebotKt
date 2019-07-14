@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
+import deserializer.ValueMustBe
 
 /**
  * Represents an audio file to be treated as music to be sent.
@@ -21,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class InputMediaAudio @JsonCreator constructor(
     @JsonProperty("type")
+    @ValueMustBe("audio")
     val type: String,
     @JsonProperty("media")
     val media: String,
