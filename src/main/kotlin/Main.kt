@@ -1,14 +1,22 @@
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import deserializer.FieldExistDeserializer
+import deserializer.DDDeserializer
 import io.vertx.core.Vertx
 import io.vertx.core.json.Json
+import io.vertx.core.json.JsonObject
 import types.*
 
 fun main() {
     registerObjectMapperModule(Json.mapper)
-    registerObjectMapperModule(Json.prettyMapper)
+    //registerObjectMapperModule(Json.prettyMapper)
+
+    val aa = InlineQueryResultArticle(
+        inputMessageContent = InputLocationMessageContent(0f, 0f),
+        id = "IDID",
+        title = "TITLETT"
+    )
+    println(JsonObject.mapFrom(aa).mapTo(InlineQueryResult::class.java))
     val vertx = Vertx.vertx()
 
     println("Hello world.")
@@ -16,7 +24,7 @@ fun main() {
 
 
 fun registerObjectMapperModule(mapper: ObjectMapper) {
-    val inlineQueryResultDeserializer = FieldExistDeserializer.create(
+    val inlineQueryResultDeserializer = DDDeserializer.create(
         listOf(
             InlineQueryResultArticle::class.java,
             InlineQueryResultAudio::class.java,
@@ -40,6 +48,18 @@ fun registerObjectMapperModule(mapper: ObjectMapper) {
             InlineQueryResultVoice::class.java
         )
     )
+    val inputMessageContentDeserializer = DDDeserializer.create(
+        listOf(
+            InputLocationMessageContent::class.java,
+            InputVenueMessageContent::class.java,
+            InputTextMessageContent::class.java,
+            InputContactMessageContent::class.java
+        )
+    )
     mapper.registerKotlinModule()
-        .registerModule(SimpleModule().addDeserializer(InlineQueryResult::class.java, inlineQueryResultDeserializer))
+        .registerModule(
+            SimpleModule()
+                .addDeserializer(InlineQueryResult::class.java, inlineQueryResultDeserializer)
+                .addDeserializer(InputMessageContent::class.java, inputMessageContentDeserializer)
+        )
 }

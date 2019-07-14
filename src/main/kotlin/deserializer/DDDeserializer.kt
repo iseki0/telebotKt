@@ -27,8 +27,10 @@ class DDDeserializer<T>(private val baseClass: Class<out T>, private val list: L
         Pair(map, it)
     }
 
+    init {
+        //println("Init: $clsList")
+    }
     override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): T? {
-        println("asasaas")
         requireNotNull(p)
         requireNotNull(ctxt)
         val maybe = HashSet<Class<out T>>()
@@ -39,17 +41,20 @@ class DDDeserializer<T>(private val baseClass: Class<out T>, private val list: L
                 if (!map.contains(field)) {
                     maybe.remove(cls)
                     mustnot.add(cls)
+                    //println("mustn't be $cls")
                 }
                 if (mustnot.contains(cls)) {
                     return@inner
                 }
                 val aa = map[field]
                 if (aa != null) {
-                    if (root[field].toString() == aa) {
+                    val factval = if (root[field].isTextual) root[field].textValue() else null
+                    if (factval == aa) {
                         maybe.add(cls)
                     } else {
                         maybe.remove(cls)
                         mustnot.add(cls)
+                        //println("mustn't be $cls. $aa!=$factval")
                     }
                 } else {
                     maybe.add(cls)
@@ -57,12 +62,16 @@ class DDDeserializer<T>(private val baseClass: Class<out T>, private val list: L
             }
         }
         val mapper = p.codec as ObjectMapper
+        //println(maybe)
         maybe.forEach {
             try {
                 return mapper.treeToValue(root, it)
             } catch (e: Exception) {
+                // 这里可能隐藏错误哦！但是我不知道还能怎么办了呢······算了暂时随他去吧，反正这个代码可能永远也不会被调用的······
+                println(e.message)
             }
         }
+
         throw UndeterminedDeserializationType()
     }
 
