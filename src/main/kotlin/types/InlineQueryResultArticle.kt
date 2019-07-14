@@ -4,12 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.module.SimpleModule
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import deserializer.FieldExistDeserializer
 import deserializer.ValueMustBe
-import io.vertx.core.json.Json
-import io.vertx.core.json.JsonObject
 
 /**
  * Represents a link to an article or web page.
@@ -53,26 +48,3 @@ data class InlineQueryResultArticle @JsonCreator constructor(
     @JsonProperty("thumb_height")
     val thumbHeight: Int? = null
 ) : InlineQueryResult
-
-data class AAA(val a: InlineQueryResultArticle)
-
-fun main() {
-    val cm = FieldExistDeserializer.create(
-        listOf(
-            InputLocationMessageContent::class.java,
-            InputContactMessageContent::class.java,
-            InputTextMessageContent::class.java,
-            InputVenueMessageContent::class.java
-        )
-    )
-    Json.mapper.registerKotlinModule()
-        .registerModule(SimpleModule().addDeserializer(InputMessageContent::class.java, cm))
-    val a = AAA(
-        InlineQueryResultArticle(
-            id = "th",
-            inputMessageContent = InputLocationMessageContent(1.0f, 2.0f),
-            title = "this is title"
-        )
-    )
-    println(JsonObject.mapFrom(a).mapTo(AAA::class.java))
-}

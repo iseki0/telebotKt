@@ -29,6 +29,7 @@ class FieldExistDeserializer<T>(private val typeClass: Class<T>, val list: List<
         val root = p.readValueAsTree<TreeNode>() ?: return null
         val clazz = run {
             root.fieldNames().forEach {
+                println(map[it])
                 map[it]?.let { return@run it }
             }
             throw UndeterminedDeserializationType()
