@@ -12,4 +12,4 @@ addons:
     packages:
       - sshpass
 after_success:
-  - sshpass -p $SCP_PASSWORD scp -o stricthostkeychecking=no -r ./build/libs/*.jar $SCP_TARGET:~ >>aaa.txt
+  - sshpass -p $SCP_PASSWORD scp -o stricthostkeychecking=no -r ./build/libs/*.jar $SCP_TARGET:~ >>aaa.txt 2>&1
