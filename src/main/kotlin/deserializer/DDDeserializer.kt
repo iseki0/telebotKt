@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
+import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
@@ -12,7 +13,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer
  * *Attention!* This Deserializer is *not* thread safe.
  * If it will shared between multiple thread. *Must* create it in initialize time.
  */
-class DDDeserializer<T>(private val baseClass: Class<out T>, private val list: List<Class<out T>>) :
+class DDDeserializer<T>(baseClass: Class<out T>, list: List<Class<out T>>) :
     StdDeserializer<T>(baseClass) {
 
     private val clsList = list.map {
@@ -66,9 +67,11 @@ class DDDeserializer<T>(private val baseClass: Class<out T>, private val list: L
         maybe.forEach {
             try {
                 return mapper.treeToValue(root, it)
-            } catch (e: Exception) {
+            } catch (e: JsonMappingException) {
                 // 这里可能隐藏错误哦！但是我不知道还能怎么办了呢······算了暂时随他去吧，反正这个代码可能永远也不会被调用的······
-                println(e.message)
+                //println(e.toString())
+            } catch (e: Exception) {
+                throw e
             }
         }
 
