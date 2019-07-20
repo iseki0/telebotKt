@@ -4,3 +4,8 @@ jdk:
 before_install:
   - chmod +x gradlew
   - chmod +x gradle/wrapper/gradle-wrapper.jar
+
+deploy:
+  provider: releases
+  api_key: "c92e1b9202e1a7f511e67fc9107cbec0e546a59e"
+  file: "build/libs/*.jar"

@@ -20,6 +20,7 @@ dependencies {
     compile "io.vertx:vertx-lang-kotlin:3.7.1"
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8"
     compile "io.vertx:vertx-pg-client:3.8.0-SNAPSHOT"
+    compile "io.vertx:vertx-web-client:3.8.0"
 
 }
 
@@ -28,4 +29,13 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "MainKt"
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
