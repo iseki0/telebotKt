@@ -1,5 +1,6 @@
 import io.vertx.core.Future
 import io.vertx.core.Vertx
+import io.vertx.core.buffer.Buffer
 import io.vertx.core.http.HttpClient
 import io.vertx.core.http.HttpServer
 import io.vertx.core.http.HttpServerOptions
@@ -12,6 +13,7 @@ class BotServer private constructor(
     val httpServer: HttpServer
 ) {
     val baseUrl = "https://api.telegram.org/bot${config.botKey}/"
+
     fun start(): Future<Unit> {
         val future = Future.future<Unit> { promise ->
             httpServer.listen {
@@ -34,9 +36,22 @@ class BotServer private constructor(
     }
 
     fun sendRequest(req: BotRequest): Future<JsonObject> {
-        TODO()
+        return Future.future { promise ->
+            val request = httpClient.post(baseUrl + req.api) { response ->
+                val buffer = Buffer.buffer()
+                response.bodyHandler { buffer.appendBuffer(it) }
+                response.endHandler {
+                    if (response.statusCode() == 200) {
+                        promise.complete(buffer.toJsonObject())
+                    } else {
+                        val json = buffer.toJsonObject()
+                        promise.fail(BotRequestException(response.statusCode(), json.getString("description")))
+                    }
+                }
+            }
+            request.putHeader("Content-Type", "application/json").write(req.jsonObject.toBuffer()).end()
+        }
     }
-
     companion object {
         fun create(
             vertx: Vertx,
@@ -60,3 +75,5 @@ data class BotConfig(
     val webhookUrl: String = "",
     val certificate: String? = null
 )
+
+class BotRequestException(val statusCode: Int, val description: String) : RuntimeException()
