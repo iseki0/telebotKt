@@ -16,7 +16,7 @@ fun getUpdates(
     offset: Int? = null,
     limit: Int? = null,
     timeout: Int? = null,
-    allowedUpdates: Array<String>?
+    allowedUpdates: Array<String>? = null
 ): BotRequest = genBotRequest(
     "getUpdates",
     Pair("offset", offset),
@@ -43,7 +43,7 @@ fun setWebhook(
     url: String,
     certificate: InputFile? = null,
     maxConnections: Int? = null,
-    allowedUpdates: Array<String>?
+    allowedUpdates: Array<String>? = null
 ): BotRequest =
     genBotRequest(
         "setWebhook",
@@ -1204,7 +1204,7 @@ fun sendInvoice(
 fun answerShippingQuery(
     shippingQueryId: String,
     ok: Boolean,
-    shippingOptions: Array<ShippingOption>?,
+    shippingOptions: Array<ShippingOption>? = null,
     errorMessage: String? = null
 ): BotRequest = genBotRequest(
     "answerShippingQuery",
