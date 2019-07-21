@@ -18,7 +18,14 @@ fun main() {
     )
     println(JsonObject.mapFrom(aa).mapTo(InlineQueryResult::class.java))
     val vertx = Vertx.vertx()
-
+    vertx.deployVerticle(BotVerticle()) {
+        if (it.succeeded()) {
+            println("deploy success")
+        } else {
+            vertx.close()
+            it.cause().printStackTrace()
+        }
+    }
     println("Hello world.")
 }
 
