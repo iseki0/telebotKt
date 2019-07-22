@@ -22,8 +22,9 @@ class BotServer private constructor(
                 else
                     promise.fail(it.cause())
             }
-        }.compose {
+        }/*.compose {
             // set Webhook
+            TODO()
             sendRequest(setWebhook(url = config.webhookUrl))
         }.compose {
             if (it.getString("ok") == "true") {
@@ -31,10 +32,21 @@ class BotServer private constructor(
             } else {
                 throw RuntimeException("Bot setWebhook fail[${it.getInteger("error_code")}]: ${it.getString("description")}")
             }
-        }
+        }*/
         return future
     }
 
+    inline fun <reified T> awsl(req: BotRequest):Future<T>{
+        return Future.future { promise->
+            sendRequest(req).setHandler {
+                if (it.succeeded()){
+                    promise.complete(it.result().mapTo(T::class.java))
+                }else{
+                    promise.fail(it.cause())
+                }
+            }
+        }
+    }
     fun sendRequest(req: BotRequest): Future<JsonObject> {
         return Future.future { promise ->
             val request = httpClient.post(baseUrl + req.api) { response ->

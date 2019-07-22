@@ -9,23 +9,10 @@ import types.*
 
 fun main() {
     registerObjectMapperModule(Json.mapper)
-    //registerObjectMapperModule(Json.prettyMapper)
-
-    val aa = InlineQueryResultArticle(
-        inputMessageContent = InputLocationMessageContent(0f, 0f),
-        id = "IDID",
-        title = "TITLETT"
-    )
-    println(JsonObject.mapFrom(aa).mapTo(InlineQueryResult::class.java))
+    registerObjectMapperModule(Json.prettyMapper)
     val vertx = Vertx.vertx()
-    vertx.deployVerticle(BotVerticle()) {
-        if (it.succeeded()) {
-            println("deploy success")
-        } else {
-            vertx.close()
-            it.cause().printStackTrace()
-        }
-    }
+    val a=JsonObject("""{"s": true}""")
+
     println("Hello world.")
 }
 
