@@ -31,6 +31,7 @@ class DDDeserializer<T>(baseClass: Class<out T>, list: List<Class<out T>>) :
     init {
         //println("Init: $clsList")
     }
+
     override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): T? {
         requireNotNull(p)
         requireNotNull(ctxt)

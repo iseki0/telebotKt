@@ -1,5 +1,8 @@
+@file:Suppress("unused", "KDocUnresolvedReference")
+
+import io.vertx.core.Future
 import types.*
-import java.util.concurrent.Future
+
 
 /**
  * Use this method to receive incoming updates using long polling ([wiki](http://en.wikipedia.org/wiki/Push_technology#Long_polling)). An Array of [Update][Update] objects is returned.
@@ -18,12 +21,14 @@ fun BotContext.getUpdates(
     limit: Int? = null,
     timeout: Int? = null,
     allowedUpdates: Array<String>? = null
-): BotRequest = genBotRequest(
-    "getUpdates",
-    Pair("offset", offset),
-    Pair("limit", limit),
-    Pair("timeout", timeout),
-    Pair("allowed_updates", allowedUpdates)
+): Future<Array<Update>?> = awslByArray(
+    genBotRequest(
+        "getUpdates",
+        Pair("offset", offset),
+        Pair("limit", limit),
+        Pair("timeout", timeout),
+        Pair("allowed_updates", allowedUpdates)
+    )
 )
 
 /**
@@ -45,13 +50,15 @@ fun BotContext.setWebhook(
     certificate: InputFile? = null,
     maxConnections: Int? = null,
     allowedUpdates: Array<String>? = null
-): BotRequest =
-    genBotRequest(
-        "setWebhook",
-        Pair("url", url),
-        Pair("certificate", certificate),
-        Pair("max_connections", maxConnections),
-        Pair("allowed_updates", allowedUpdates)
+): Future<Boolean?> =
+    awsl(
+        genBotRequest(
+            "setWebhook",
+            Pair("url", url),
+            Pair("certificate", certificate),
+            Pair("max_connections", maxConnections),
+            Pair("allowed_updates", allowedUpdates)
+        )
     )
 
 /**
@@ -59,21 +66,21 @@ fun BotContext.setWebhook(
  *
 
  */
-fun BotContext.deleteWebhook(): BotRequest = genBotRequest("deleteWebhook")
+fun BotContext.deleteWebhook(): Future<Boolean?> = awsl(genBotRequest("deleteWebhook"))
 
 /**
  * Use this method to get current webhook status. Requires no parameters. On success, returns a [WebhookInfo][WebhookInfo] object. If the bot is using [getUpdates][getUpdates], will return an object with the *url* field empty.
  *
 
  */
-fun BotContext.getWebhookInfo(): BotRequest = genBotRequest("getWebhookInfo")
+fun BotContext.getWebhookInfo(): Future<WebhookInfo?> = awsl(genBotRequest("getWebhookInfo"))
 
 /**
  * A simple method for testing your bot's auth token. Requires no parameters. Returns basic information about the bot in form of a [User][User] object.
  *
 
  */
-fun BotContext.getMe(): BotRequest = genBotRequest("getMe")
+fun BotContext.getMe(): Future<User?> = awsl(genBotRequest("getMe"))
 
 /**
  * Use this method to send text messages. On success, the sent [Message][Message] is returned.
@@ -94,15 +101,17 @@ fun BotContext.sendMessage(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): BotRequest = genBotRequest(
-    "sendMessage",
-    Pair("chat_id", chatId),
-    Pair("text", text),
-    Pair("parse_mode", parseMode),
-    Pair("disable_web_page_preview", disableWebPagePreview),
-    Pair("disable_notification", disableNotification),
-    Pair("reply_to_message_id", replyToMessageId),
-    Pair("reply_markup", replyMarkup)
+): Future<Message?> = awsl(
+    genBotRequest(
+        "sendMessage",
+        Pair("chat_id", chatId),
+        Pair("text", text),
+        Pair("parse_mode", parseMode),
+        Pair("disable_web_page_preview", disableWebPagePreview),
+        Pair("disable_notification", disableNotification),
+        Pair("reply_to_message_id", replyToMessageId),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -113,13 +122,20 @@ fun BotContext.sendMessage(
  * @param[disableNotification] Sends the message [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive a notification with no sound.
  * @param[messageId] Message identifier in the chat specified in *from_chat_id*
  */
-fun BotContext.forwardMessage(chatId: Int, fromChatId: Int, disableNotification: Boolean? = null, messageId: Int): BotRequest =
-    genBotRequest(
-        "forwardMessage",
-        Pair("chat_id", chatId),
-        Pair("from_chat_id", fromChatId),
-        Pair("disable_notification", disableNotification),
-        Pair("message_id", messageId)
+fun BotContext.forwardMessage(
+    chatId: Int,
+    fromChatId: Int,
+    disableNotification: Boolean? = null,
+    messageId: Int
+): Future<Message?> =
+    awsl(
+        genBotRequest(
+            "forwardMessage",
+            Pair("chat_id", chatId),
+            Pair("from_chat_id", fromChatId),
+            Pair("disable_notification", disableNotification),
+            Pair("message_id", messageId)
+        )
     )
 
 /**
@@ -141,15 +157,17 @@ fun BotContext.sendPhoto(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): BotRequest = genBotRequest(
-    "sendPhoto",
-    Pair("chat_id", chatId),
-    Pair("photo", photo),
-    Pair("caption", caption),
-    Pair("parse_mode", parseMode),
-    Pair("disable_notification", disableNotification),
-    Pair("reply_to_message_id", replyToMessageId),
-    Pair("reply_markup", replyMarkup)
+): Future<Message?> = awsl(
+    genBotRequest(
+        "sendPhoto",
+        Pair("chat_id", chatId),
+        Pair("photo", photo),
+        Pair("caption", caption),
+        Pair("parse_mode", parseMode),
+        Pair("disable_notification", disableNotification),
+        Pair("reply_to_message_id", replyToMessageId),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -180,19 +198,21 @@ fun BotContext.sendAudio(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): BotRequest = genBotRequest(
-    "sendAudio",
-    Pair("chat_id", chatId),
-    Pair("audio", audio),
-    Pair("caption", caption),
-    Pair("parse_mode", parseMode),
-    Pair("duration", duration),
-    Pair("performer", performer),
-    Pair("title", title),
-    Pair("thumb", thumb),
-    Pair("disable_notification", disableNotification),
-    Pair("reply_to_message_id", replyToMessageId),
-    Pair("reply_markup", replyMarkup)
+): Future<Message?> = awsl(
+    genBotRequest(
+        "sendAudio",
+        Pair("chat_id", chatId),
+        Pair("audio", audio),
+        Pair("caption", caption),
+        Pair("parse_mode", parseMode),
+        Pair("duration", duration),
+        Pair("performer", performer),
+        Pair("title", title),
+        Pair("thumb", thumb),
+        Pair("disable_notification", disableNotification),
+        Pair("reply_to_message_id", replyToMessageId),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -216,16 +236,18 @@ fun BotContext.sendDocument(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): BotRequest = genBotRequest(
-    "sendDocument",
-    Pair("chat_id", chatId),
-    Pair("document", document),
-    Pair("thumb", thumb),
-    Pair("caption", caption),
-    Pair("parse_mode", parseMode),
-    Pair("disable_notification", disableNotification),
-    Pair("reply_to_message_id", replyToMessageId),
-    Pair("reply_markup", replyMarkup)
+): Future<Message?> = awsl(
+    genBotRequest(
+        "sendDocument",
+        Pair("chat_id", chatId),
+        Pair("document", document),
+        Pair("thumb", thumb),
+        Pair("caption", caption),
+        Pair("parse_mode", parseMode),
+        Pair("disable_notification", disableNotification),
+        Pair("reply_to_message_id", replyToMessageId),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -257,20 +279,22 @@ fun BotContext.sendVideo(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): BotRequest = genBotRequest(
-    "sendVideo",
-    Pair("chat_id", chatId),
-    Pair("video", video),
-    Pair("duration", duration),
-    Pair("width", width),
-    Pair("height", height),
-    Pair("thumb", thumb),
-    Pair("caption", caption),
-    Pair("parse_mode", parseMode),
-    Pair("supports_streaming", supportsStreaming),
-    Pair("disable_notification", disableNotification),
-    Pair("reply_to_message_id", replyToMessageId),
-    Pair("reply_markup", replyMarkup)
+): Future<Message?> = awsl(
+    genBotRequest(
+        "sendVideo",
+        Pair("chat_id", chatId),
+        Pair("video", video),
+        Pair("duration", duration),
+        Pair("width", width),
+        Pair("height", height),
+        Pair("thumb", thumb),
+        Pair("caption", caption),
+        Pair("parse_mode", parseMode),
+        Pair("supports_streaming", supportsStreaming),
+        Pair("disable_notification", disableNotification),
+        Pair("reply_to_message_id", replyToMessageId),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -300,19 +324,21 @@ fun BotContext.sendAnimation(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): BotRequest = genBotRequest(
-    "sendAnimation",
-    Pair("chat_id", chatId),
-    Pair("animation", animation),
-    Pair("duration", duration),
-    Pair("width", width),
-    Pair("height", height),
-    Pair("thumb", thumb),
-    Pair("caption", caption),
-    Pair("parse_mode", parseMode),
-    Pair("disable_notification", disableNotification),
-    Pair("reply_to_message_id", replyToMessageId),
-    Pair("reply_markup", replyMarkup)
+): Future<Message?> = awsl(
+    genBotRequest(
+        "sendAnimation",
+        Pair("chat_id", chatId),
+        Pair("animation", animation),
+        Pair("duration", duration),
+        Pair("width", width),
+        Pair("height", height),
+        Pair("thumb", thumb),
+        Pair("caption", caption),
+        Pair("parse_mode", parseMode),
+        Pair("disable_notification", disableNotification),
+        Pair("reply_to_message_id", replyToMessageId),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -336,16 +362,18 @@ fun BotContext.sendVoice(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): BotRequest = genBotRequest(
-    "sendVoice",
-    Pair("chat_id", chatId),
-    Pair("voice", voice),
-    Pair("caption", caption),
-    Pair("parse_mode", parseMode),
-    Pair("duration", duration),
-    Pair("disable_notification", disableNotification),
-    Pair("reply_to_message_id", replyToMessageId),
-    Pair("reply_markup", replyMarkup)
+): Future<Message?> = awsl(
+    genBotRequest(
+        "sendVoice",
+        Pair("chat_id", chatId),
+        Pair("voice", voice),
+        Pair("caption", caption),
+        Pair("parse_mode", parseMode),
+        Pair("duration", duration),
+        Pair("disable_notification", disableNotification),
+        Pair("reply_to_message_id", replyToMessageId),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -369,16 +397,18 @@ fun BotContext.sendVideoNote(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): BotRequest = genBotRequest(
-    "sendVideoNote",
-    Pair("chat_id", chatId),
-    Pair("video_note", videoNote),
-    Pair("duration", duration),
-    Pair("length", length),
-    Pair("thumb", thumb),
-    Pair("disable_notification", disableNotification),
-    Pair("reply_to_message_id", replyToMessageId),
-    Pair("reply_markup", replyMarkup)
+): Future<Message?> = awsl(
+    genBotRequest(
+        "sendVideoNote",
+        Pair("chat_id", chatId),
+        Pair("video_note", videoNote),
+        Pair("duration", duration),
+        Pair("length", length),
+        Pair("thumb", thumb),
+        Pair("disable_notification", disableNotification),
+        Pair("reply_to_message_id", replyToMessageId),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -394,12 +424,14 @@ fun BotContext.sendMediaGroup(
     media: MediaGroupable,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null
-): BotRequest = genBotRequest(
-    "sendMediaGroup",
-    Pair("chat_id", chatId),
-    Pair("media", media),
-    Pair("disable_notification", disableNotification),
-    Pair("reply_to_message_id", replyToMessageId)
+): Future<Message?> = awsl(
+    genBotRequest(
+        "sendMediaGroup",
+        Pair("chat_id", chatId),
+        Pair("media", media),
+        Pair("disable_notification", disableNotification),
+        Pair("reply_to_message_id", replyToMessageId)
+    )
 )
 
 /**
@@ -421,15 +453,17 @@ fun BotContext.sendLocation(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): BotRequest = genBotRequest(
-    "sendLocation",
-    Pair("chat_id", chatId),
-    Pair("latitude", latitude),
-    Pair("longitude", longitude),
-    Pair("live_period", livePeriod),
-    Pair("disable_notification", disableNotification),
-    Pair("reply_to_message_id", replyToMessageId),
-    Pair("reply_markup", replyMarkup)
+): Future<Message?> = awsl(
+    genBotRequest(
+        "sendLocation",
+        Pair("chat_id", chatId),
+        Pair("latitude", latitude),
+        Pair("longitude", longitude),
+        Pair("live_period", livePeriod),
+        Pair("disable_notification", disableNotification),
+        Pair("reply_to_message_id", replyToMessageId),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -449,14 +483,16 @@ fun BotContext.editMessageLiveLocation(
     latitude: Double,
     longitude: Double,
     replyMarkup: InlineKeyboardMarkup? = null
-): BotRequest = genBotRequest(
-    "editMessageLiveLocation",
-    Pair("chat_id", chatId),
-    Pair("message_id", messageId),
-    Pair("inline_message_id", inlineMessageId),
-    Pair("latitude", latitude),
-    Pair("longitude", longitude),
-    Pair("reply_markup", replyMarkup)
+): Future<Boolean?> = awsl(
+    genBotRequest(
+        "editMessageLiveLocation",
+        Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("latitude", latitude),
+        Pair("longitude", longitude),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -472,12 +508,14 @@ fun BotContext.stopMessageLiveLocation(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): BotRequest = genBotRequest(
-    "stopMessageLiveLocation",
-    Pair("chat_id", chatId),
-    Pair("message_id", messageId),
-    Pair("inline_message_id", inlineMessageId),
-    Pair("reply_markup", replyMarkup)
+): Future<Boolean?> = awsl(
+    genBotRequest(
+        "stopMessageLiveLocation",
+        Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -505,18 +543,20 @@ fun BotContext.sendVenue(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): BotRequest = genBotRequest(
-    "sendVenue",
-    Pair("chat_id", chatId),
-    Pair("latitude", latitude),
-    Pair("longitude", longitude),
-    Pair("title", title),
-    Pair("address", address),
-    Pair("foursquare_id", foursquareId),
-    Pair("foursquare_type", foursquareType),
-    Pair("disable_notification", disableNotification),
-    Pair("reply_to_message_id", replyToMessageId),
-    Pair("reply_markup", replyMarkup)
+): Future<Message?> = awsl(
+    genBotRequest(
+        "sendVenue",
+        Pair("chat_id", chatId),
+        Pair("latitude", latitude),
+        Pair("longitude", longitude),
+        Pair("title", title),
+        Pair("address", address),
+        Pair("foursquare_id", foursquareId),
+        Pair("foursquare_type", foursquareType),
+        Pair("disable_notification", disableNotification),
+        Pair("reply_to_message_id", replyToMessageId),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -540,16 +580,18 @@ fun BotContext.sendContact(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): BotRequest = genBotRequest(
-    "sendContact",
-    Pair("chat_id", chatId),
-    Pair("phone_number", phoneNumber),
-    Pair("first_name", firstName),
-    Pair("last_name", lastName),
-    Pair("vcard", vcard),
-    Pair("disable_notification", disableNotification),
-    Pair("reply_to_message_id", replyToMessageId),
-    Pair("reply_markup", replyMarkup)
+): Future<Message?> = awsl(
+    genBotRequest(
+        "sendContact",
+        Pair("chat_id", chatId),
+        Pair("phone_number", phoneNumber),
+        Pair("first_name", firstName),
+        Pair("last_name", lastName),
+        Pair("vcard", vcard),
+        Pair("disable_notification", disableNotification),
+        Pair("reply_to_message_id", replyToMessageId),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -569,14 +611,16 @@ fun BotContext.sendPoll(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): BotRequest = genBotRequest(
-    "sendPoll",
-    Pair("chat_id", chatId),
-    Pair("question", question),
-    Pair("options", options),
-    Pair("disable_notification", disableNotification),
-    Pair("reply_to_message_id", replyToMessageId),
-    Pair("reply_markup", replyMarkup)
+): Future<Message?> = awsl(
+    genBotRequest(
+        "sendPoll",
+        Pair("chat_id", chatId),
+        Pair("question", question),
+        Pair("options", options),
+        Pair("disable_notification", disableNotification),
+        Pair("reply_to_message_id", replyToMessageId),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -587,8 +631,8 @@ fun BotContext.sendPoll(
  * @param[chatId] Unique identifier for the target chat or username of the target channel (in the format  `@channelusername` )
  * @param[action] Type of action to broadcast. Choose one, depending on what the user is about to receive: *typing* for [text messages][sendMessage], *upload_photo* for [photos][sendPhoto], *record_video* or *upload_video* for [videos][sendVideo], *record_audio* or *upload_audio* for [audio files][sendAudio], *upload_document* for [general files][sendDocument], *find_location* for [location data][sendLocation], *record_video_note* or *upload_video_note* for [video notes][sendVideoNote].
  */
-fun BotContext.sendChatAction(chatId: Int, action: String): BotRequest =
-    genBotRequest("sendChatAction", Pair("chat_id", chatId), Pair("action", action))
+fun BotContext.sendChatAction(chatId: Int, action: String): Future<Boolean?> =
+    awsl(genBotRequest("sendChatAction", Pair("chat_id", chatId), Pair("action", action)))
 
 /**
  * Use this method to get a list of profile pictures for a user. Returns a [UserProfilePhotos][UserProfilePhotos] object.
@@ -597,8 +641,8 @@ fun BotContext.sendChatAction(chatId: Int, action: String): BotRequest =
  * @param[offset] Sequential number of the first photo to be returned. By default, all photos are returned.
  * @param[limit] Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100.
  */
-fun BotContext.getUserProfilePhotos(userId: Int, offset: Int? = null, limit: Int?): BotRequest =
-    genBotRequest("getUserProfilePhotos", Pair("user_id", userId), Pair("offset", offset), Pair("limit", limit))
+fun BotContext.getUserProfilePhotos(userId: Int, offset: Int? = null, limit: Int?): Future<UserProfilePhotos?> =
+    awsl(genBotRequest("getUserProfilePhotos", Pair("user_id", userId), Pair("offset", offset), Pair("limit", limit)))
 
 /**
  * Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a [File][File] object is returned. The file can then be downloaded via the link  `https://api.telegram.org/file/bot<token>/<file_path>` , where  `<file_path>`  is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling [getFile][getFile] again.
@@ -606,7 +650,7 @@ fun BotContext.getUserProfilePhotos(userId: Int, offset: Int? = null, limit: Int
  *
  * @param[fileId] File identifier to get info about
  */
-fun BotContext.getFile(fileId: String): BotRequest = genBotRequest("getFile", Pair("file_id", fileId))
+fun BotContext.getFile(fileId: String): Future<File?> = awsl(genBotRequest("getFile", Pair("file_id", fileId)))
 
 /**
  * Use this method to kick a user from a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the group on their own using invite links, etc., unless [unbanned][unbanChatMember] first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns *True* on success.
@@ -616,8 +660,15 @@ fun BotContext.getFile(fileId: String): BotRequest = genBotRequest("getFile", Pa
  * @param[userId] Unique identifier of the target user
  * @param[untilDate] Date when the user will be unbanned, unix time. If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever
  */
-fun BotContext.kickChatMember(chatId: Int, userId: Int, untilDate: Int?): BotRequest =
-    genBotRequest("kickChatMember", Pair("chat_id", chatId), Pair("user_id", userId), Pair("until_date", untilDate))
+fun BotContext.kickChatMember(chatId: Int, userId: Int, untilDate: Int?): Future<Boolean?> =
+    awsl(
+        genBotRequest(
+            "kickChatMember",
+            Pair("chat_id", chatId),
+            Pair("user_id", userId),
+            Pair("until_date", untilDate)
+        )
+    )
 
 /**
  * Use this method to unban a previously kicked user in a supergroup or channel. The user will **not** return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. Returns *True* on success.
@@ -625,8 +676,8 @@ fun BotContext.kickChatMember(chatId: Int, userId: Int, untilDate: Int?): BotReq
  * @param[chatId] Unique identifier for the target group or username of the target supergroup or channel (in the format  `@username` )
  * @param[userId] Unique identifier of the target user
  */
-fun BotContext.unbanChatMember(chatId: Int, userId: Int): BotRequest =
-    genBotRequest("unbanChatMember", Pair("chat_id", chatId), Pair("user_id", userId))
+fun BotContext.unbanChatMember(chatId: Int, userId: Int): Future<Boolean?> =
+    awsl(genBotRequest("unbanChatMember", Pair("chat_id", chatId), Pair("user_id", userId)))
 
 /**
  * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass *True* for all boolean parameters to lift restrictions from a user. Returns *True* on success.
@@ -647,15 +698,17 @@ fun BotContext.restrictChatMember(
     canSendMediaMessages: Boolean? = null,
     canSendOtherMessages: Boolean? = null,
     canAddWebPagePreviews: Boolean? = null
-): BotRequest = genBotRequest(
-    "restrictChatMember",
-    Pair("chat_id", chatId),
-    Pair("user_id", userId),
-    Pair("until_date", untilDate),
-    Pair("can_send_messages", canSendMessages),
-    Pair("can_send_media_messages", canSendMediaMessages),
-    Pair("can_send_other_messages", canSendOtherMessages),
-    Pair("can_add_web_page_previews", canAddWebPagePreviews)
+): Future<Boolean?> = awsl(
+    genBotRequest(
+        "restrictChatMember",
+        Pair("chat_id", chatId),
+        Pair("user_id", userId),
+        Pair("until_date", untilDate),
+        Pair("can_send_messages", canSendMessages),
+        Pair("can_send_media_messages", canSendMediaMessages),
+        Pair("can_send_other_messages", canSendOtherMessages),
+        Pair("can_add_web_page_previews", canAddWebPagePreviews)
+    )
 )
 
 /**
@@ -683,18 +736,20 @@ fun BotContext.promoteChatMember(
     canRestrictMembers: Boolean? = null,
     canPinMessages: Boolean? = null,
     canPromoteMembers: Boolean? = null
-): BotRequest = genBotRequest(
-    "promoteChatMember",
-    Pair("chat_id", chatId),
-    Pair("user_id", userId),
-    Pair("can_change_info", canChangeInfo),
-    Pair("can_post_messages", canPostMessages),
-    Pair("can_edit_messages", canEditMessages),
-    Pair("can_delete_messages", canDeleteMessages),
-    Pair("can_invite_users", canInviteUsers),
-    Pair("can_restrict_members", canRestrictMembers),
-    Pair("can_pin_messages", canPinMessages),
-    Pair("can_promote_members", canPromoteMembers)
+): Future<Boolean?> = awsl(
+    genBotRequest(
+        "promoteChatMember",
+        Pair("chat_id", chatId),
+        Pair("user_id", userId),
+        Pair("can_change_info", canChangeInfo),
+        Pair("can_post_messages", canPostMessages),
+        Pair("can_edit_messages", canEditMessages),
+        Pair("can_delete_messages", canDeleteMessages),
+        Pair("can_invite_users", canInviteUsers),
+        Pair("can_restrict_members", canRestrictMembers),
+        Pair("can_pin_messages", canPinMessages),
+        Pair("can_promote_members", canPromoteMembers)
+    )
 )
 
 /**
@@ -703,7 +758,8 @@ fun BotContext.promoteChatMember(
  *
  * @param[chatId] Unique identifier for the target chat or username of the target channel (in the format  `@channelusername` )
  */
-fun BotContext.exportChatInviteLink(chatId: Int): BotRequest = genBotRequest("exportChatInviteLink", Pair("chat_id", chatId))
+fun BotContext.exportChatInviteLink(chatId: Int): Future<String?> =
+    awsl(genBotRequest("exportChatInviteLink", Pair("chat_id", chatId)))
 
 /**
  * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns *True* on success.
@@ -712,8 +768,8 @@ fun BotContext.exportChatInviteLink(chatId: Int): BotRequest = genBotRequest("ex
  * @param[chatId] Unique identifier for the target chat or username of the target channel (in the format  `@channelusername` )
  * @param[photo] New chat photo, uploaded using multipart/form-data
  */
-fun BotContext.setChatPhoto(chatId: Int, photo: InputFile): BotRequest =
-    genBotRequest("setChatPhoto", Pair("chat_id", chatId), Pair("photo", photo))
+fun BotContext.setChatPhoto(chatId: Int, photo: InputFile): Future<Boolean?> =
+    awsl(genBotRequest("setChatPhoto", Pair("chat_id", chatId), Pair("photo", photo)))
 
 /**
  * Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns *True* on success.
@@ -721,7 +777,8 @@ fun BotContext.setChatPhoto(chatId: Int, photo: InputFile): BotRequest =
  *
  * @param[chatId] Unique identifier for the target chat or username of the target channel (in the format  `@channelusername` )
  */
-fun BotContext.deleteChatPhoto(chatId: Int): BotRequest = genBotRequest("deleteChatPhoto", Pair("chat_id", chatId))
+fun BotContext.deleteChatPhoto(chatId: Int): Future<Boolean?> =
+    awsl(genBotRequest("deleteChatPhoto", Pair("chat_id", chatId)))
 
 /**
  * Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns *True* on success.
@@ -730,8 +787,8 @@ fun BotContext.deleteChatPhoto(chatId: Int): BotRequest = genBotRequest("deleteC
  * @param[chatId] Unique identifier for the target chat or username of the target channel (in the format  `@channelusername` )
  * @param[title] New chat title, 1-255 characters
  */
-fun BotContext.setChatTitle(chatId: Int, title: String): BotRequest =
-    genBotRequest("setChatTitle", Pair("chat_id", chatId), Pair("title", title))
+fun BotContext.setChatTitle(chatId: Int, title: String): Future<Boolean?> =
+    awsl(genBotRequest("setChatTitle", Pair("chat_id", chatId), Pair("title", title)))
 
 /**
  * Use this method to change the description of a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns *True* on success.
@@ -739,8 +796,8 @@ fun BotContext.setChatTitle(chatId: Int, title: String): BotRequest =
  * @param[chatId] Unique identifier for the target chat or username of the target channel (in the format  `@channelusername` )
  * @param[description] New chat description, 0-255 characters
  */
-fun BotContext.setChatDescription(chatId: Int, description: String?): BotRequest =
-    genBotRequest("setChatDescription", Pair("chat_id", chatId), Pair("description", description))
+fun BotContext.setChatDescription(chatId: Int, description: String?): Future<Boolean?> =
+    awsl(genBotRequest("setChatDescription", Pair("chat_id", chatId), Pair("description", description)))
 
 /**
  * Use this method to pin a message in a group, a supergroup, or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns *True* on success.
@@ -749,11 +806,13 @@ fun BotContext.setChatDescription(chatId: Int, description: String?): BotRequest
  * @param[messageId] Identifier of a message to pin
  * @param[disableNotification] Pass *True*, if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels.
  */
-fun BotContext.pinChatMessage(chatId: Int, messageId: Int, disableNotification: Boolean?): BotRequest = genBotRequest(
-    "pinChatMessage",
-    Pair("chat_id", chatId),
-    Pair("message_id", messageId),
-    Pair("disable_notification", disableNotification)
+fun BotContext.pinChatMessage(chatId: Int, messageId: Int, disableNotification: Boolean?): Future<Boolean?> = awsl(
+    genBotRequest(
+        "pinChatMessage",
+        Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("disable_notification", disableNotification)
+    )
 )
 
 /**
@@ -761,35 +820,38 @@ fun BotContext.pinChatMessage(chatId: Int, messageId: Int, disableNotification: 
  *
  * @param[chatId] Unique identifier for the target chat or username of the target channel (in the format  `@channelusername` )
  */
-fun BotContext.unpinChatMessage(chatId: Int): BotRequest = genBotRequest("unpinChatMessage", Pair("chat_id", chatId))
+fun BotContext.unpinChatMessage(chatId: Int): Future<Boolean?> =
+    awsl(genBotRequest("unpinChatMessage", Pair("chat_id", chatId)))
 
 /**
  * Use this method for your bot to leave a group, supergroup or channel. Returns *True* on success.
  *
  * @param[chatId] Unique identifier for the target chat or username of the target supergroup or channel (in the format  `@channelusername` )
  */
-fun BotContext.leaveChat(chatId: Int): BotRequest = genBotRequest("leaveChat", Pair("chat_id", chatId))
+fun BotContext.leaveChat(chatId: Int): Future<Boolean?> = awsl(genBotRequest("leaveChat", Pair("chat_id", chatId)))
 
 /**
  * Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Returns a [Chat][Chat] object on success.
  *
  * @param[chatId] Unique identifier for the target chat or username of the target supergroup or channel (in the format  `@channelusername` )
  */
-fun BotContext.getChat(chatId: Int): BotRequest = genBotRequest("getChat", Pair("chat_id", chatId))
+fun BotContext.getChat(chatId: Int): Future<Chat?> = awsl(genBotRequest("getChat", Pair("chat_id", chatId)))
 
 /**
  * Use this method to get a list of administrators in a chat. On success, returns an Array of [ChatMember][ChatMember] objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.
  *
  * @param[chatId] Unique identifier for the target chat or username of the target supergroup or channel (in the format  `@channelusername` )
  */
-fun BotContext.getChatAdministrators(chatId: Int): BotRequest = genBotRequest("getChatAdministrators", Pair("chat_id", chatId))
+fun BotContext.getChatAdministrators(chatId: Int): Future<Array<ChatMember>?> =
+    awslByArray(genBotRequest("getChatAdministrators", Pair("chat_id", chatId)))
 
 /**
  * Use this method to get the number of members in a chat. Returns *Int* on success.
  *
  * @param[chatId] Unique identifier for the target chat or username of the target supergroup or channel (in the format  `@channelusername` )
  */
-fun BotContext.getChatMembersCount(chatId: Int): BotRequest = genBotRequest("getChatMembersCount", Pair("chat_id", chatId))
+fun BotContext.getChatMembersCount(chatId: Int): Future<Int?> =
+    awsl(genBotRequest("getChatMembersCount", Pair("chat_id", chatId)))
 
 /**
  * Use this method to get information about a member of a chat. Returns a [ChatMember][ChatMember] object on success.
@@ -797,8 +859,8 @@ fun BotContext.getChatMembersCount(chatId: Int): BotRequest = genBotRequest("get
  * @param[chatId] Unique identifier for the target chat or username of the target supergroup or channel (in the format  `@channelusername` )
  * @param[userId] Unique identifier of the target user
  */
-fun BotContext.getChatMember(chatId: Int, userId: Int): BotRequest =
-    genBotRequest("getChatMember", Pair("chat_id", chatId), Pair("user_id", userId))
+fun BotContext.getChatMember(chatId: Int, userId: Int): Future<ChatMember?> =
+    awsl(genBotRequest("getChatMember", Pair("chat_id", chatId), Pair("user_id", userId)))
 
 /**
  * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field *can_set_sticker_set* optionally returned in [getChat][getChat] requests to check if the bot can use this method. Returns *True* on success.
@@ -806,15 +868,16 @@ fun BotContext.getChatMember(chatId: Int, userId: Int): BotRequest =
  * @param[chatId] Unique identifier for the target chat or username of the target supergroup (in the format  `@supergroupusername` )
  * @param[stickerSetName] Name of the sticker set to be set as the group sticker set
  */
-fun BotContext.setChatStickerSet(chatId: Int, stickerSetName: String): BotRequest =
-    genBotRequest("setChatStickerSet", Pair("chat_id", chatId), Pair("sticker_set_name", stickerSetName))
+fun BotContext.setChatStickerSet(chatId: Int, stickerSetName: String): Future<Boolean?> =
+    awsl(genBotRequest("setChatStickerSet", Pair("chat_id", chatId), Pair("sticker_set_name", stickerSetName)))
 
 /**
  * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field *can_set_sticker_set* optionally returned in [getChat][getChat] requests to check if the bot can use this method. Returns *True* on success.
  *
  * @param[chatId] Unique identifier for the target chat or username of the target supergroup (in the format  `@supergroupusername` )
  */
-fun BotContext.deleteChatStickerSet(chatId: Int): BotRequest = genBotRequest("deleteChatStickerSet", Pair("chat_id", chatId))
+fun BotContext.deleteChatStickerSet(chatId: Int): Future<Boolean?> =
+    awsl(genBotRequest("deleteChatStickerSet", Pair("chat_id", chatId)))
 
 /**
  * Use this method to send answers to callback queries sent from [inline keyboards](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating). The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, *True* is returned.
@@ -833,15 +896,18 @@ fun BotContext.answerCallbackQuery(
     showAlert: Boolean? = null,
     url: String? = null,
     cacheTime: Int? = null
-): BotRequest = genBotRequest(
-    "answerCallbackQuery",
-    Pair("callback_query_id", callbackQueryId),
-    Pair("text", text),
-    Pair("show_alert", showAlert),
-    Pair("url", url),
-    Pair("cache_time", cacheTime)
+): Future<Boolean?> = awsl(
+    genBotRequest(
+        "answerCallbackQuery",
+        Pair("callback_query_id", callbackQueryId),
+        Pair("text", text),
+        Pair("show_alert", showAlert),
+        Pair("url", url),
+        Pair("cache_time", cacheTime)
+    )
 )
 
+// TODO
 /**
  * Use this method to edit text and [game][null] messages. On success, if edited message is sent by the bot, the edited [Message][Message] is returned, otherwise *True* is returned.
  *
@@ -1082,7 +1148,8 @@ fun BotContext.setStickerPositionInSet(sticker: String, position: Int): BotReque
  *
  * @param[sticker] File identifier of the sticker
  */
-fun BotContext.deleteStickerFromSet(sticker: String): BotRequest = genBotRequest("deleteStickerFromSet", Pair("sticker", sticker))
+fun BotContext.deleteStickerFromSet(sticker: String): BotRequest =
+    genBotRequest("deleteStickerFromSet", Pair("sticker", sticker))
 
 /**
  * Use this method to send answers to an inline query. On success, *True* is returned. \
@@ -1222,12 +1289,13 @@ fun BotContext.answerShippingQuery(
  * @param[ok] Specify *True* if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use *False* if there are any problems.
  * @param[errorMessage] Required if *ok* is *False*. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!"). Telegram will display this message to the user.
  */
-fun BotContext.answerPreCheckoutQuery(preCheckoutQueryId: String, ok: Boolean, errorMessage: String?): BotRequest = genBotRequest(
-    "answerPreCheckoutQuery",
-    Pair("pre_checkout_query_id", preCheckoutQueryId),
-    Pair("ok", ok),
-    Pair("error_message", errorMessage)
-)
+fun BotContext.answerPreCheckoutQuery(preCheckoutQueryId: String, ok: Boolean, errorMessage: String?): BotRequest =
+    genBotRequest(
+        "answerPreCheckoutQuery",
+        Pair("pre_checkout_query_id", preCheckoutQueryId),
+        Pair("ok", ok),
+        Pair("error_message", errorMessage)
+    )
 
 /**
  * Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns *True* on success.
@@ -1302,7 +1370,12 @@ fun BotContext.setGameScore(
  * @param[messageId] Required if *inline_message_id* is not specified. Identifier of the sent message
  * @param[inlineMessageId] Required if *chat_id* and *message_id* are not specified. Identifier of the inline message
  */
-fun BotContext.getGameHighScores(userId: Int, chatId: Int? = null, messageId: Int? = null, inlineMessageId: String?): BotRequest =
+fun BotContext.getGameHighScores(
+    userId: Int,
+    chatId: Int? = null,
+    messageId: Int? = null,
+    inlineMessageId: String?
+): BotRequest =
     genBotRequest(
         "getGameHighScores",
         Pair("user_id", userId),

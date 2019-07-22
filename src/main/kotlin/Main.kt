@@ -11,7 +11,7 @@ fun main() {
     registerObjectMapperModule(Json.mapper)
     registerObjectMapperModule(Json.prettyMapper)
     val vertx = Vertx.vertx()
-    val a=JsonObject("""{"s": true}""")
+    val a = JsonObject("""{"s": true}""")
 
     println("Hello world.")
 }

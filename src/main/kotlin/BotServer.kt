@@ -14,39 +14,20 @@ class BotServer private constructor(
 ) {
     val baseUrl = "https://api.telegram.org/bot${config.botKey}/"
 
-    fun start(): Future<Unit> {
-        val future = Future.future<Unit> { promise ->
-            httpServer.listen {
-                if (it.succeeded())
-                    promise.complete()
-                else
-                    promise.fail(it.cause())
-            }
-        }/*.compose {
-            // set Webhook
-            TODO()
-            sendRequest(setWebhook(url = config.webhookUrl))
-        }.compose {
-            if (it.getString("ok") == "true") {
-                Future.succeededFuture<Unit>()
-            } else {
-                throw RuntimeException("Bot setWebhook fail[${it.getInteger("error_code")}]: ${it.getString("description")}")
-            }
-        }*/
-        return future
-    }
+    fun start(): Future<Unit> = TODO()
 
-    inline fun <reified T> awsl(req: BotRequest):Future<T>{
-        return Future.future { promise->
+    inline fun <reified T> awsl(req: BotRequest): Future<T> {
+        return Future.future { promise ->
             sendRequest(req).setHandler {
-                if (it.succeeded()){
+                if (it.succeeded()) {
                     promise.complete(it.result().mapTo(T::class.java))
-                }else{
+                } else {
                     promise.fail(it.cause())
                 }
             }
         }
     }
+
     fun sendRequest(req: BotRequest): Future<JsonObject> {
         return Future.future { promise ->
             val request = httpClient.post(baseUrl + req.api) { response ->
@@ -64,6 +45,7 @@ class BotServer private constructor(
             request.putHeader("Content-Type", "application/json").write(req.jsonObject.toBuffer()).end()
         }
     }
+
     companion object {
         fun create(
             vertx: Vertx,
