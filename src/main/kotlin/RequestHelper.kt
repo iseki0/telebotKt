@@ -9,28 +9,33 @@ data class BotRequest(val api: String, val jsonObject: JsonObject)
 
 class BotContext(val botServer: BotServer) {
 
+
+    inline fun <reified BasicType, reified ObjectType> awslByEither(req: BotRequest): Future<Either<BasicType, ObjectType>?> =
+        Future.future { promise ->
+            botServer.sendRequest(req).setHandler {
+                if (it.succeeded()) {
+                    val a = it.result().getValue("result") ?: promise.complete(null)
+                    when (a) {
+                        is BasicType -> promise.complete(Either.Left(a as BasicType))
+                        is ObjectType -> promise.complete(Either.Right((a as JsonObject).mapTo(ObjectType::class.java)))
+                    }
+                } else {
+                    promise.fail(it.cause())
+                }
+            }
+        }
+
     inline fun <reified R> awsl(req: BotRequest): Future<R?> = Future.future { promise ->
         botServer.sendRequest(req).setHandler {
             if (it.succeeded()) {
                 val a = it.result().getValue("result")
-                if (0 is R) {
-                    // if R is integer
-                    promise.complete(a as R)
-                } else if ("" is R) {
-                    // if R is string
-                    promise.complete(a as R)
-                } else if (true is R) {
-                    // if R is boolean
-                    //  if result is boolean
-                    //      return result as boolean
-                    //  else return TRUE
-                    if (a is Boolean) {
+                when {
+                    0 is R -> // if R is integer
                         promise.complete(a as R)
-                    } else {
-                        promise.complete(true as R)
-                    }
-                } else {
-                    promise.complete((a as? JsonObject)?.mapTo(R::class.java))
+                    "" is R -> // if R is string
+                        promise.complete(a as R)
+                    true is R -> promise.complete(a as R)
+                    else -> promise.complete((a as? JsonObject)?.mapTo(R::class.java))
                 }
             } else {
                 promise.fail(it.cause())

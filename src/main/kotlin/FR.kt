@@ -17,12 +17,16 @@ inline fun <reified T> aa1() {
 }
 
 fun main() {
+    /*
     aa<String?>()
     println("========")
     aa1<Boolean?>()
 
     val a = JsonObject("""{"a":"sss"}""")
     println(a.getValue("a").javaClass)
+
+     */
+    val b = JsonObject("""{"a": 123,"b": {"c": 5}}""")
+    println(b.getValue("a").javaClass)
 }
 
-fun aaa(): BotServer = TODO()

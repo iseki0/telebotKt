@@ -424,7 +424,7 @@ fun BotContext.sendMediaGroup(
     media: MediaGroupable,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null
-): Future<Message?> = awsl(
+): Future<Array<Message>?> = awslByArray(
     genBotRequest(
         "sendMediaGroup",
         Pair("chat_id", chatId),
@@ -483,7 +483,7 @@ fun BotContext.editMessageLiveLocation(
     latitude: Double,
     longitude: Double,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Boolean?> = awsl(
+): Future<Either<Boolean, Message>?> = awslByEither(
     genBotRequest(
         "editMessageLiveLocation",
         Pair("chat_id", chatId),
@@ -508,7 +508,7 @@ fun BotContext.stopMessageLiveLocation(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Boolean?> = awsl(
+): Future<Either<Boolean, Message>?> = awslByEither(
     genBotRequest(
         "stopMessageLiveLocation",
         Pair("chat_id", chatId),
@@ -927,15 +927,17 @@ fun BotContext.editMessageText(
     parseMode: ParseMode? = null,
     disableWebPagePreview: Boolean? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): BotRequest = genBotRequest(
-    "editMessageText",
-    Pair("chat_id", chatId),
-    Pair("message_id", messageId),
-    Pair("inline_message_id", inlineMessageId),
-    Pair("text", text),
-    Pair("parse_mode", parseMode),
-    Pair("disable_web_page_preview", disableWebPagePreview),
-    Pair("reply_markup", replyMarkup)
+): Future<Either<Boolean, Message>?> = awslByEither(
+    genBotRequest(
+        "editMessageText",
+        Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("text", text),
+        Pair("parse_mode", parseMode),
+        Pair("disable_web_page_preview", disableWebPagePreview),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -955,14 +957,16 @@ fun BotContext.editMessageCaption(
     caption: String? = null,
     parseMode: ParseMode? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): BotRequest = genBotRequest(
-    "editMessageCaption",
-    Pair("chat_id", chatId),
-    Pair("message_id", messageId),
-    Pair("inline_message_id", inlineMessageId),
-    Pair("caption", caption),
-    Pair("parse_mode", parseMode),
-    Pair("reply_markup", replyMarkup)
+): Future<Either<Boolean, Message>?> = awslByEither(
+    genBotRequest(
+        "editMessageCaption",
+        Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("caption", caption),
+        Pair("parse_mode", parseMode),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -980,13 +984,15 @@ fun BotContext.editMessageMedia(
     inlineMessageId: String? = null,
     media: InputMedia,
     replyMarkup: InlineKeyboardMarkup? = null
-): BotRequest = genBotRequest(
-    "editMessageMedia",
-    Pair("chat_id", chatId),
-    Pair("message_id", messageId),
-    Pair("inline_message_id", inlineMessageId),
-    Pair("media", media),
-    Pair("reply_markup", replyMarkup)
+): Future<Either<Boolean, Message>?> = awslByEither(
+    genBotRequest(
+        "editMessageMedia",
+        Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("media", media),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -1002,12 +1008,14 @@ fun BotContext.editMessageReplyMarkup(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): BotRequest = genBotRequest(
-    "editMessageReplyMarkup",
-    Pair("chat_id", chatId),
-    Pair("message_id", messageId),
-    Pair("inline_message_id", inlineMessageId),
-    Pair("reply_markup", replyMarkup)
+): Future<Either<Boolean, Message>?> = awslByEither(
+    genBotRequest(
+        "editMessageReplyMarkup",
+        Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -1017,8 +1025,15 @@ fun BotContext.editMessageReplyMarkup(
  * @param[messageId] Identifier of the original message with the poll
  * @param[replyMarkup] A JSON-serialized object for a new message [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
-fun BotContext.stopPoll(chatId: Int, messageId: Int, replyMarkup: InlineKeyboardMarkup?): BotRequest =
-    genBotRequest("stopPoll", Pair("chat_id", chatId), Pair("message_id", messageId), Pair("reply_markup", replyMarkup))
+fun BotContext.stopPoll(chatId: Int, messageId: Int, replyMarkup: InlineKeyboardMarkup?): Future<Poll?> =
+    awsl(
+        genBotRequest(
+            "stopPoll",
+            Pair("chat_id", chatId),
+            Pair("message_id", messageId),
+            Pair("reply_markup", replyMarkup)
+        )
+    )
 
 /**
  * Use this method to delete a message, including service messages, with the following limitations: \
@@ -1034,8 +1049,8 @@ fun BotContext.stopPoll(chatId: Int, messageId: Int, replyMarkup: InlineKeyboard
  * @param[chatId] Unique identifier for the target chat or username of the target channel (in the format  `@channelusername` )
  * @param[messageId] Identifier of the message to delete
  */
-fun BotContext.deleteMessage(chatId: Int, messageId: Int): BotRequest =
-    genBotRequest("deleteMessage", Pair("chat_id", chatId), Pair("message_id", messageId))
+fun BotContext.deleteMessage(chatId: Int, messageId: Int): Future<Boolean?> =
+    awsl(genBotRequest("deleteMessage", Pair("chat_id", chatId), Pair("message_id", messageId)))
 
 /**
  * Use this method to send .webp stickers. On success, the sent [Message][Message] is returned.
@@ -1052,13 +1067,15 @@ fun BotContext.sendSticker(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): BotRequest = genBotRequest(
-    "sendSticker",
-    Pair("chat_id", chatId),
-    Pair("sticker", sticker),
-    Pair("disable_notification", disableNotification),
-    Pair("reply_to_message_id", replyToMessageId),
-    Pair("reply_markup", replyMarkup)
+): Future<Message?> = awsl(
+    genBotRequest(
+        "sendSticker",
+        Pair("chat_id", chatId),
+        Pair("sticker", sticker),
+        Pair("disable_notification", disableNotification),
+        Pair("reply_to_message_id", replyToMessageId),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -1066,7 +1083,8 @@ fun BotContext.sendSticker(
  *
  * @param[name] Name of the sticker set
  */
-fun BotContext.getStickerSet(name: String): BotRequest = genBotRequest("getStickerSet", Pair("name", name))
+fun BotContext.getStickerSet(name: String): Future<StickerSet?> =
+    awsl(genBotRequest("getStickerSet", Pair("name", name)))
 
 /**
  * Use this method to upload a .png file with a sticker for later use in *createNewStickerSet* and *addStickerToSet* methods (can be used multiple times). Returns the uploaded [File][File] on success.
@@ -1074,8 +1092,8 @@ fun BotContext.getStickerSet(name: String): BotRequest = genBotRequest("getStick
  * @param[userId] User identifier of sticker file owner
  * @param[pngSticker] **Png** image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. [More info on Sending Files »][Sending files]
  */
-fun BotContext.uploadStickerFile(userId: Int, pngSticker: InputFile): BotRequest =
-    genBotRequest("uploadStickerFile", Pair("user_id", userId), Pair("png_sticker", pngSticker))
+fun BotContext.uploadStickerFile(userId: Int, pngSticker: InputFile): Future<File?> =
+    awsl(genBotRequest("uploadStickerFile", Pair("user_id", userId), Pair("png_sticker", pngSticker)))
 
 /**
  * Use this method to create new sticker set owned by a user. The bot will be able to edit the created sticker set. Returns *True* on success.
@@ -1096,15 +1114,17 @@ fun BotContext.createNewStickerSet(
     emojis: String,
     containsMasks: Boolean? = null,
     maskPosition: MaskPosition? = null
-): BotRequest = genBotRequest(
-    "createNewStickerSet",
-    Pair("user_id", userId),
-    Pair("name", name),
-    Pair("title", title),
-    Pair("png_sticker", pngSticker),
-    Pair("emojis", emojis),
-    Pair("contains_masks", containsMasks),
-    Pair("mask_position", maskPosition)
+): Future<Boolean?> = awsl(
+    genBotRequest(
+        "createNewStickerSet",
+        Pair("user_id", userId),
+        Pair("name", name),
+        Pair("title", title),
+        Pair("png_sticker", pngSticker),
+        Pair("emojis", emojis),
+        Pair("contains_masks", containsMasks),
+        Pair("mask_position", maskPosition)
+    )
 )
 
 /**
@@ -1122,13 +1142,15 @@ fun BotContext.addStickerToSet(
     pngSticker: String,
     emojis: String,
     maskPosition: MaskPosition? = null
-): BotRequest = genBotRequest(
-    "addStickerToSet",
-    Pair("user_id", userId),
-    Pair("name", name),
-    Pair("png_sticker", pngSticker),
-    Pair("emojis", emojis),
-    Pair("mask_position", maskPosition)
+): Future<Boolean?> = awsl(
+    genBotRequest(
+        "addStickerToSet",
+        Pair("user_id", userId),
+        Pair("name", name),
+        Pair("png_sticker", pngSticker),
+        Pair("emojis", emojis),
+        Pair("mask_position", maskPosition)
+    )
 )
 
 /**
@@ -1137,8 +1159,8 @@ fun BotContext.addStickerToSet(
  * @param[sticker] File identifier of the sticker
  * @param[position] New sticker position in the set, zero-based
  */
-fun BotContext.setStickerPositionInSet(sticker: String, position: Int): BotRequest =
-    genBotRequest("setStickerPositionInSet", Pair("sticker", sticker), Pair("position", position))
+fun BotContext.setStickerPositionInSet(sticker: String, position: Int): Future<Boolean?> =
+    awsl(genBotRequest("setStickerPositionInSet", Pair("sticker", sticker), Pair("position", position)))
 
 /**
  * Use this method to delete a sticker from a set created by the bot. Returns *True* on success.
@@ -1148,8 +1170,8 @@ fun BotContext.setStickerPositionInSet(sticker: String, position: Int): BotReque
  *
  * @param[sticker] File identifier of the sticker
  */
-fun BotContext.deleteStickerFromSet(sticker: String): BotRequest =
-    genBotRequest("deleteStickerFromSet", Pair("sticker", sticker))
+fun BotContext.deleteStickerFromSet(sticker: String): Future<Boolean?> =
+    awsl(genBotRequest("deleteStickerFromSet", Pair("sticker", sticker)))
 
 /**
  * Use this method to send answers to an inline query. On success, *True* is returned. \
@@ -1172,15 +1194,17 @@ fun BotContext.answerInlineQuery(
     nextOffset: String? = null,
     switchPmText: String? = null,
     switchPmParameter: String? = null
-): BotRequest = genBotRequest(
-    "answerInlineQuery",
-    Pair("inline_query_id", inlineQueryId),
-    Pair("results", results),
-    Pair("cache_time", cacheTime),
-    Pair("is_personal", isPersonal),
-    Pair("next_offset", nextOffset),
-    Pair("switch_pm_text", switchPmText),
-    Pair("switch_pm_parameter", switchPmParameter)
+): Future<Boolean?> = awsl(
+    genBotRequest(
+        "answerInlineQuery",
+        Pair("inline_query_id", inlineQueryId),
+        Pair("results", results),
+        Pair("cache_time", cacheTime),
+        Pair("is_personal", isPersonal),
+        Pair("next_offset", nextOffset),
+        Pair("switch_pm_text", switchPmText),
+        Pair("switch_pm_parameter", switchPmParameter)
+    )
 )
 
 /**
@@ -1234,31 +1258,33 @@ fun BotContext.sendInvoice(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): BotRequest = genBotRequest(
-    "sendInvoice",
-    Pair("chat_id", chatId),
-    Pair("title", title),
-    Pair("description", description),
-    Pair("payload", payload),
-    Pair("provider_token", providerToken),
-    Pair("start_parameter", startParameter),
-    Pair("currency", currency),
-    Pair("prices", prices),
-    Pair("provider_data", providerData),
-    Pair("photo_url", photoUrl),
-    Pair("photo_size", photoSize),
-    Pair("photo_width", photoWidth),
-    Pair("photo_height", photoHeight),
-    Pair("need_name", needName),
-    Pair("need_phone_number", needPhoneNumber),
-    Pair("need_email", needEmail),
-    Pair("need_shipping_address", needShippingAddress),
-    Pair("send_phone_number_to_provider", sendPhoneNumberToProvider),
-    Pair("send_email_to_provider", sendEmailToProvider),
-    Pair("is_flexible", isFlexible),
-    Pair("disable_notification", disableNotification),
-    Pair("reply_to_message_id", replyToMessageId),
-    Pair("reply_markup", replyMarkup)
+): Future<Message?> = awsl(
+    genBotRequest(
+        "sendInvoice",
+        Pair("chat_id", chatId),
+        Pair("title", title),
+        Pair("description", description),
+        Pair("payload", payload),
+        Pair("provider_token", providerToken),
+        Pair("start_parameter", startParameter),
+        Pair("currency", currency),
+        Pair("prices", prices),
+        Pair("provider_data", providerData),
+        Pair("photo_url", photoUrl),
+        Pair("photo_size", photoSize),
+        Pair("photo_width", photoWidth),
+        Pair("photo_height", photoHeight),
+        Pair("need_name", needName),
+        Pair("need_phone_number", needPhoneNumber),
+        Pair("need_email", needEmail),
+        Pair("need_shipping_address", needShippingAddress),
+        Pair("send_phone_number_to_provider", sendPhoneNumberToProvider),
+        Pair("send_email_to_provider", sendEmailToProvider),
+        Pair("is_flexible", isFlexible),
+        Pair("disable_notification", disableNotification),
+        Pair("reply_to_message_id", replyToMessageId),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -1274,12 +1300,14 @@ fun BotContext.answerShippingQuery(
     ok: Boolean,
     shippingOptions: Array<ShippingOption>? = null,
     errorMessage: String? = null
-): BotRequest = genBotRequest(
-    "answerShippingQuery",
-    Pair("shipping_query_id", shippingQueryId),
-    Pair("ok", ok),
-    Pair("shipping_options", shippingOptions),
-    Pair("error_message", errorMessage)
+): Future<Boolean?> = awsl(
+    genBotRequest(
+        "answerShippingQuery",
+        Pair("shipping_query_id", shippingQueryId),
+        Pair("ok", ok),
+        Pair("shipping_options", shippingOptions),
+        Pair("error_message", errorMessage)
+    )
 )
 
 /**
@@ -1289,12 +1317,18 @@ fun BotContext.answerShippingQuery(
  * @param[ok] Specify *True* if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use *False* if there are any problems.
  * @param[errorMessage] Required if *ok* is *False*. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!"). Telegram will display this message to the user.
  */
-fun BotContext.answerPreCheckoutQuery(preCheckoutQueryId: String, ok: Boolean, errorMessage: String?): BotRequest =
-    genBotRequest(
-        "answerPreCheckoutQuery",
-        Pair("pre_checkout_query_id", preCheckoutQueryId),
-        Pair("ok", ok),
-        Pair("error_message", errorMessage)
+fun BotContext.answerPreCheckoutQuery(
+    preCheckoutQueryId: String,
+    ok: Boolean,
+    errorMessage: String?
+): Future<Boolean?> =
+    awsl(
+        genBotRequest(
+            "answerPreCheckoutQuery",
+            Pair("pre_checkout_query_id", preCheckoutQueryId),
+            Pair("ok", ok),
+            Pair("error_message", errorMessage)
+        )
     )
 
 /**
@@ -1304,8 +1338,8 @@ fun BotContext.answerPreCheckoutQuery(preCheckoutQueryId: String, ok: Boolean, e
  * @param[userId] User identifier
  * @param[errors] A JSON-serialized array describing the errors
  */
-fun BotContext.setPassportDataErrors(userId: Int, errors: Array<PassportElementError>): BotRequest =
-    genBotRequest("setPassportDataErrors", Pair("user_id", userId), Pair("errors", errors))
+fun BotContext.setPassportDataErrors(userId: Int, errors: Array<PassportElementError>): Future<Boolean?> =
+    awsl(genBotRequest("setPassportDataErrors", Pair("user_id", userId), Pair("errors", errors)))
 
 /**
  * Use this method to send a game. On success, the sent [Message][Message] is returned.
@@ -1322,13 +1356,15 @@ fun BotContext.sendGame(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): BotRequest = genBotRequest(
-    "sendGame",
-    Pair("chat_id", chatId),
-    Pair("game_short_name", gameShortName),
-    Pair("disable_notification", disableNotification),
-    Pair("reply_to_message_id", replyToMessageId),
-    Pair("reply_markup", replyMarkup)
+): Future<Message?> = awsl(
+    genBotRequest(
+        "sendGame",
+        Pair("chat_id", chatId),
+        Pair("game_short_name", gameShortName),
+        Pair("disable_notification", disableNotification),
+        Pair("reply_to_message_id", replyToMessageId),
+        Pair("reply_markup", replyMarkup)
+    )
 )
 
 /**
@@ -1350,15 +1386,17 @@ fun BotContext.setGameScore(
     chatId: Int? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null
-): BotRequest = genBotRequest(
-    "setGameScore",
-    Pair("user_id", userId),
-    Pair("score", score),
-    Pair("force", force),
-    Pair("disable_edit_message", disableEditMessage),
-    Pair("chat_id", chatId),
-    Pair("message_id", messageId),
-    Pair("inline_message_id", inlineMessageId)
+): Future<Either<Boolean, Message>?> = awslByEither(
+    genBotRequest(
+        "setGameScore",
+        Pair("user_id", userId),
+        Pair("score", score),
+        Pair("force", force),
+        Pair("disable_edit_message", disableEditMessage),
+        Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId)
+    )
 )
 
 /**
@@ -1375,11 +1413,13 @@ fun BotContext.getGameHighScores(
     chatId: Int? = null,
     messageId: Int? = null,
     inlineMessageId: String?
-): BotRequest =
-    genBotRequest(
-        "getGameHighScores",
-        Pair("user_id", userId),
-        Pair("chat_id", chatId),
-        Pair("message_id", messageId),
-        Pair("inline_message_id", inlineMessageId)
+): Future<Array<GameHighScore>?> =
+    awslByArray(
+        genBotRequest(
+            "getGameHighScores",
+            Pair("user_id", userId),
+            Pair("chat_id", chatId),
+            Pair("message_id", messageId),
+            Pair("inline_message_id", inlineMessageId)
+        )
     )

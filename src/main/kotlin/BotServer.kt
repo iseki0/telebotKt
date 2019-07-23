@@ -16,18 +16,6 @@ class BotServer private constructor(
 
     fun start(): Future<Unit> = TODO()
 
-    inline fun <reified T> awsl(req: BotRequest): Future<T> {
-        return Future.future { promise ->
-            sendRequest(req).setHandler {
-                if (it.succeeded()) {
-                    promise.complete(it.result().mapTo(T::class.java))
-                } else {
-                    promise.fail(it.cause())
-                }
-            }
-        }
-    }
-
     fun sendRequest(req: BotRequest): Future<JsonObject> {
         return Future.future { promise ->
             val request = httpClient.post(baseUrl + req.api) { response ->
