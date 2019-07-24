@@ -9,7 +9,7 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    //maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 dependencies {
@@ -19,8 +19,8 @@ dependencies {
     compile "io.vertx:vertx-core:3.7.1"
     compile "io.vertx:vertx-lang-kotlin:3.7.1"
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8"
-    compile "io.vertx:vertx-pg-client:3.8.0-SNAPSHOT"
-    compile "io.vertx:vertx-web-client:3.8.0"
+    //compile "io.vertx:vertx-pg-client:3.8.0-SNAPSHOT"
+    //compile "io.vertx:vertx-web-client:3.8.0"
 
 }
 

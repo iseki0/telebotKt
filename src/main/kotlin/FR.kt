@@ -28,5 +28,6 @@ fun main() {
      */
     val b = JsonObject("""{"a": 123,"b": {"c": 5}}""")
     println(b.getValue("a").javaClass)
+    assert(false)
 }
 
