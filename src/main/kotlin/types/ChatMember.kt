@@ -60,7 +60,7 @@ data class ChatMember @JsonCreator constructor(
     val canSendMessages: Boolean? = null,
     @JsonProperty("can_send_media_messages")
     val canSendMediaMessages: Boolean? = null,
-    @JsonProperty("can_send_polls ")
+    @JsonProperty("can_send_polls")
     val canSendPolls: Boolean? = null,
     @JsonProperty("can_send_other_messages")
     val canSendOtherMessages: Boolean? = null,
