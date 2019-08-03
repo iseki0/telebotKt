@@ -1,6 +1,6 @@
+import io.vertx.core.CompositeFuture
 import io.vertx.core.Future
 import io.vertx.core.Vertx
-import io.vertx.core.buffer.Buffer
 import io.vertx.core.http.HttpClient
 import io.vertx.core.http.HttpServer
 import io.vertx.core.http.HttpServerOptions
@@ -13,26 +13,32 @@ class BotServer private constructor(
     val httpServer: HttpServer
 ) {
     val baseUrl = "https://api.telegram.org/bot${config.botKey}/"
+    val context = BotContext(this)
+    fun start(): Future<Unit> = Future.future { promise ->
 
-    fun start(): Future<Unit> = TODO()
+    }
 
-    fun sendRequest(req: BotRequest): Future<JsonObject> {
-        return Future.future { promise ->
-            val request = httpClient.post(baseUrl + req.api) { response ->
-                val buffer = Buffer.buffer()
-                response.bodyHandler { buffer.appendBuffer(it) }
-                response.endHandler {
-                    if (response.statusCode() == 200) {
-                        promise.complete(buffer.toJsonObject())
-                    } else {
-                        val json = buffer.toJsonObject()
-                        promise.fail(BotRequestException(response.statusCode(), json.getString("description")))
-                    }
-                }
+    fun createPollingLoop() {
+        context.getUpdates()
+    }
+
+    fun sendRequest(req: BotRequest): Future<JsonObject> = Future.future { promise ->
+        val request = httpClient.post(baseUrl + req.api)
+        val requestFuture = request.putHeader("Content-Type", "application/json").end(req.jsonObject.encode())
+
+        CompositeFuture.all(request, requestFuture).compose {
+            request.result().body()
+        }.compose {
+            Future.succeededFuture(it.toJsonObject())
+        }.setHandler {
+            if (it.succeeded()) {
+                promise.complete(it.result())
+            } else {
+                promise.fail(it.cause())
             }
-            request.putHeader("Content-Type", "application/json").write(req.jsonObject.toBuffer()).end()
         }
     }
+
 
     companion object {
         fun create(
@@ -55,7 +61,7 @@ data class BotConfig(
     val localListenPort: Int = 8080,
     val needSetWebhook: Boolean = false,
     val webhookUrl: String = "",
-    val certificate: String? = null
+    val certificate: String? = null,
+    val pollDelay: Long = 500L
 )
 
-class BotRequestException(val statusCode: Int, val description: String) : RuntimeException()

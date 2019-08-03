@@ -56,15 +56,5 @@ class BotContext(val botServer: BotServer) {
         }
     }
 
-    inline fun xswl(req: BotRequest): Future<Any> = Future.future { promise ->
-        botServer.sendRequest(req).setHandler {
-            if (it.succeeded()) {
-                promise.complete(it.result().getValue("result"))
-            } else {
-                promise.fail(it.cause())
-            }
-        }
-    }
-
 
 }

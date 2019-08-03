@@ -1,20 +1,9 @@
+package deserializer
+
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import deserializer.DDDeserializer
-import io.vertx.core.Vertx
-import io.vertx.core.json.Json
-import io.vertx.core.json.JsonObject
 import types.*
-
-fun main() {
-    registerObjectMapperModule(Json.mapper)
-    registerObjectMapperModule(Json.prettyMapper)
-    val vertx = Vertx.vertx()
-    val a = JsonObject("""{"s": true}""")
-
-    println("Hello world.")
-}
 
 
 fun registerObjectMapperModule(mapper: ObjectMapper) {
