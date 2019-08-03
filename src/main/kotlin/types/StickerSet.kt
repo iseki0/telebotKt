@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  *
  * @param[name] types.Sticker set name
  * @param[title] types.Sticker set title
+ * @param[isAntimated] *True*, if the sticker set contains [animated stickers](https://telegram.org/blog/animated-stickers)
  * @param[containsMasks] *True*, if the sticker set contains masks
  * @param[stickers] List of all set stickers
  */
@@ -20,6 +21,8 @@ data class StickerSet @JsonCreator constructor(
     val name: String,
     @JsonProperty("title")
     val title: String,
+    @JsonProperty("is_animated")
+    val isAntimated: Boolean = true,
     @JsonProperty("contains_masks")
     val containsMasks: Boolean,
     @JsonProperty("stickers")

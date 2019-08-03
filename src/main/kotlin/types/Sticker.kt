@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[fileId] Unique identifier for this file
  * @param[width] types.Sticker width
  * @param[height] types.Sticker height
+ * @param[isAntimated] *True*, if the sticker is animated
  * @param[thumb] *Optional*. types.Sticker thumbnail in the .webp or .jpg format
  * @param[emoji] *Optional*. Emoji associated with the sticker
  * @param[setName] *Optional*. Name of the sticker set to which the sticker belongs
@@ -26,6 +27,8 @@ data class Sticker @JsonCreator constructor(
     val width: Int,
     @JsonProperty("height")
     val height: Int,
+    @JsonProperty("is_animated")
+    val isAntimated: Boolean = true,
     @JsonProperty("thumb")
     val thumb: PhotoSize? = null,
     @JsonProperty("emoji")

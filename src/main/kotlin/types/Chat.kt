@@ -15,10 +15,12 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[firstName] *Optional*. First name of the other party in a private chat
  * @param[lastName] *Optional*. Last name of the other party in a private chat
  * @param[allMembersAreAdministrators] *Optional*. True if a group has ‘All Members Are Admins’ enabled.
+ * **Deprecated** The field all_members_are_administrators has been removed from the documentation for the Chat object. The field is still returned in the object for backward compatibility, but new bots should use the permissions field instead.
  * @param[photo] *Optional*. types.Chat photo. Returned only in [getChat][getChat].
  * @param[description] *Optional*. Description, for supergroups and channel chats. Returned only in [getChat][getChat].
  * @param[inviteLink] *Optional*. types.Chat invite link, for supergroups and channel chats. Each administrator in a chat generates their own invite links, so the bot must first generate the link using [exportChatInviteLink][exportChatInviteLink]. Returned only in [getChat][getChat].
  * @param[pinnedMessage] *Optional*. Pinned message, for groups, supergroups and channels. Returned only in [getChat][getChat].
+ * @param[permissions] *Optional*. Default chat member permissions, for groups and supergroups. Returned only in [getChat][getChat].
  * @param[stickerSetName] *Optional*. For supergroups, name of group sticker set. Returned only in [getChat][getChat].
  * @param[canSetStickerSet] *Optional*. True, if the bot can change the group sticker set. Returned only in [getChat][getChat].
  */
@@ -37,6 +39,7 @@ data class Chat @JsonCreator constructor(
     val firstName: String? = null,
     @JsonProperty("last_name")
     val lastName: String? = null,
+    @Deprecated("Removed from official document on Bot API 4.4", replaceWith = ReplaceWith("Chat.permissions"))
     @JsonProperty("all_members_are_administrators")
     val allMembersAreAdministrators: Boolean? = null,
     @JsonProperty("photo")
@@ -47,6 +50,8 @@ data class Chat @JsonCreator constructor(
     val inviteLink: String? = null,
     @JsonProperty("pinned_message")
     val pinnedMessage: Message? = null,
+    @JsonProperty("permissions")
+    val permissions: ChatPermissions? = null,
     @JsonProperty("sticker_set_name")
     val stickerSetName: String? = null,
     @JsonProperty("can_set_sticker_set")
