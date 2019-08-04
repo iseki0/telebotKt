@@ -27,7 +27,7 @@ data class InlineQueryResultCachedGif @JsonCreator constructor(
     @JsonProperty("id")
     val id: String,
     @JsonProperty("gif_file_id")
-    val gifFileId: String,
+    val gifFileId: FileId,
     @JsonProperty("title")
     val title: String? = null,
     @JsonProperty("caption")

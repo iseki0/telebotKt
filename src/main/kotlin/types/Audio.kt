@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class Audio @JsonCreator constructor(
     @JsonProperty("file_id")
-    val fileId: String,
+    val fileId: FileId,
     @JsonProperty("duration")
     val duration: Int,
     @JsonProperty("performer")

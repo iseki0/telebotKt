@@ -28,7 +28,7 @@ data class InlineQueryResultCachedPhoto @JsonCreator constructor(
     @JsonProperty("id")
     val id: String,
     @JsonProperty("photo_file_id")
-    val photoFileId: String,
+    val photoFileId: FileId,
     @JsonProperty("title")
     val title: String? = null,
     @JsonProperty("description")

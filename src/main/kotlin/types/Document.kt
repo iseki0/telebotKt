@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class Document @JsonCreator constructor(
     @JsonProperty("file_id")
-    val fileId: String,
+    val fileId: FileId,
     @JsonProperty("thumb")
     val thumb: PhotoSize? = null,
     @JsonProperty("file_name")

@@ -25,7 +25,7 @@ data class InlineQueryResultCachedSticker @JsonCreator constructor(
     @JsonProperty("id")
     val id: String,
     @JsonProperty("sticker_file_id")
-    val stickerFileId: String,
+    val stickerFileId: FileId,
     @JsonProperty("reply_markup")
     val replyMarkup: InlineKeyboardMarkup? = null,
     @JsonProperty("input_message_content")

@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class VideoNote @JsonCreator constructor(
     @JsonProperty("file_id")
-    val fileId: String,
+    val fileId: FileId,
     @JsonProperty("length")
     val length: Int,
     @JsonProperty("duration")

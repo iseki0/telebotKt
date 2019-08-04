@@ -28,7 +28,7 @@ data class InlineQueryResultCachedVideo @JsonCreator constructor(
     @JsonProperty("id")
     val id: String,
     @JsonProperty("video_file_id")
-    val videoFileId: String,
+    val videoFileId: FileId,
     @JsonProperty("title")
     val title: String,
     @JsonProperty("description")

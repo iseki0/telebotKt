@@ -27,7 +27,7 @@ data class InlineQueryResultCachedAudio @JsonCreator constructor(
     @JsonProperty("id")
     val id: String,
     @JsonProperty("audio_file_id")
-    val audioFileId: String,
+    val audioFileId: FileId,
     @JsonProperty("caption")
     val caption: String? = null,
     @JsonProperty("parse_mode")

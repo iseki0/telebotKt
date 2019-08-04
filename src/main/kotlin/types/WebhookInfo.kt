@@ -37,7 +37,7 @@ data class WebhookInfo @JsonCreator constructor(
     @JsonProperty("max_connections")
     val maxConnections: Int? = null,
     @JsonProperty("allowed_updates")
-    val allowedUpdates: Array<String>?
+    val allowedUpdates: Array<AllowedUpdateType>?
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

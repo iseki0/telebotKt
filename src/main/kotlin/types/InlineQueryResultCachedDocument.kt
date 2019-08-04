@@ -31,7 +31,7 @@ data class InlineQueryResultCachedDocument @JsonCreator constructor(
     @JsonProperty("title")
     val title: String,
     @JsonProperty("document_file_id")
-    val documentFileId: String,
+    val documentFileId: FileId,
     @JsonProperty("description")
     val description: String? = null,
     @JsonProperty("caption")

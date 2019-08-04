@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class ChatPhoto @JsonCreator constructor(
     @JsonProperty("small_file_id")
-    val smallFileId: String,
+    val smallFileId: FileId,
     @JsonProperty("big_file_id")
-    val bigFileId: String
+    val bigFileId: FileId
 )

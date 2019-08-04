@@ -30,7 +30,7 @@ data class Chat @JsonCreator constructor(
     @JsonProperty("id")
     val id: Int,
     @JsonProperty("type")
-    val type: String,
+    val type: ChatType,
     @JsonProperty("title")
     val title: String? = null,
     @JsonProperty("username")

@@ -27,7 +27,7 @@ data class InlineQueryResultCachedMpeg4Gif @JsonCreator constructor(
     @JsonProperty("id")
     val id: String,
     @JsonProperty("mpeg4_file_id")
-    val mpeg4FileId: String,
+    val mpeg4FileId: FileId,
     @JsonProperty("title")
     val title: String? = null,
     @JsonProperty("caption")

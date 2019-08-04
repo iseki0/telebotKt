@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class Sticker @JsonCreator constructor(
     @JsonProperty("file_id")
-    val fileId: String,
+    val fileId: FileId,
     @JsonProperty("width")
     val width: Int,
     @JsonProperty("height")

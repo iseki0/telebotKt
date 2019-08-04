@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class MessageEntity @JsonCreator constructor(
     @JsonProperty("type")
-    val type: String,
+    val type: MessageEntityType,
     @JsonProperty("offset")
     val offset: Int,
     @JsonProperty("length")

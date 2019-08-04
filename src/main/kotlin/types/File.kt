@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class File @JsonCreator constructor(
     @JsonProperty("file_id")
-    val fileId: String,
+    val fileId: FileId,
     @JsonProperty("file_size")
     val fileSize: Int? = null,
     @JsonProperty("file_path")

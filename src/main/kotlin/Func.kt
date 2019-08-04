@@ -20,7 +20,7 @@ fun BotContext.getUpdates(
     offset: Int? = null,
     limit: Int? = null,
     timeout: Int? = null,
-    allowedUpdates: Array<String>? = null
+    allowedUpdates: Array<AllowedUpdateType>? = null
 ): Future<Array<Update>?> = awslByArray(
     genBotRequest(
         "getUpdates",
@@ -49,7 +49,7 @@ fun BotContext.setWebhook(
     url: String,
     certificate: InputFile? = null,
     maxConnections: Int? = null,
-    allowedUpdates: Array<String>? = null
+    allowedUpdates: Array<AllowedUpdateType>? = null
 ): Future<Boolean?> =
     awsl(
         genBotRequest(
