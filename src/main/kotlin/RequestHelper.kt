@@ -1,8 +1,6 @@
 import io.vertx.core.Future
 import io.vertx.core.json.JsonObject
 
-fun genBotRequest(api: String, vararg pairs: Pair<String, Any?>): BotRequest =
-    BotRequest(api, JsonObject(mapOf(*pairs).filterNot { it.value == null }))
 
 data class BotRequest(val api: String, val jsonObject: JsonObject)
 
@@ -45,16 +43,22 @@ class BotContext(val botServer: BotServer) {
 
     inline fun <reified R> awslByArray(req: BotRequest): Future<Array<R>?> = Future.future { promise ->
         botServer.sendRequest(req).setHandler {
-            if (it.succeeded()) {
-                val arr = it.result().getJsonArray("result").map {
-                    (it as JsonObject).mapTo(R::class.java)
-                }.toTypedArray()
-                promise.complete(arr)
-            } else {
-                promise.fail(it.cause())
+            try {
+                if (it.succeeded()) {
+                    val arr = it.result().getJsonArray("result").map {
+                        (it as JsonObject).mapTo(R::class.java)
+                    }.toTypedArray()
+                    promise.complete(arr)
+                } else {
+                    promise.fail(it.cause())
+                }
+            } catch (e: Exception) {
+                promise.fail(e)
             }
         }
     }
-
-
 }
+
+
+fun genBotRequest(api: String, vararg pairs: Pair<String, Any?>): BotRequest =
+    BotRequest(api, JsonObject(mapOf(*pairs).filterNot { it.value == null }))

@@ -1,4 +1,9 @@
-import io.vertx.core.json.JsonObject
+import deserializer.registerObjectMapperModule
+import io.vertx.core.Vertx
+import io.vertx.core.http.HttpClientOptions
+import io.vertx.core.json.Json
+import io.vertx.core.net.ProxyOptions
+import io.vertx.core.net.ProxyType
 
 inline fun <reified T> aa() {
     println("" is T)
@@ -17,17 +22,24 @@ inline fun <reified T> aa1() {
 }
 
 fun main() {
-    /*
-    aa<String?>()
-    println("========")
-    aa1<Boolean?>()
-
-    val a = JsonObject("""{"a":"sss"}""")
-    println(a.getValue("a").javaClass)
-
-     */
-    val b = JsonObject("""{"a": 123,"b": {"c": 5}}""")
-    println(b.getValue("a").javaClass)
-    assert(false)
+    registerObjectMapperModule(Json.prettyMapper)
+    registerObjectMapperModule(Json.mapper)
+    val vertx = Vertx.vertx()
+    val botServer = BotServer.create(
+        vertx = vertx,
+        botConfig = BotConfig(
+            botKey = "981517466:AAHpynMZZ8oItS_-S_n8me1OQiTPa1criUM"
+        ),
+        httpClient = vertx.createHttpClient(
+            HttpClientOptions().setProxyOptions(
+                ProxyOptions().setType(ProxyType.SOCKS5).setHost(
+                    "127.0.0.1"
+                ).setPort(17654)
+            )
+        )
+    )
+    botServer.start().setHandler {
+        println(it)
+    }
 }
 
