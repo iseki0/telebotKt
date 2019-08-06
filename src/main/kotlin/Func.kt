@@ -907,7 +907,6 @@ fun BotContext.answerCallbackQuery(
     )
 )
 
-// TODO
 /**
  * Use this method to edit text and [game][null] messages. On success, if edited message is sent by the bot, the edited [Message][Message] is returned, otherwise *True* is returned.
  *

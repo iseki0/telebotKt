@@ -30,9 +30,9 @@ class BotServer private constructor(
                     log { "new message: ${it.result()?.size ?: "null"}" }
                     it.result()?.let { resolveUpdates(it) }
                 } else {
-                    //it.cause().printStackTrace()
                     println("ERROR")
                     println(it.cause().message)
+                    //it.cause().printStackTrace()
                 }
             }
         }
@@ -53,27 +53,30 @@ class BotServer private constructor(
         TODO()
     }
 
-    fun sendRequest(req: BotRequest): Future<JsonObject> = Future.future { promise ->
+    fun sendRequest(req: BotRequest): Future<JsonObject> {
         log { "Send request: ${req.api}" }
         val request = httpClient.postAbs(baseUrl + req.api)
-        val requestFuture = request.putHeader("Content-Type", "application/json")
-        request.compose {
-            log { "Receive response of ${req.api}, ${request.result().statusCode()} - ${request.result().statusMessage()}" }
-            request.result().body()
+        val result = request.compose {
+            log { "Receive response of ${req.api}, ${it.statusCode()} - ${it.statusMessage()}" }
+            it.body()
         }.compose {
             log { "length: ${it.length()}" }
             Future.succeededFuture(it.toJsonObject())
-        }.setHandler {
-            if (it.succeeded()) {
-                promise.complete(it.result())
+        }.compose<JsonObject> {
+            if (it.getBoolean("ok")) {
+                Future.succeededFuture(it)
             } else {
-                promise.fail(it.cause())
+                throw TelegramRequestException(
+                    request = req,
+                    errorCode = it.getInteger("error_code"),
+                    description = it.getString("description")
+                )
             }
         }
-        // send request
-        requestFuture.end(req.jsonObject.encode())
+        request.putHeader("Content-Type", "application/json")
+            .end(req.jsonObject.encode())
+        return result
     }
-
 
     companion object {
         fun create(
@@ -105,3 +108,10 @@ data class BotConfig(
 inline fun log(msg: () -> String) {
     println(msg())
 }
+
+class TelegramRequestException(
+    val request: BotRequest? = null,
+    val errorCode: Int = 0,
+    val description: String = "",
+    cause: Throwable? = null
+) : RuntimeException("$errorCode: $description", cause)

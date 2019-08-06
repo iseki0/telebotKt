@@ -7,58 +7,39 @@ data class BotRequest(val api: String, val jsonObject: JsonObject)
 
 class BotContext(val botServer: BotServer) {
 
-
     inline fun <reified BasicType, reified ObjectType> awslByEither(req: BotRequest): Future<Either<BasicType, ObjectType>?> =
-        Future.future { promise ->
-            botServer.sendRequest(req).setHandler {
-                if (it.succeeded()) {
-                    val a = it.result().getValue("result") ?: promise.complete(null)
-                    when (a) {
-                        is BasicType -> promise.complete(Either.Left(a as BasicType))
-                        is ObjectType -> promise.complete(Either.Right((a as JsonObject).mapTo(ObjectType::class.java)))
-                    }
-                } else {
-                    promise.fail(it.cause())
-                }
+        botServer.sendRequest(req).compose<Either<BasicType, ObjectType>?> {
+            when (it.getValue("result") ?: return@compose Future.succeededFuture(null)) {
+                is BasicType -> Future.succeededFuture(Either.Left(it as BasicType))
+                is ObjectType -> Future.succeededFuture(Either.Right((it as JsonObject).mapTo(ObjectType::class.java)))
+                else -> throw RuntimeException()
             }
         }
 
-    inline fun <reified R> awsl(req: BotRequest): Future<R?> = Future.future { promise ->
-        botServer.sendRequest(req).setHandler {
-            if (it.succeeded()) {
-                val a = it.result().getValue("result")
+    inline fun <reified R> awsl(req: BotRequest): Future<R?> =
+        botServer.sendRequest(req).compose {
+            val a = it.getValue("result")
+            Future.succeededFuture(
                 when {
-                    0 is R -> // if R is integer
-                        promise.complete(a as R)
-                    "" is R -> // if R is string
-                        promise.complete(a as R)
-                    true is R -> promise.complete(a as R)
-                    else -> promise.complete((a as? JsonObject)?.mapTo(R::class.java))
+                    0 is R ->
+                        a as R
+                    "" is R ->
+                        a as R
+                    true is R ->
+                        a as R
+                    else -> (a as? JsonObject)?.mapTo(R::class.java)
                 }
-            } else {
-                promise.fail(it.cause())
-            }
+            )
         }
-    }
 
-    inline fun <reified R> awslByArray(req: BotRequest): Future<Array<R>?> = Future.future { promise ->
-        botServer.sendRequest(req).setHandler {
-            try {
-                if (it.succeeded()) {
-                    val arr = it.result().getJsonArray("result").map {
-                        (it as JsonObject).mapTo(R::class.java)
-                    }.toTypedArray()
-                    promise.complete(arr)
-                } else {
-                    promise.fail(it.cause())
-                }
-            } catch (e: Exception) {
-                promise.fail(e)
-            }
+
+    inline fun <reified R> awslByArray(req: BotRequest): Future<Array<R>?> =
+        botServer.sendRequest(req).compose {
+            Future.succeededFuture(it.getJsonArray("result")?.map {
+                (it as JsonObject).mapTo(R::class.java)
+            }?.toTypedArray())
         }
-    }
 }
-
 
 fun genBotRequest(api: String, vararg pairs: Pair<String, Any?>): BotRequest =
     BotRequest(api, JsonObject(mapOf(*pairs).filterNot { it.value == null }))
