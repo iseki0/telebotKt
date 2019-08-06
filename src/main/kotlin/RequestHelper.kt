@@ -9,23 +9,26 @@ class BotContext(val botServer: BotServer) {
 
     inline fun <reified BasicType, reified ObjectType> awslByEither(req: BotRequest): Future<Either<BasicType, ObjectType>?> =
         botServer.sendRequest(req).compose<Either<BasicType, ObjectType>?> {
-            when (it.getValue("result") ?: return@compose Future.succeededFuture(null)) {
-                is BasicType -> Future.succeededFuture(Either.Left(it as BasicType))
-                is ObjectType -> Future.succeededFuture(Either.Right((it as JsonObject).mapTo(ObjectType::class.java)))
-                else -> throw RuntimeException()
+            val basicType = BasicType::class.java
+            val result = it.getValue("result") ?: return@compose Future.succeededFuture(null)
+            when {
+                basicType.isInstance(result) -> Future.succeededFuture(Either.Left(result as BasicType))
+                else -> Future.succeededFuture(Either.Right((result as JsonObject).mapTo(ObjectType::class.java)))
+                //else -> throw RuntimeException("awslByEither: left = $basicType, right = $objectType, result = ${result::class.java}")
             }
         }
 
     inline fun <reified R> awsl(req: BotRequest): Future<R?> =
         botServer.sendRequest(req).compose {
+            val type = R::class.java
             val a = it.getValue("result")
             Future.succeededFuture(
                 when {
-                    0 is R ->
+                    type.isInstance(true) ->
                         a as R
-                    "" is R ->
+                    type.isInstance("") ->
                         a as R
-                    true is R ->
+                    type.isInstance(0) ->
                         a as R
                     else -> (a as? JsonObject)?.mapTo(R::class.java)
                 }

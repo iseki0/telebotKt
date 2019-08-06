@@ -90,9 +90,9 @@ data class Message @JsonCreator constructor(
     @JsonProperty("text")
     val text: String? = null,
     @JsonProperty("entities")
-    val entities: Array<MessageEntity>?,
+    val entities: Array<MessageEntity>? = null,
     @JsonProperty("caption_entities")
-    val captionEntities: Array<MessageEntity>?,
+    val captionEntities: Array<MessageEntity>? = null,
     @JsonProperty("audio")
     val audio: Audio? = null,
     @JsonProperty("document")
@@ -102,7 +102,7 @@ data class Message @JsonCreator constructor(
     @JsonProperty("game")
     val game: Game? = null,
     @JsonProperty("photo")
-    val photo: Array<PhotoSize>?,
+    val photo: Array<PhotoSize>? = null,
     @JsonProperty("sticker")
     val sticker: Sticker? = null,
     @JsonProperty("video")
@@ -122,13 +122,13 @@ data class Message @JsonCreator constructor(
     @JsonProperty("poll")
     val poll: Poll? = null,
     @JsonProperty("new_chat_members")
-    val newChatMembers: Array<User>?,
+    val newChatMembers: Array<User>? = null,
     @JsonProperty("left_chat_member")
     val leftChatMember: User? = null,
     @JsonProperty("new_chat_title")
     val newChatTitle: String? = null,
     @JsonProperty("new_chat_photo")
-    val newChatPhoto: Array<PhotoSize>?,
+    val newChatPhoto: Array<PhotoSize>? = null,
     @JsonProperty("delete_chat_photo")
     val deleteChatPhoto: Boolean? = null,
     @JsonProperty("group_chat_created")
