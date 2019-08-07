@@ -75,7 +75,7 @@ internal class BotContextTest {
             o.mapTo(ChatMember::class.java)
         }
         //println(result)
-        botContext.getChatAdministrators(111).setHandler {
+        botContext.getChatAdministrators("111").setHandler {
             it.cause()?.printStackTrace()
             assertTrue(it.succeeded())
             assertArrayEquals(chatm, it.result())

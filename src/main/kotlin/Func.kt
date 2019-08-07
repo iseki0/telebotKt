@@ -94,7 +94,7 @@ fun BotContext.getMe(): Future<User?> = awsl(genBotRequest("getMe"))
  * @param[replyMarkup] Additional interface options. A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https://core.telegram.org/bots#keyboards), instructions to remove reply keyboard or to force a reply from the user.
  */
 fun BotContext.sendMessage(
-    chatId: Int,
+    chatId: String,
     text: String,
     parseMode: ParseMode? = null,
     disableWebPagePreview: Boolean? = null,
@@ -123,7 +123,7 @@ fun BotContext.sendMessage(
  * @param[messageId] Message identifier in the chat specified in *from_chat_id*
  */
 fun BotContext.forwardMessage(
-    chatId: Int,
+    chatId: String,
     fromChatId: Int,
     disableNotification: Boolean? = null,
     messageId: Int
@@ -150,7 +150,7 @@ fun BotContext.forwardMessage(
  * @param[replyMarkup] Additional interface options. A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https://core.telegram.org/bots#keyboards), instructions to remove reply keyboard or to force a reply from the user.
  */
 fun BotContext.sendPhoto(
-    chatId: Int,
+    chatId: String,
     photo: String,
     caption: String? = null,
     parseMode: ParseMode? = null,
@@ -187,7 +187,7 @@ fun BotContext.sendPhoto(
  * @param[replyMarkup] Additional interface options. A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https://core.telegram.org/bots#keyboards), instructions to remove reply keyboard or to force a reply from the user.
  */
 fun BotContext.sendAudio(
-    chatId: Int,
+    chatId: String,
     audio: String,
     caption: String? = null,
     parseMode: ParseMode? = null,
@@ -228,7 +228,7 @@ fun BotContext.sendAudio(
  * @param[replyMarkup] Additional interface options. A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https://core.telegram.org/bots#keyboards), instructions to remove reply keyboard or to force a reply from the user.
  */
 fun BotContext.sendDocument(
-    chatId: Int,
+    chatId: String,
     document: String,
     thumb: String? = null,
     caption: String? = null,
@@ -267,7 +267,7 @@ fun BotContext.sendDocument(
  * @param[replyMarkup] Additional interface options. A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https://core.telegram.org/bots#keyboards), instructions to remove reply keyboard or to force a reply from the user.
  */
 fun BotContext.sendVideo(
-    chatId: Int,
+    chatId: String,
     video: String,
     duration: Int? = null,
     width: Int? = null,
@@ -313,7 +313,7 @@ fun BotContext.sendVideo(
  * @param[replyMarkup] Additional interface options. A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https://core.telegram.org/bots#keyboards), instructions to remove reply keyboard or to force a reply from the user.
  */
 fun BotContext.sendAnimation(
-    chatId: Int,
+    chatId: String,
     animation: String,
     duration: Int? = null,
     width: Int? = null,
@@ -354,7 +354,7 @@ fun BotContext.sendAnimation(
  * @param[replyMarkup] Additional interface options. A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https://core.telegram.org/bots#keyboards), instructions to remove reply keyboard or to force a reply from the user.
  */
 fun BotContext.sendVoice(
-    chatId: Int,
+    chatId: String,
     voice: String,
     caption: String? = null,
     parseMode: ParseMode? = null,
@@ -389,7 +389,7 @@ fun BotContext.sendVoice(
  * @param[replyMarkup] Additional interface options. A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https://core.telegram.org/bots#keyboards), instructions to remove reply keyboard or to force a reply from the user.
  */
 fun BotContext.sendVideoNote(
-    chatId: Int,
+    chatId: String,
     videoNote: String,
     duration: Int? = null,
     length: Int? = null,
@@ -420,7 +420,7 @@ fun BotContext.sendVideoNote(
  * @param[replyToMessageId] If the messages are a reply, ID of the original message
  */
 fun BotContext.sendMediaGroup(
-    chatId: Int,
+    chatId: String,
     media: MediaGroupable,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null
@@ -446,7 +446,7 @@ fun BotContext.sendMediaGroup(
  * @param[replyMarkup] Additional interface options. A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https://core.telegram.org/bots#keyboards), instructions to remove reply keyboard or to force a reply from the user.
  */
 fun BotContext.sendLocation(
-    chatId: Int,
+    chatId: String,
     latitude: Double,
     longitude: Double,
     livePeriod: Int? = null,
@@ -477,7 +477,7 @@ fun BotContext.sendLocation(
  * @param[replyMarkup] A JSON-serialized object for a new [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
 fun BotContext.editMessageLiveLocation(
-    chatId: Int? = null,
+    chatId: String? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     latitude: Double,
@@ -504,7 +504,7 @@ fun BotContext.editMessageLiveLocation(
  * @param[replyMarkup] A JSON-serialized object for a new [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
 fun BotContext.stopMessageLiveLocation(
-    chatId: Int? = null,
+    chatId: String? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
@@ -533,7 +533,7 @@ fun BotContext.stopMessageLiveLocation(
  * @param[replyMarkup] Additional interface options. A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https://core.telegram.org/bots#keyboards), instructions to remove reply keyboard or to force a reply from the user.
  */
 fun BotContext.sendVenue(
-    chatId: Int,
+    chatId: String,
     latitude: Double,
     longitude: Double,
     title: String,
@@ -572,7 +572,7 @@ fun BotContext.sendVenue(
  * @param[replyMarkup] Additional interface options. A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https://core.telegram.org/bots#keyboards), instructions to remove keyboard or to force a reply from the user.
  */
 fun BotContext.sendContact(
-    chatId: Int,
+    chatId: String,
     phoneNumber: String,
     firstName: String,
     lastName: String? = null,
@@ -605,7 +605,7 @@ fun BotContext.sendContact(
  * @param[replyMarkup] Additional interface options. A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https://core.telegram.org/bots#keyboards), instructions to remove reply keyboard or to force a reply from the user.
  */
 fun BotContext.sendPoll(
-    chatId: Int,
+    chatId: String,
     question: String,
     options: Array<String>,
     disableNotification: Boolean? = null,
@@ -631,7 +631,7 @@ fun BotContext.sendPoll(
  * @param[chatId] Unique identifier for the target chat or username of the target channel (in the format  `@channelusername` )
  * @param[action] Type of action to broadcast. Choose one, depending on what the user is about to receive: *typing* for [text messages][sendMessage], *upload_photo* for [photos][sendPhoto], *record_video* or *upload_video* for [videos][sendVideo], *record_audio* or *upload_audio* for [audio files][sendAudio], *upload_document* for [general files][sendDocument], *find_location* for [location data][sendLocation], *record_video_note* or *upload_video_note* for [video notes][sendVideoNote].
  */
-fun BotContext.sendChatAction(chatId: Int, action: String): Future<Boolean?> =
+fun BotContext.sendChatAction(chatId: String, action: String): Future<Boolean?> =
     awsl(genBotRequest("sendChatAction", Pair("chat_id", chatId), Pair("action", action)))
 
 /**
@@ -660,7 +660,7 @@ fun BotContext.getFile(fileId: String): Future<File?> = awsl(genBotRequest("getF
  * @param[userId] Unique identifier of the target user
  * @param[untilDate] Date when the user will be unbanned, unix time. If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever
  */
-fun BotContext.kickChatMember(chatId: Int, userId: Int, untilDate: Int?): Future<Boolean?> =
+fun BotContext.kickChatMember(chatId: String, userId: Int, untilDate: Int?): Future<Boolean?> =
     awsl(
         genBotRequest(
             "kickChatMember",
@@ -676,7 +676,7 @@ fun BotContext.kickChatMember(chatId: Int, userId: Int, untilDate: Int?): Future
  * @param[chatId] Unique identifier for the target group or username of the target supergroup or channel (in the format  `@username` )
  * @param[userId] Unique identifier of the target user
  */
-fun BotContext.unbanChatMember(chatId: Int, userId: Int): Future<Boolean?> =
+fun BotContext.unbanChatMember(chatId: String, userId: Int): Future<Boolean?> =
     awsl(genBotRequest("unbanChatMember", Pair("chat_id", chatId), Pair("user_id", userId)))
 
 /**
@@ -688,7 +688,7 @@ fun BotContext.unbanChatMember(chatId: Int, userId: Int): Future<Boolean?> =
  * @param[untilDate] Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever
  */
 fun BotContext.restrictChatMember(
-    chatId: Int,
+    chatId: String,
     userId: Int,
     permissions: ChatPermissions,
     untilDate: Int? = null
@@ -717,7 +717,7 @@ fun BotContext.restrictChatMember(
  * @param[canPromoteMembers] Pass True, if the administrator can add new administrators with a subset of his own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by him)
  */
 fun BotContext.promoteChatMember(
-    chatId: Int,
+    chatId: String,
     userId: Int,
     canChangeInfo: Boolean? = null,
     canPostMessages: Boolean? = null,
@@ -750,7 +750,7 @@ fun BotContext.promoteChatMember(
  * @param[chatId] Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
  * @param[permissions] New default chat permissions
  */
-fun BotContext.setChatPermissions(chatId: Int, permissions: ChatPermissions): Future<Boolean?> =
+fun BotContext.setChatPermissions(chatId: String, permissions: ChatPermissions): Future<Boolean?> =
     awsl(genBotRequest("setChatPermissions", Pair("chat_id", chatId), Pair("permissions", permissions)))
 
 /**
@@ -759,7 +759,7 @@ fun BotContext.setChatPermissions(chatId: Int, permissions: ChatPermissions): Fu
  *
  * @param[chatId] Unique identifier for the target chat or username of the target channel (in the format  `@channelusername` )
  */
-fun BotContext.exportChatInviteLink(chatId: Int): Future<String?> =
+fun BotContext.exportChatInviteLink(chatId: String): Future<String?> =
     awsl(genBotRequest("exportChatInviteLink", Pair("chat_id", chatId)))
 
 /**
@@ -769,7 +769,7 @@ fun BotContext.exportChatInviteLink(chatId: Int): Future<String?> =
  * @param[chatId] Unique identifier for the target chat or username of the target channel (in the format  `@channelusername` )
  * @param[photo] New chat photo, uploaded using multipart/form-data
  */
-fun BotContext.setChatPhoto(chatId: Int, photo: InputFile): Future<Boolean?> =
+fun BotContext.setChatPhoto(chatId: String, photo: InputFile): Future<Boolean?> =
     awsl(genBotRequest("setChatPhoto", Pair("chat_id", chatId), Pair("photo", photo)))
 
 /**
@@ -778,7 +778,7 @@ fun BotContext.setChatPhoto(chatId: Int, photo: InputFile): Future<Boolean?> =
  *
  * @param[chatId] Unique identifier for the target chat or username of the target channel (in the format  `@channelusername` )
  */
-fun BotContext.deleteChatPhoto(chatId: Int): Future<Boolean?> =
+fun BotContext.deleteChatPhoto(chatId: String): Future<Boolean?> =
     awsl(genBotRequest("deleteChatPhoto", Pair("chat_id", chatId)))
 
 /**
@@ -788,7 +788,7 @@ fun BotContext.deleteChatPhoto(chatId: Int): Future<Boolean?> =
  * @param[chatId] Unique identifier for the target chat or username of the target channel (in the format  `@channelusername` )
  * @param[title] New chat title, 1-255 characters
  */
-fun BotContext.setChatTitle(chatId: Int, title: String): Future<Boolean?> =
+fun BotContext.setChatTitle(chatId: String, title: String): Future<Boolean?> =
     awsl(genBotRequest("setChatTitle", Pair("chat_id", chatId), Pair("title", title)))
 
 /**
@@ -797,7 +797,7 @@ fun BotContext.setChatTitle(chatId: Int, title: String): Future<Boolean?> =
  * @param[chatId] Unique identifier for the target chat or username of the target channel (in the format  `@channelusername` )
  * @param[description] New chat description, 0-255 characters
  */
-fun BotContext.setChatDescription(chatId: Int, description: String?): Future<Boolean?> =
+fun BotContext.setChatDescription(chatId: String, description: String?): Future<Boolean?> =
     awsl(genBotRequest("setChatDescription", Pair("chat_id", chatId), Pair("description", description)))
 
 /**
@@ -807,7 +807,7 @@ fun BotContext.setChatDescription(chatId: Int, description: String?): Future<Boo
  * @param[messageId] Identifier of a message to pin
  * @param[disableNotification] Pass *True*, if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels.
  */
-fun BotContext.pinChatMessage(chatId: Int, messageId: Int, disableNotification: Boolean?): Future<Boolean?> = awsl(
+fun BotContext.pinChatMessage(chatId: String, messageId: Int, disableNotification: Boolean?): Future<Boolean?> = awsl(
     genBotRequest(
         "pinChatMessage",
         Pair("chat_id", chatId),
@@ -821,7 +821,7 @@ fun BotContext.pinChatMessage(chatId: Int, messageId: Int, disableNotification: 
  *
  * @param[chatId] Unique identifier for the target chat or username of the target channel (in the format  `@channelusername` )
  */
-fun BotContext.unpinChatMessage(chatId: Int): Future<Boolean?> =
+fun BotContext.unpinChatMessage(chatId: String): Future<Boolean?> =
     awsl(genBotRequest("unpinChatMessage", Pair("chat_id", chatId)))
 
 /**
@@ -829,21 +829,21 @@ fun BotContext.unpinChatMessage(chatId: Int): Future<Boolean?> =
  *
  * @param[chatId] Unique identifier for the target chat or username of the target supergroup or channel (in the format  `@channelusername` )
  */
-fun BotContext.leaveChat(chatId: Int): Future<Boolean?> = awsl(genBotRequest("leaveChat", Pair("chat_id", chatId)))
+fun BotContext.leaveChat(chatId: String): Future<Boolean?> = awsl(genBotRequest("leaveChat", Pair("chat_id", chatId)))
 
 /**
  * Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Returns a [Chat][Chat] object on success.
  *
  * @param[chatId] Unique identifier for the target chat or username of the target supergroup or channel (in the format  `@channelusername` )
  */
-fun BotContext.getChat(chatId: Int): Future<Chat?> = awsl(genBotRequest("getChat", Pair("chat_id", chatId)))
+fun BotContext.getChat(chatId: String): Future<Chat?> = awsl(genBotRequest("getChat", Pair("chat_id", chatId)))
 
 /**
  * Use this method to get a list of administrators in a chat. On success, returns an Array of [ChatMember][ChatMember] objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.
  *
  * @param[chatId] Unique identifier for the target chat or username of the target supergroup or channel (in the format  `@channelusername` )
  */
-fun BotContext.getChatAdministrators(chatId: Int): Future<Array<ChatMember>?> =
+fun BotContext.getChatAdministrators(chatId: String): Future<Array<ChatMember>?> =
     awslByArray(genBotRequest("getChatAdministrators", Pair("chat_id", chatId)))
 
 /**
@@ -851,7 +851,7 @@ fun BotContext.getChatAdministrators(chatId: Int): Future<Array<ChatMember>?> =
  *
  * @param[chatId] Unique identifier for the target chat or username of the target supergroup or channel (in the format  `@channelusername` )
  */
-fun BotContext.getChatMembersCount(chatId: Int): Future<Int?> =
+fun BotContext.getChatMembersCount(chatId: String): Future<Int?> =
     awsl(genBotRequest("getChatMembersCount", Pair("chat_id", chatId)))
 
 /**
@@ -860,7 +860,7 @@ fun BotContext.getChatMembersCount(chatId: Int): Future<Int?> =
  * @param[chatId] Unique identifier for the target chat or username of the target supergroup or channel (in the format  `@channelusername` )
  * @param[userId] Unique identifier of the target user
  */
-fun BotContext.getChatMember(chatId: Int, userId: Int): Future<ChatMember?> =
+fun BotContext.getChatMember(chatId: String, userId: Int): Future<ChatMember?> =
     awsl(genBotRequest("getChatMember", Pair("chat_id", chatId), Pair("user_id", userId)))
 
 /**
@@ -869,7 +869,7 @@ fun BotContext.getChatMember(chatId: Int, userId: Int): Future<ChatMember?> =
  * @param[chatId] Unique identifier for the target chat or username of the target supergroup (in the format  `@supergroupusername` )
  * @param[stickerSetName] Name of the sticker set to be set as the group sticker set
  */
-fun BotContext.setChatStickerSet(chatId: Int, stickerSetName: String): Future<Boolean?> =
+fun BotContext.setChatStickerSet(chatId: String, stickerSetName: String): Future<Boolean?> =
     awsl(genBotRequest("setChatStickerSet", Pair("chat_id", chatId), Pair("sticker_set_name", stickerSetName)))
 
 /**
@@ -877,7 +877,7 @@ fun BotContext.setChatStickerSet(chatId: Int, stickerSetName: String): Future<Bo
  *
  * @param[chatId] Unique identifier for the target chat or username of the target supergroup (in the format  `@supergroupusername` )
  */
-fun BotContext.deleteChatStickerSet(chatId: Int): Future<Boolean?> =
+fun BotContext.deleteChatStickerSet(chatId: String): Future<Boolean?> =
     awsl(genBotRequest("deleteChatStickerSet", Pair("chat_id", chatId)))
 
 /**
@@ -920,7 +920,7 @@ fun BotContext.answerCallbackQuery(
  * @param[replyMarkup] A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
 fun BotContext.editMessageText(
-    chatId: Int? = null,
+    chatId: String? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     text: String,
@@ -951,7 +951,7 @@ fun BotContext.editMessageText(
  * @param[replyMarkup] A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
 fun BotContext.editMessageCaption(
-    chatId: Int? = null,
+    chatId: String? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     caption: String? = null,
@@ -979,7 +979,7 @@ fun BotContext.editMessageCaption(
  * @param[replyMarkup] A JSON-serialized object for a new [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
 fun BotContext.editMessageMedia(
-    chatId: Int? = null,
+    chatId: String? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     media: InputMedia,
@@ -1004,7 +1004,7 @@ fun BotContext.editMessageMedia(
  * @param[replyMarkup] A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
 fun BotContext.editMessageReplyMarkup(
-    chatId: Int? = null,
+    chatId: String? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
@@ -1025,7 +1025,7 @@ fun BotContext.editMessageReplyMarkup(
  * @param[messageId] Identifier of the original message with the poll
  * @param[replyMarkup] A JSON-serialized object for a new message [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
-fun BotContext.stopPoll(chatId: Int, messageId: Int, replyMarkup: InlineKeyboardMarkup?): Future<Poll?> =
+fun BotContext.stopPoll(chatId: String, messageId: Int, replyMarkup: InlineKeyboardMarkup?): Future<Poll?> =
     awsl(
         genBotRequest(
             "stopPoll",
@@ -1049,7 +1049,7 @@ fun BotContext.stopPoll(chatId: Int, messageId: Int, replyMarkup: InlineKeyboard
  * @param[chatId] Unique identifier for the target chat or username of the target channel (in the format  `@channelusername` )
  * @param[messageId] Identifier of the message to delete
  */
-fun BotContext.deleteMessage(chatId: Int, messageId: Int): Future<Boolean?> =
+fun BotContext.deleteMessage(chatId: String, messageId: Int): Future<Boolean?> =
     awsl(genBotRequest("deleteMessage", Pair("chat_id", chatId), Pair("message_id", messageId)))
 
 /**
@@ -1062,7 +1062,7 @@ fun BotContext.deleteMessage(chatId: Int, messageId: Int): Future<Boolean?> =
  * @param[replyMarkup] Additional interface options. A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https://core.telegram.org/bots#keyboards), instructions to remove reply keyboard or to force a reply from the user.
  */
 fun BotContext.sendSticker(
-    chatId: Int,
+    chatId: String,
     sticker: String,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
@@ -1235,7 +1235,7 @@ fun BotContext.answerInlineQuery(
  * @param[replyMarkup] A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating). If empty, one 'Pay  `total price` ' button will be shown. If not empty, the first button must be a Pay button.
  */
 fun BotContext.sendInvoice(
-    chatId: Int,
+    chatId: String,
     title: String,
     description: String,
     payload: String,
@@ -1351,7 +1351,7 @@ fun BotContext.setPassportDataErrors(userId: Int, errors: Array<PassportElementE
  * @param[replyMarkup] A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating). If empty, one ‘Play game_title’ button will be shown. If not empty, the first button must launch the game.
  */
 fun BotContext.sendGame(
-    chatId: Int,
+    chatId: String,
     gameShortName: String,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
@@ -1383,7 +1383,7 @@ fun BotContext.setGameScore(
     score: Int,
     force: Boolean? = null,
     disableEditMessage: Boolean? = null,
-    chatId: Int? = null,
+    chatId: String? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null
 ): Future<Either<Boolean, Message>?> = awslByEither(
@@ -1410,7 +1410,7 @@ fun BotContext.setGameScore(
  */
 fun BotContext.getGameHighScores(
     userId: Int,
-    chatId: Int? = null,
+    chatId: String? = null,
     messageId: Int? = null,
     inlineMessageId: String?
 ): Future<Array<GameHighScore>?> =
