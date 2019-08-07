@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -11,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[smallFileId] Unique file identifier of small (160x160) chat photo. This file_id can be used only for photo download.
  * @param[bigFileId] Unique file identifier of big (640x640) chat photo. This file_id can be used only for photo download.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class ChatPhoto @JsonCreator constructor(
     @JsonProperty("small_file_id")

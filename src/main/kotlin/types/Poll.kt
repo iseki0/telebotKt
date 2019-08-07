@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -13,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[options] List of poll options
  * @param[isClosed] True, if the poll is closed
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class Poll @JsonCreator constructor(
     @JsonProperty("id")
@@ -22,6 +21,7 @@ data class Poll @JsonCreator constructor(
     val question: String,
     @JsonProperty("options")
     val options: Array<PollOption>,
+    @get:JsonProperty("is_closed")
     @JsonProperty("is_closed")
     val isClosed: Boolean
 ) {

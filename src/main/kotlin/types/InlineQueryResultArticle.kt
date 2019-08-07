@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 import deserializer.ValueMustBe
@@ -21,7 +20,7 @@ import deserializer.ValueMustBe
  * @param[thumbWidth] *Optional*. Thumbnail width
  * @param[thumbHeight] *Optional*. Thumbnail height
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class InlineQueryResultArticle @JsonCreator constructor(
     @ValueMustBe("article")

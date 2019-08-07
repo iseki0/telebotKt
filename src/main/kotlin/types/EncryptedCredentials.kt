@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -12,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[hash] Base64-encoded data hash for data authentication
  * @param[secret] Base64-encoded secret, encrypted with the bot's public RSA key, required for data decryption
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class EncryptedCredentials @JsonCreator constructor(
     @JsonProperty("data")

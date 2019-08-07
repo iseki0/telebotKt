@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer
  * *Attention!* This Deserializer is *not* thread safe.
  * If it will shared between multiple thread. *Must* create it in initialize time.
  */
+@Deprecated("useless and tons of bug.")
 class DDDeserializer<T>(baseClass: Class<out T>, list: List<Class<out T>>) :
     StdDeserializer<T>(baseClass) {
 

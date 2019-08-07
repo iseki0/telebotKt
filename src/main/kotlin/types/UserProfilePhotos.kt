@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -11,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[totalCount] Total number of profile pictures the target user has
  * @param[photos] Requested profile pictures (in up to 4 sizes each)
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class UserProfilePhotos @JsonCreator constructor(
     @JsonProperty("total_count")

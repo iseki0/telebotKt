@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -13,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[forceReply] Shows reply interface to the user, as if they manually selected the bot‘s message and tapped ’Reply'
  * @param[selective] *Optional*. Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the *text* of the [types.Message][Message] object; 2) if the bot's message is a reply (has *reply_to_message_id*), sender of the original message.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class ForceReply @JsonCreator constructor(
     @JsonProperty("force_reply")

@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -15,12 +14,13 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[username] *Optional*. types.User‘s or bot’s username
  * @param[languageCode] *Optional*. [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag) of the user's language
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class User @JsonCreator constructor(
     @JsonProperty("id")
     val id: Int,
-    @JsonProperty("is_bot")
+    @get:JsonProperty(value = "is_bot")
+    @JsonProperty(value = "is_bot")
     val isBot: Boolean,
     @JsonProperty("first_name")
     val firstName: String,

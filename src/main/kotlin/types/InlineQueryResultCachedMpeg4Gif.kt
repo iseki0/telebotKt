@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 import deserializer.ValueMustBe
@@ -18,7 +17,7 @@ import deserializer.ValueMustBe
  * @param[replyMarkup] *Optional*. [Inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating) attached to the message
  * @param[inputMessageContent] *Optional*. Content of the message to be sent instead of the video animation
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class InlineQueryResultCachedMpeg4Gif @JsonCreator constructor(
     @ValueMustBe("mpeg4_gif")

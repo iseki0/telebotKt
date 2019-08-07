@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -14,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[query] Text of the query (up to 512 characters)
  * @param[offset] Offset of the results to be returned, can be controlled by the bot
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class InlineQuery @JsonCreator constructor(
     @JsonProperty("id")

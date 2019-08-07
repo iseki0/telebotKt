@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -18,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[maskPosition] *Optional*. For mask stickers, the position where the mask should be placed
  * @param[fileSize] *Optional*. types.File size
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class Sticker @JsonCreator constructor(
     @JsonProperty("file_id")
@@ -27,6 +26,7 @@ data class Sticker @JsonCreator constructor(
     val width: Int,
     @JsonProperty("height")
     val height: Int,
+    @get:JsonProperty("is_animated")
     @JsonProperty("is_animated")
     val isAntimated: Boolean = true,
     @JsonProperty("thumb")

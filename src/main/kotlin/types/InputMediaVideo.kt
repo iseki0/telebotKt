@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 import deserializer.ValueMustBe
@@ -19,7 +18,7 @@ import deserializer.ValueMustBe
  * @param[duration] *Optional*. types.Video duration
  * @param[supportsStreaming] *Optional*. Pass *True*, if the uploaded video is suitable for streaming
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class InputMediaVideo @JsonCreator constructor(
     @JsonProperty("type")

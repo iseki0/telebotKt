@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 import deserializer.ValueMustBe
@@ -18,7 +17,7 @@ import deserializer.ValueMustBe
  * @param[performer] *Optional*. Performer of the audio
  * @param[title] *Optional*. Title of the audio
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class InputMediaAudio @JsonCreator constructor(
     @JsonProperty("type")

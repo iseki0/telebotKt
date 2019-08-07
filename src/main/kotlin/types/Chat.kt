@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -24,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[stickerSetName] *Optional*. For supergroups, name of group sticker set. Returned only in [getChat][getChat].
  * @param[canSetStickerSet] *Optional*. True, if the bot can change the group sticker set. Returned only in [getChat][getChat].
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class Chat @JsonCreator constructor(
     @JsonProperty("id")

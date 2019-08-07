@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -27,13 +26,13 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[canSendOtherMessages] *Optional*. Restricted only. True, if the user can send animations, games, stickers and use inline bots, implies can_send_media_messages
  * @param[canAddWebPagePreviews] *Optional*. Restricted only. True, if user may add web page previews to his messages, implies can_send_media_messages
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class ChatMember @JsonCreator constructor(
     @JsonProperty("user")
     val user: User,
     @JsonProperty("status")
-    val status: String,
+    val status: ChatMemberStatus,
     @JsonProperty("until_date")
     val untilDate: Int? = null,
     @JsonProperty("can_be_edited")
@@ -54,6 +53,7 @@ data class ChatMember @JsonCreator constructor(
     val canPinMessages: Boolean? = null,
     @JsonProperty("can_promote_members")
     val canPromoteMembers: Boolean? = null,
+    @get:JsonProperty("is_member")
     @JsonProperty("is_member")
     val isMember: Boolean? = null,
     @JsonProperty("can_send_messages")

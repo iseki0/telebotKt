@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -13,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[fileSize] *Optional*. types.File size, if known
  * @param[filePath] *Optional*. types.File path. Use  `https://api.telegram.org/file/bot<token>/<file_path>`  to get the file.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class File @JsonCreator constructor(
     @JsonProperty("file_id")

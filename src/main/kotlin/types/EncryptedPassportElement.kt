@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -19,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[translation] *Optional*. Array of encrypted files with translated versions of documents provided by the user. Available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying [types.EncryptedCredentials][EncryptedCredentials].
  * @param[hash] Base64-encoded element hash for using in [types.PassportElementErrorUnspecified][PassportElementErrorUnspecified]
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class EncryptedPassportElement @JsonCreator constructor(
     @JsonProperty("type")

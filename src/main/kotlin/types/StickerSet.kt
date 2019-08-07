@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -14,13 +13,14 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[containsMasks] *True*, if the sticker set contains masks
  * @param[stickers] List of all set stickers
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class StickerSet @JsonCreator constructor(
     @JsonProperty("name")
     val name: String,
     @JsonProperty("title")
     val title: String,
+    @get:JsonProperty("is_animated")
     @JsonProperty("is_animated")
     val isAntimated: Boolean = true,
     @JsonProperty("contains_masks")

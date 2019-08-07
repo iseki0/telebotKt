@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -17,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[shippingOptionId] *Optional*. Identifier of the shipping option chosen by the user
  * @param[orderInfo] *Optional*. Order info provided by the user
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class PreCheckoutQuery @JsonCreator constructor(
     @JsonProperty("id")

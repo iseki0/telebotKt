@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -17,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[data] *Optional*. Data associated with the callback button. Be aware that a bad client can send arbitrary data in this field.
  * @param[gameShortName] *Optional*. Short name of a [types.Game][null] to be returned, serves as the unique identifier for the game
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class CallbackQuery @JsonCreator constructor(
     @JsonProperty("id")

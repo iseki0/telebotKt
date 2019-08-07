@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -15,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[textEntities] *Optional*. Special entities that appear in *text*, such as usernames, URLs, bot commands, etc.
  * @param[animation] *Optional*. types.Animation that will be displayed in the game message in chats. Upload via [BotFather](https://t.me/botfather)
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class Game @JsonCreator constructor(
     @JsonProperty("title")

@@ -3,7 +3,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -21,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[maxConnections] *Optional*. Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
  * @param[allowedUpdates] *Optional*. A list of update types the bot is subscribed to. Defaults to all update types
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class WebhookInfo @JsonCreator constructor(
     @JsonProperty("url")

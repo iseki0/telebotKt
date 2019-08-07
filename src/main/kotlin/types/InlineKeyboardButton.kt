@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -21,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[pay] *Optional*. Specify True, to send a [Pay button][null]. \
  * **NOTE:** This type of button **must** always be the first button in the first row.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class InlineKeyboardButton @JsonCreator constructor(
     @JsonProperty("text")

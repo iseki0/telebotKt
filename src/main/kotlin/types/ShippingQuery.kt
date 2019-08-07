@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -13,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[invoicePayload] Bot specified invoice payload
  * @param[shippingAddress] types.User specified shipping address
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class ShippingQuery @JsonCreator constructor(
     @JsonProperty("id")

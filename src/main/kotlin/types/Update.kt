@@ -3,7 +3,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -23,7 +22,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[preCheckoutQuery] *Optional*. New incoming pre-checkout query. Contains full information about checkout
  * @param[poll] *Optional*. New poll state. Bots receive only updates about stopped polls and polls, which are sent by the bot
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
+@Suppress("KDocUnresolvedReference")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class Update @JsonCreator constructor(
     @JsonProperty("update_id")

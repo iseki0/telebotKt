@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -11,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[data] Array with information about documents and other Telegram Passport elements that was shared with the bot
  * @param[credentials] Encrypted credentials required to decrypt the data
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class PassportData @JsonCreator constructor(
     @JsonProperty("data")

@@ -1,6 +1,5 @@
 package types
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -16,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[canInviteUsers] *Optional*. True, if the user is allowed to invite new users to the chat
  * @param[canPinMessages] *Optional*. True, if the user is allowed to pin messages. Ignored in public supergroups
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class ChatPermissions(
     @JsonProperty("can_send_messages")

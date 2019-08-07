@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -13,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[requestContact] *Optional*. If *True*, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only
  * @param[requestLocation] *Optional*. If *True*, the user's current location will be sent when the button is pressed. Available in private chats only
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class KeyboardButton @JsonCreator constructor(
     @JsonProperty("text")

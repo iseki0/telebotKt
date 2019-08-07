@@ -1,7 +1,6 @@
 package types
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -14,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[url] *Optional*. For “text_link” only, url that will be opened after user taps on the text
  * @param[user] *Optional*. For “text_mention” only, the mentioned user
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class MessageEntity @JsonCreator constructor(
     @JsonProperty("type")
