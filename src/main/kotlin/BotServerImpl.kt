@@ -1,4 +1,5 @@
 import io.vertx.core.Future
+import io.vertx.core.Handler
 import io.vertx.core.Vertx
 import io.vertx.core.http.HttpClient
 import io.vertx.core.http.HttpServer
@@ -13,52 +14,50 @@ class BotServerImpl constructor(
 ) : BotServer {
     val baseUrl = "https://api.telegram.org/bot${config.botKey}/"
     val context = BotContext(this)
-
+    var updateHandler: Handler<Update>? = null
     var lastUpdateId = 0
+    var lastUpdateTimerId = 0L
 
     fun start(): Future<Unit> = Future.future { promise ->
-        doPollUpdate()
+        lastUpdateTimerId = doPollUpdate()
         promise.complete()
     }
 
-    fun doPollUpdate() {
+    fun doPollUpdate(): Long =
         vertx.setTimer(config.pollingDelay) {
-            context.getUpdates(offset = lastUpdateId + 1).setHandler {
-                doPollUpdate()
+            context.getUpdates(offset = lastUpdateId + 1, timeout = config.pollingTimeout).setHandler {
+                lastUpdateTimerId = doPollUpdate()
                 if (it.succeeded()) {
                     log { "new message: ${it.result()?.size ?: "null"}" }
                     it.result()?.let { resolveUpdates(it) }
                 } else {
-                    println("ERROR")
-                    println(it.cause().message)
-                    //it.cause().printStackTrace()
+                    log { it.cause().message ?: it.cause().toString() }
                 }
             }
         }
-    }
+
 
     fun resolveUpdates(updates: Array<Update>) {
         updates.forEach {
             if (it.updateId > lastUpdateId) {
                 // this is a new message
                 lastUpdateId = it.updateId
-                println(it)
-                println("ssssss")
-                //println(JsonObject.mapFrom(it).encode())
+                updateHandler?.handle(it)
             } else {
-                println("old message")
+                log { "Receive Old Message." }
             }
         }
-        TODO()
     }
 
     override fun sendRequest(req: BotRequest): Future<JsonObject> {
         log { "Send request: ${req.api}" }
         val request = httpClient.postAbs(baseUrl + req.api)
         val result = request.compose {
+            // receive http response
             log { "Receive response of ${req.api}, ${it.statusCode()} - ${it.statusMessage()}" }
             it.body()
         }.compose {
+            // received body
             log { "length: ${it.length()}" }
             Future.succeededFuture(it.toJsonObject())
         }.compose<JsonObject> {
@@ -87,12 +86,12 @@ data class BotConfig(
     val webhookUrl: String = "",
     val certificate: String? = null,
     val pollingDelay: Long = 500L,
-    val pollingTimeout: Int = 10000
+    val pollingTimeout: Int = 10
 )
 
 
 inline fun log(msg: () -> String) {
-    println(msg())
+    //println(msg())
 }
 
 class TelegramRequestException(
