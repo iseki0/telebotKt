@@ -6,7 +6,7 @@ import io.vertx.core.http.HttpServerOptions
 import io.vertx.core.json.JsonObject
 
 interface BotServer {
-    fun sendRequest(req: BotRequest): Future<JsonObject>
+    fun sendRequest(req: BotRequest, context: BotContext): Future<JsonObject>
 
     companion object {
         fun create(
@@ -22,4 +22,8 @@ interface BotServer {
         private fun defaultHttpClient(vertx: Vertx): HttpClient =
             vertx.createHttpClient()
     }
+}
+
+enum class RequestMethod {
+    JSON, FORM
 }

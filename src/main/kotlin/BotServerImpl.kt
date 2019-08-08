@@ -13,7 +13,7 @@ class BotServerImpl constructor(
     val httpServer: HttpServer
 ) : BotServer {
     val baseUrl = "https://api.telegram.org/bot${config.botKey}/"
-    val context = BotContext(this)
+    val context = BotContext(botServer = this, httpTimeout = 10000)
     var updateHandler: Handler<Update>? = null
     var lastUpdateId = 0
     var lastUpdateTimerId = 0L
@@ -49,7 +49,7 @@ class BotServerImpl constructor(
         }
     }
 
-    override fun sendRequest(req: BotRequest): Future<JsonObject> {
+    override fun sendRequest(req: BotRequest, context: BotContext): Future<JsonObject> {
         log { "Send request: ${req.api}" }
         val request = httpClient.postAbs(baseUrl + req.api)
         val result = request.compose {
