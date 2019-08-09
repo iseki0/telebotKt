@@ -20,4 +20,10 @@ internal class BotServerImplKtTest {
         assertFalse(checkSimpleType(object : InputFile {}))
         assertFalse(checkSimpleType(this))
     }
+
+    @Test
+    fun testEncodeToJson() {
+        val arr = listOf(Pair("A", "a"), Pair("B", "b"))
+        println(encodeToJson(arr))
+    }
 }

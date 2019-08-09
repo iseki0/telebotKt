@@ -3,6 +3,7 @@ import io.vertx.core.Handler
 import io.vertx.core.Promise
 import io.vertx.core.Vertx
 import io.vertx.core.http.HttpServer
+import io.vertx.core.json.Json
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.client.WebClient
 import io.vertx.ext.web.multipart.MultipartForm
@@ -57,40 +58,29 @@ class BotServerImpl(
         val url = baseUrl + req.api
         val request = httpClient.postAbs(url)
         val promise = Promise.promise<JsonObject>()
-        if (checkNeedForm(req) || true) {
-            val form = MultipartForm.create()
-            req.pairs.forEach { (key, value) ->
-                if (value is InputFile) {
-                    TODO()
-                } else {
-                    form.attribute(
-                        key,
-                        if (checkSimpleType(value)) value.toString() else JsonObject.mapFrom(value).encode()
-                    )
-                }
+        val form = MultipartForm.create()
+        req.pairs.forEach { (key, value) ->
+            if (value is InputFile) {
+                TODO()
+            } else {
+                form.attribute(key, if (checkSimpleType(value)) value.toString() else encodeToJson(value))
             }
+        }
 
-            request.sendMultipartForm(form) {
-                if (it.succeeded()) {
-                    try {
-                        val json = it.result().bodyAsJsonObject()
-                        if (json.getBoolean("ok")) {
-                            promise.complete(json)
-                        } else {
-                            promise.fail(
-                                TelegramRequestException(
-                                    request = req,
-                                    errorCode = json.getInteger("error_code", -1),
-                                    description = json.getString("description", "")
-                                )
-                            )
-                        }
-                    } catch (e: Exception) {
-                        promise.fail(e)
+        request.sendMultipartForm(form) {
+            if (it.succeeded()) {
+                try {
+                    val json = it.result().bodyAsJsonObject()
+                    if (json.getBoolean("ok")) {
+                        promise.complete(json)
+                    } else {
+                        promise.fail(TelegramRequestException(req, json))
                     }
-                } else {
-                    promise.fail(it.cause())
+                } catch (e: Exception) {
+                    promise.fail(e)
                 }
+            } else {
+                promise.fail(it.cause())
             }
         }
         return promise.future()
@@ -118,7 +108,13 @@ class TelegramRequestException(
     val errorCode: Int = 0,
     val description: String = "",
     cause: Throwable? = null
-) : RuntimeException("$errorCode: $description", cause)
+) : RuntimeException("$errorCode: $description", cause) {
+    constructor(request: BotRequest? = null, json: JsonObject? = null) : this(
+        request = request,
+        errorCode = json?.getInteger("error_code") ?: -1,
+        description = json?.getString("description") ?: ""
+    )
+}
 
 fun checkNeedForm(req: BotRequest): Boolean =
     req.pairs.find { it.second is InputFile }?.run { true } ?: false
@@ -133,3 +129,6 @@ fun checkSimpleType(obj: Any?): Boolean =
         else -> false
     }
 
+fun encodeToJson(obj: Any?): String {
+    return Json.encodePrettily(obj)
+}
