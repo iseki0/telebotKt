@@ -1,9 +1,7 @@
-# ~~🚧telebotKt (Not working)🚧~~
-~~Unofficial Telegram bot API lib for Kotlin. (Not working🚧)~~
+# 🚧telebotKt (Not working)🚧
+Unofficial Telegram bot API lib for Kotlin. (Not working🚧)
 
-# Stop maintenance 
-Stop maintenance on 2019-8-8 0:05 UTC+0800
-Byebye~
+Continue work!
 
 
 Refenerce: [Telegram Bot API](https://core.telegram.org/bots/api)
