@@ -1,17 +1,21 @@
 import io.vertx.core.Future
 import io.vertx.core.Handler
+import io.vertx.core.Promise
 import io.vertx.core.Vertx
-import io.vertx.core.http.HttpClient
 import io.vertx.core.http.HttpServer
 import io.vertx.core.json.JsonObject
+import io.vertx.ext.web.client.WebClient
+import io.vertx.ext.web.multipart.MultipartForm
+import types.InputFile
 import types.Update
 
-class BotServerImpl constructor(
+class BotServerImpl(
     val vertx: Vertx,
     val config: BotConfig,
-    val httpClient: HttpClient,
+    val httpClient: WebClient,
     val httpServer: HttpServer
 ) : BotServer {
+
     val baseUrl = "https://api.telegram.org/bot${config.botKey}/"
     val context = BotContext(botServer = this, httpTimeout = 10000)
     var updateHandler: Handler<Update>? = null
@@ -50,32 +54,47 @@ class BotServerImpl constructor(
     }
 
     override fun sendRequest(req: BotRequest, context: BotContext): Future<JsonObject> {
-        log { "Send request: ${req.api}" }
-        val request = httpClient.postAbs(baseUrl + req.api)
-        val result = request.compose {
-            // receive http response
-            log { "Receive response of ${req.api}, ${it.statusCode()} - ${it.statusMessage()}" }
-            it.body()
-        }.compose {
-            // received body
-            log { "length: ${it.length()}" }
-            Future.succeededFuture(it.toJsonObject())
-        }.compose<JsonObject> {
-            if (it.getBoolean("ok")) {
-                Future.succeededFuture(it)
-            } else {
-                throw TelegramRequestException(
-                    request = req,
-                    errorCode = it.getInteger("error_code"),
-                    description = it.getString("description")
-                )
+        val url = baseUrl + req.api
+        val request = httpClient.postAbs(url)
+        val promise = Promise.promise<JsonObject>()
+        if (checkNeedForm(req) || true) {
+            val form = MultipartForm.create()
+            req.pairs.forEach { (key, value) ->
+                if (value is InputFile) {
+                    TODO()
+                } else {
+                    form.attribute(
+                        key,
+                        if (checkSimpleType(value)) value.toString() else JsonObject.mapFrom(value).encode()
+                    )
+                }
+            }
+
+            request.sendMultipartForm(form) {
+                if (it.succeeded()) {
+                    try {
+                        val json = it.result().bodyAsJsonObject()
+                        if (json.getBoolean("ok")) {
+                            promise.complete(json)
+                        } else {
+                            promise.fail(
+                                TelegramRequestException(
+                                    request = req,
+                                    errorCode = json.getInteger("error_code", -1),
+                                    description = json.getString("description", "")
+                                )
+                            )
+                        }
+                    } catch (e: Exception) {
+                        promise.fail(e)
+                    }
+                } else {
+                    promise.fail(it.cause())
+                }
             }
         }
-        request.putHeader("Content-Type", "application/json")
-            .end(req.jsonObject.encode())
-        return result
+        return promise.future()
     }
-
 
 }
 
@@ -91,7 +110,7 @@ data class BotConfig(
 
 
 inline fun log(msg: () -> String) {
-    //println(msg())
+    println(msg())
 }
 
 class TelegramRequestException(
@@ -100,3 +119,17 @@ class TelegramRequestException(
     val description: String = "",
     cause: Throwable? = null
 ) : RuntimeException("$errorCode: $description", cause)
+
+fun checkNeedForm(req: BotRequest): Boolean =
+    req.pairs.find { it.second is InputFile }?.run { true } ?: false
+
+fun checkSimpleType(obj: Any?): Boolean =
+    when (obj) {
+        null -> true
+        is String -> true
+        is Int -> true
+        is Long -> true
+        is Boolean -> true
+        else -> false
+    }
+

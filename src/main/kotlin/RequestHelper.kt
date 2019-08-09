@@ -1,11 +1,14 @@
-import io.vertx.core.json.JsonObject
+data class BotRequest(
+    val api: String,
+    val pairs: List<Pair<String, Any?>>
+)
 
 
-data class BotRequest(val api: String, val jsonObject: JsonObject)
-
+//fun genBotRequest(api: String, vararg pairs: Pair<String, Any?>): BotRequest =
+//    BotRequest(api, JsonObject(mapOf(*pairs).filterNot { it.value == null }))
 
 fun genBotRequest(api: String, vararg pairs: Pair<String, Any?>): BotRequest =
-    BotRequest(api, JsonObject(mapOf(*pairs).filterNot { it.value == null }))
+    BotRequest(api, pairs.toList().filterNot { it.second == null })
 
 fun <T> basicTypeNeednotMapTo(type: Class<T>): Boolean =
     when {

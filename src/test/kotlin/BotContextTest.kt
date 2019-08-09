@@ -9,10 +9,10 @@ import types.*
 
 
 internal class BotContextTest {
-    val botRequest = BotRequest("testAPI", JsonObject("""{"key": "value"}"""))
+    val botRequest = BotRequest("testAPI", listOf(Pair("", "")))
     val botServer = object : BotServer {
         override fun sendRequest(req: BotRequest, context: BotContext): Future<JsonObject> =
-            Future.succeededFuture(this@BotContextTest.result)//.apply { println(result().encodePrettily()) }
+            Future.succeededFuture(this@BotContextTest.result)
     }
     val botContext = BotContext(botServer, 1)
     private lateinit var result: JsonObject
