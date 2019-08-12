@@ -24,7 +24,7 @@ fun ApiContext.editMessageCaption(
     caption: String? = null,
     parseMode: ParseMode? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Either<Message, Boolean>?> = sendRequest<Either<Message, Boolean>?>(
+): Future<Either<Message, Boolean>?> = sendRequestEither<Message, Boolean>(
     "editMessageCaption",
     listOf(
         Pair("chat_id", chatId),
@@ -44,7 +44,7 @@ fun ApiContext.editMessageCaption(
     parseMode: ParseMode? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
     callback: (result: Either<Message, Boolean>?) -> Unit
-): ApiContext = sendRequestCallback<Either<Message, Boolean>?>(
+): ApiContext = sendRequestEitherCallback<Message, Boolean>(
     "editMessageCaption",
     listOf(
         Pair("chat_id", chatId),
@@ -64,7 +64,7 @@ suspend fun ApiContext.editMessageCaptionAwait(
     caption: String? = null,
     parseMode: ParseMode? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Either<Message, Boolean>? = sendRequestAwait<Either<Message, Boolean>?>(
+): Either<Message, Boolean>? = sendRequestEitherAwait<Message, Boolean>(
     "editMessageCaption",
     listOf(
         Pair("chat_id", chatId),

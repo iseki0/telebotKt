@@ -20,7 +20,7 @@ fun ApiContext.editMessageReplyMarkup(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Either<Message, Boolean>?> = sendRequest<Either<Message, Boolean>?>(
+): Future<Either<Message, Boolean>?> = sendRequestEither<Message, Boolean>(
     "editMessageReplyMarkup",
     listOf(
         Pair("chat_id", chatId),
@@ -36,7 +36,7 @@ fun ApiContext.editMessageReplyMarkup(
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
     callback: (result: Either<Message, Boolean>?) -> Unit
-): ApiContext = sendRequestCallback<Either<Message, Boolean>?>(
+): ApiContext = sendRequestEitherCallback<Message, Boolean>(
     "editMessageReplyMarkup",
     listOf(
         Pair("chat_id", chatId),
@@ -52,7 +52,7 @@ suspend fun ApiContext.editMessageReplyMarkupAwait(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Either<Message, Boolean>? = sendRequestAwait<Either<Message, Boolean>?>(
+): Either<Message, Boolean>? = sendRequestEitherAwait<Message, Boolean>(
     "editMessageReplyMarkup",
     listOf(
         Pair("chat_id", chatId),

@@ -20,7 +20,7 @@ fun ApiContext.stopMessageLiveLocation(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Either<Message, Boolean>?> = sendRequest<Either<Message, Boolean>?>(
+): Future<Either<Message, Boolean>?> = sendRequestEither<Message, Boolean>(
     "stopMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -36,7 +36,7 @@ fun ApiContext.stopMessageLiveLocation(
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
     callback: (result: Either<Message, Boolean>?) -> Unit
-): ApiContext = sendRequestCallback<Either<Message, Boolean>?>(
+): ApiContext = sendRequestEitherCallback<Message, Boolean>(
     "stopMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -52,7 +52,7 @@ suspend fun ApiContext.stopMessageLiveLocationAwait(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Either<Message, Boolean>? = sendRequestAwait<Either<Message, Boolean>?>(
+): Either<Message, Boolean>? = sendRequestEitherAwait<Message, Boolean>(
     "stopMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),

@@ -24,7 +24,7 @@ fun ApiContext.editMessageLiveLocation(
     latitude: Double,
     longitude: Double,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Either<Message, Boolean>?> = sendRequest<Either<Message, Boolean>?>(
+): Future<Either<Message, Boolean>?> = sendRequestEither<Message, Boolean>(
     "editMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -44,7 +44,7 @@ fun ApiContext.editMessageLiveLocation(
     longitude: Double,
     replyMarkup: InlineKeyboardMarkup? = null,
     callback: (result: Either<Message, Boolean>?) -> Unit
-): ApiContext = sendRequestCallback<Either<Message, Boolean>?>(
+): ApiContext = sendRequestEitherCallback<Message, Boolean>(
     "editMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -64,7 +64,7 @@ suspend fun ApiContext.editMessageLiveLocationAwait(
     latitude: Double,
     longitude: Double,
     replyMarkup: InlineKeyboardMarkup? = null
-): Either<Message, Boolean>? = sendRequestAwait<Either<Message, Boolean>?>(
+): Either<Message, Boolean>? = sendRequestEitherAwait<Message, Boolean>(
     "editMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),

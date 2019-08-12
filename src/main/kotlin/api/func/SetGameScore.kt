@@ -25,7 +25,7 @@ fun ApiContext.setGameScore(
     chatId: Int? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null
-): Future<Either<Message, Boolean>?> = sendRequest<Either<Message, Boolean>?>(
+): Future<Either<Message, Boolean>?> = sendRequestEither<Message, Boolean>(
     "setGameScore",
     listOf(
         Pair("user_id", userId),
@@ -47,7 +47,7 @@ fun ApiContext.setGameScore(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     callback: (result: Either<Message, Boolean>?) -> Unit
-): ApiContext = sendRequestCallback<Either<Message, Boolean>?>(
+): ApiContext = sendRequestEitherCallback<Message, Boolean>(
     "setGameScore",
     listOf(
         Pair("user_id", userId),
@@ -69,7 +69,7 @@ suspend fun ApiContext.setGameScoreAwait(
     chatId: Int? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null
-): Either<Message, Boolean>? = sendRequestAwait<Either<Message, Boolean>?>(
+): Either<Message, Boolean>? = sendRequestEitherAwait<Message, Boolean>(
     "setGameScore",
     listOf(
         Pair("user_id", userId),
