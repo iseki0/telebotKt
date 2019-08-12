@@ -1,0 +1,323 @@
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
+import org.jsoup.nodes.Node
+import org.jsoup.select.NodeVisitor
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileReader
+import java.io.FileWriter
+import kotlin.system.exitProcess
+
+fun main() {
+    assert(false)
+    exitProcess(-1)
+    parse(Jsoup.parse(File("page.html"), "UTF-8", "https://core.telegram.org/bots/api"))
+}
+
+val nameMap = HashMap<String, String>()
+fun parse(document: Document) {
+    val allSet = document.select("h4").filter {
+        it.selectFirst("a")?.run {
+            attr("name").indexOf('-') == -1
+                    && attr("href")[0] == '#'
+        } ?: false
+    }.filter {
+        var curr = it.nextElementSibling()
+        repeat(8) {
+            if (curr.tagName() == "table") return@filter true
+            else if (curr.tagName() == "h4") return@filter false
+            curr = curr.nextElementSibling()
+        }
+        return@filter false
+    }.apply {
+        forEach {
+            nameMap[it.text().trim().toLowerCase()] = it.text().trim()
+        }
+    }.map {
+        var el = it.nextElementSibling()
+        val docList = ArrayList<Element>()
+        repeat(8) {
+            if (el.tagName() == "table") return@repeat
+            docList.add(el)
+            el = el.nextElementSibling()
+        }
+        val title = it.text().trim()
+        val doc = parseDocList(docList)
+        val table = el
+        Triple(title, doc, table)
+    }.map { (name, docs, table) ->
+        if (name[0].isLowerCase()) {
+            //func
+            Func(
+                name = name,
+                docs = docs,
+                fields = parseFuncTable(table)
+            )
+        } else {
+            //type
+            Type(
+                name = name,
+                docs = docs,
+                fields = parseTypeTable(table)
+            )
+        }
+    }
+
+    val docsMap = allSet.map {
+        fun genDocs(docs: List<String>): String =
+            docs.map { it.split("\n").toList() }.flatten().joinToString(prefix = " * ", separator = "\n * ")
+
+        fun aaa(fields: List<Field>): String =
+            fields.map { """ * @param[${it.camelCase}] ${it.docs}""" }.joinToString(separator = "\n")
+
+        fun bbb(docs: List<String>, fields: List<Field>): String =
+            """/**
+                |${genDocs(docs)}
+                | *
+                |${aaa(fields)}
+                | */
+            """.trimMargin()
+
+        if (it is Type) {
+            return@map it.name to bbb(it.docs, it.fields)
+        } else if (it is Func) {
+            return@map it.name to bbb(it.docs, it.fields)
+        } else {
+            throw RuntimeException()
+        }
+    }.toMap()
+
+    val pts = allSet.map {
+        if (it is Func) {
+            it.fields
+        } else if (it is Type) {
+            it.fields
+        } else {
+            assert(false)
+        }
+    }.flatMap {
+        (it as List<Field>)
+    }.map { it.type }/*.filterNot { it.size==1 }*/.apply { println(this.distinct()) }.map {
+        when (it) {
+            listOf("Int", "String") -> it to "String"
+            listOf("InputFile", "String") -> it to "InputFile"
+            listOf(
+                "InlineKeyboardMarkup",
+                "ReplyKeyboardMarkup",
+                "ReplyKeyboardRemove",
+                "ForceReply"
+            ) -> it to "ReplyMarkup"
+            listOf("InputMediaPhoto", "InputMediaPhoto") -> it to "InputMedia"
+            else -> it to it[0]
+        }
+    }.toMap()
+
+    val types = allSet.filter { it is Type }.map {
+        val type = it as Type
+        fun genField(field: Field): String =
+            """
+                |@get:JsonProperty("${field.jsonName}")
+                |@JsonProperty("${field.jsonName}")
+                |val ${field.camelCase}:${pts[field.type]}${if (field.optional) "? = null" else ""}
+            """.trimMargin()
+
+        val a = type.fields.map { genField(it) }.joinToString(separator = ",\n")
+        val b = """
+            |@file:Suppress("SpellCheckingInspection", "unused")
+            |package api.type
+            |import api.*
+            |import api.func.*
+            |import com.fasterxml.jackson.annotation.JsonInclude
+            |import com.fasterxml.jackson.annotation.JsonCreator
+            |import com.fasterxml.jackson.annotation.JsonProperty
+            |
+            |${docsMap[type.name]}
+            |${if (type.fields.find {
+                pts[it.type]?.startsWith("List") ?: throw RuntimeException()
+            } != null) "@HasList" else ""}
+            |@JsonInclude(JsonInclude.Include.NON_NULL)
+            |data class ${type.name} @JsonCreator constructor(
+            |${a.split("\n").joinToString(prefix = "\t", separator = "\n\t")}
+            |)
+        """.trimMargin()
+        type to b
+    }
+
+    val funcReturn = run {
+        BufferedReader(FileReader("funcReturn.txt")).readLines().map { it.split(Regex(","), 2) }.map { it[0] to it[1] }
+            .toMap()
+    }
+
+    val func = allSet.filter { it is Func }.map { it as Func }.map { func ->
+        val f = func.fields.map {
+            """${it.camelCase}: ${pts[it.type]}${if (it.optional) "? = null" else ""}"""
+        }.joinToString(separator = ",\n")
+        val p = func.fields.map {
+            """Pair("${it.jsonName}",${it.camelCase})"""
+        }.joinToString(separator = ",")
+        val result = funcReturn[func.name] ?: assert(false)
+        val a = """
+            |fun ApiContext.${func.name}(
+            |$f
+            |):Future<$result?> = sendRequest<$result?>("${func.name}",listOf($p))
+        """.trimMargin()
+        val b = """
+            |fun ApiContext.${func.name}(
+            |$f,
+            |callback:(result: $result?)->Unit
+            |):ApiContext = sendRequestCallback<$result?>("${func.name}",listOf($p),callback)
+        """.trimMargin()
+        val s = """
+            |suspend fun ApiContext.${func.name}Await(
+            |$f
+            |):$result? = sendRequestAwait<$result?>("${func.name}",listOf($p))
+        """.trimMargin()
+
+        func.name to """
+            |@file:Suppress("RemoveExplicitTypeArguments","DuplicatedCode","unused","SpellCheckingInspection")
+            |package api.func
+            |
+            |import api.type.*
+            |import api.*
+            |
+            |${docsMap[func.name]}
+            |$a
+            |
+            |$b
+            |
+            |$s
+        """.trimMargin()
+    }
+
+    func.forEach { (name, code) ->
+        val writer = FileWriter("src/main/kotlin/api/func/${name.capitalize()}.kt")
+        writer.write(code)
+        writer.close()
+    }
+    types.forEach { (name, code) ->
+        val writer = FileWriter("src/main/kotlin/api/type/${name.name}.kt")
+        writer.write(code)
+        writer.close()
+    }
+    //println(func.joinToString(separator = "\n\n"))
+    //println(funcReturn)
+    //println(allSet.filter { it is Func }.map { (it as Func).name }.joinToString(separator = ",\n"))
+}
+
+fun parseFuncTable(table: Element): List<Field> =
+    table.select("tbody > tr").map {
+        Field(
+            jsonName = it.child(0).text().trim(),
+            type = parseTypes(it.child(1).text().trim()),
+            docs = parseDocEle(it.child(3)).replace("\n", ""),
+            optional = it.child(2).text() != "Yes"
+        )
+    }
+
+fun parseTypeTable(table: Element): List<Field> =
+    table.select("tbody > tr").map {
+        val jsonName = it.child(0).text().trim()
+        val type = parseTypes(it.child(1).text().trim())
+        val docs = parseDocEle(it.child(2)).replace("\n", "")
+        Field(
+            jsonName = jsonName,
+            type = type,
+            docs = docs,
+            optional = docs.startsWith("*Optional")
+        )
+    }
+
+fun parseTypes(src: String): List<String> =
+    src.split(Regex("( or )|( and )")).map {
+        fun parseArray(str: String): String {
+            val a = str.trim()
+            return if (a.startsWith("Array of")) {
+                "List<" + parseArray(a.removePrefix("Array of")) + ">"
+            } else {
+                convTypes(a)
+            }
+        }
+        parseArray(it)
+    }
+
+fun convTypes(src: String): String =
+    when (src) {
+        "True" -> "Boolean"
+        "Integer" -> "Int"
+        "Float number" -> "Double"
+        else -> src
+    }
+
+fun parseDocList(list: List<Element>): List<String> = list.map { parseDocEle(it) }
+
+fun parseDocEle(element: Element): String = StringBuilder().apply {
+
+    element.traverse(object : NodeVisitor {
+        var linkUrl = ""
+        override fun head(node: Node?, depth: Int) {
+            when (node?.nodeName()) {
+                "#text" -> append(node)
+                "br" -> append("\n")
+                "strong" -> append("**")
+                "em" -> append("*")
+                "blockquote" -> append("> ")
+                "code" -> append('`')
+                "a" -> {
+                    linkUrl = node.attr("href").run {
+                        if (startsWith("/") || (startsWith("#") && !nameMap.containsKey(removePrefix("#"))))
+                            "https://core.telegram.org$this"
+                        else
+                            this
+                    }
+                    append('[')
+                }
+            }
+        }
+
+        override fun tail(node: Node?, depth: Int) {
+            when (node?.nodeName()) {
+                "strong" -> append("**")
+                "em" -> append("*")
+                "code" -> append('`')
+                "a" -> {
+                    append(']')
+                    if (linkUrl.startsWith("http")) {
+                        append('(')
+                        append(linkUrl)
+                        append(')')
+                    } else {
+                        append('[')
+                        append(nameMap[linkUrl.removePrefix("#")])
+                        append(']')
+                    }
+                }
+            }
+        }
+    })
+}.toString()
+
+data class Type(
+    val name: String,
+    val docs: List<String>,
+    val fields: List<Field>
+)
+
+data class Func(
+    val name: String,
+    val docs: List<String>,
+    val fields: List<Field>
+)
+
+data class Field(
+    val jsonName: String,
+    val type: List<String>,
+    val optional: Boolean,
+    val docs: String
+) {
+    val camelCase: String
+        get() = jsonName.split("_").mapIndexed { index, s -> if (index != 0) s.capitalize() else s }.joinToString(
+            separator = ""
+        )
+}
+
