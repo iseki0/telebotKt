@@ -2,8 +2,12 @@
 
 package api.func
 
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import api.type.UserProfilePhotos
+import io.vertx.core.Future
 
 /**
  * Use this method to get a list of profile pictures for a user. Returns a [UserProfilePhotos][UserProfilePhotos] object.

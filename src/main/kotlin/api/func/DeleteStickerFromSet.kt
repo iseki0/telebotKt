@@ -2,7 +2,11 @@
 
 package api.func
 
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
+import io.vertx.core.Future
 
 /**
  * Use this method to delete a sticker from a set created by the bot. Returns *True* on success.

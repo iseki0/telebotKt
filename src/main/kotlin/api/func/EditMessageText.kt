@@ -5,6 +5,7 @@ package api.func
 import api.*
 import api.type.InlineKeyboardMarkup
 import api.type.Message
+import io.vertx.core.Future
 
 /**
  * Use this method to edit text and [game](https://core.telegram.org#games) messages. On success, if edited message is sent by the bot, the edited [Message][Message] is returned, otherwise *True* is returned.

@@ -5,6 +5,7 @@ package api.func
 import api.*
 import api.type.InlineKeyboardMarkup
 import api.type.Message
+import io.vertx.core.Future
 
 /**
  * Use this method to edit captions of messages. On success, if edited message is sent by the bot, the edited [Message][Message] is returned, otherwise *True* is returned.

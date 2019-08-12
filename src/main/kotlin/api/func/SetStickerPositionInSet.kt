@@ -2,7 +2,11 @@
 
 package api.func
 
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
+import io.vertx.core.Future
 
 /**
  * Use this method to move a sticker in a set created by the bot to a specific position . Returns *True* on success.

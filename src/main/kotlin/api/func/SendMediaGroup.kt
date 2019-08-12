@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.Message
+import io.vertx.core.Future
 
 /**
  * Use this method to send a group of photos or videos as an album. On success, an array of the sent [Messages][Message] is returned.

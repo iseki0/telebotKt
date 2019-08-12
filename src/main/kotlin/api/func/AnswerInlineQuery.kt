@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.InlineKeyboardMarkup
+import io.vertx.core.Future
 
 /**
  * Use this method to send answers to an inline query. On success, *True* is returned.

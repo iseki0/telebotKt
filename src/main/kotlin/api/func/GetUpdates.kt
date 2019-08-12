@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.Update
+import io.vertx.core.Future
 
 /**
  * Use this method to receive incoming updates using long polling ([wiki](http://en.wikipedia.org/wiki/Push_technology#Long_polling)). An Array of [Update][Update] objects is returned.

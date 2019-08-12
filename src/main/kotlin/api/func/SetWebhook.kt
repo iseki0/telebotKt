@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.Update
+import io.vertx.core.Future
 
 /**
  * Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized [Update][Update]. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns *True* on success.

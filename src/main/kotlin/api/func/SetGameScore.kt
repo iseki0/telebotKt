@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.Message
+import io.vertx.core.Future
 
 /**
  * Use this method to set the score of the specified user in a game. On success, if the message was sent by the bot, returns the edited [Message][Message], otherwise returns *True*. Returns an error, if the new score is not greater than the user's current score in the chat and *force* is *False*.

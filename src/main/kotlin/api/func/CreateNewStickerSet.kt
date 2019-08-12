@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.MaskPosition
+import io.vertx.core.Future
 
 /**
  * Use this method to create new sticker set owned by a user. The bot will be able to edit the created sticker set. Returns *True* on success.

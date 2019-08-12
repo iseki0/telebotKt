@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.Message
+import io.vertx.core.Future
 
 /**
  * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent [Message][Message] is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.

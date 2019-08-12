@@ -5,6 +5,7 @@ package api.func
 import api.*
 import api.type.Document
 import api.type.Message
+import io.vertx.core.Future
 
 /**
  * Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as [Document][Document]). On success, the sent [Message][Message] is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.

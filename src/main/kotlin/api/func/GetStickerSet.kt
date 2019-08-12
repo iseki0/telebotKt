@@ -2,8 +2,12 @@
 
 package api.func
 
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import api.type.StickerSet
+import io.vertx.core.Future
 
 /**
  * Use this method to get a sticker set. On success, a [StickerSet][StickerSet] object is returned.

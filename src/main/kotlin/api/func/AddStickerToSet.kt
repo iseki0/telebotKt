@@ -4,6 +4,8 @@ package api.func
 
 import api.*
 import api.type.MaskPosition
+import io.vertx.core.Future
+
 
 /**
  * Use this method to add a new sticker to a set created by the bot. Returns *True* on success.

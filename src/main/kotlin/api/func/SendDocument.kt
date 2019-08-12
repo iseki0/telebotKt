@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.Message
+import io.vertx.core.Future
 
 /**
  * Use this method to send general files. On success, the sent [Message][Message] is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.

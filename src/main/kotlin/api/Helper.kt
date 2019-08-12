@@ -1,5 +1,7 @@
 package api
 
+import io.vertx.core.Future
+
 inline fun <reified T> ApiContext.sendRequest(command: String, args: List<Pair<String, Any?>>): Future<T?> =
     TODO()
 
@@ -12,7 +14,3 @@ inline fun <reified T> ApiContext.sendRequestCallback(
 
 suspend inline fun <reified T> ApiContext.sendRequestAwait(command: String, args: List<Pair<String, Any?>>): T? =
     TODO()
-
-fun a(apiContext: ApiContext) {
-
-}

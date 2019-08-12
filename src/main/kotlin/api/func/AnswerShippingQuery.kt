@@ -2,9 +2,13 @@
 
 package api.func
 
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import api.type.ShippingOption
 import api.type.Update
+import io.vertx.core.Future
 
 /**
  * If you sent an invoice requesting a shipping address and the parameter *is_flexible* was specified, the Bot API will send an [Update][Update] with a *shipping_query* field to the bot. Use this method to reply to shipping queries. On success, True is returned.

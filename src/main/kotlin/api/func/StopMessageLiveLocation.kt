@@ -5,6 +5,7 @@ package api.func
 import api.*
 import api.type.InlineKeyboardMarkup
 import api.type.Message
+import io.vertx.core.Future
 
 /**
  * Use this method to stop updating a live location message before *live_period* expires. On success, if the message was sent by the bot, the sent [Message][Message] is returned, otherwise *True* is returned.

@@ -2,9 +2,13 @@
 
 package api.func
 
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import api.type.InlineKeyboardMarkup
 import api.type.Message
+import io.vertx.core.Future
 
 /**
  * Use this method to send a game. On success, the sent [Message][Message] is returned.
