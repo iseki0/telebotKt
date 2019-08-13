@@ -26,7 +26,7 @@ fun ApiContext.editMessageText(
     parseMode: ParseMode? = null,
     disableWebPagePreview: Boolean? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Either<Message, Boolean>?> = sendRequestEither<Message, Boolean>(
+): Future<Message?> = sendRequest<Message?>(
     "editMessageText",
     listOf(
         Pair("chat_id", chatId),
@@ -47,8 +47,8 @@ fun ApiContext.editMessageText(
     parseMode: ParseMode? = null,
     disableWebPagePreview: Boolean? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: Either<Message, Boolean>?) -> Unit
-): ApiContext = sendRequestEitherCallback<Message, Boolean>(
+    callback: (result: Message?) -> Unit
+): ApiContext = sendRequestCallback<Message?>(
     "editMessageText",
     listOf(
         Pair("chat_id", chatId),
@@ -70,7 +70,7 @@ suspend fun ApiContext.editMessageTextAwait(
     parseMode: ParseMode? = null,
     disableWebPagePreview: Boolean? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Either<Message, Boolean>? = sendRequestEitherAwait<Message, Boolean>(
+): Message? = sendRequestAwait<Message?>(
     "editMessageText",
     listOf(
         Pair("chat_id", chatId),

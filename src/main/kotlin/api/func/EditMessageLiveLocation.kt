@@ -2,7 +2,10 @@
 
 package api.func
 
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import api.type.InlineKeyboardMarkup
 import api.type.Message
 import io.vertx.core.Future
@@ -24,7 +27,7 @@ fun ApiContext.editMessageLiveLocation(
     latitude: Double,
     longitude: Double,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Either<Message, Boolean>?> = sendRequestEither<Message, Boolean>(
+): Future<Message?> = sendRequest<Message?>(
     "editMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -43,8 +46,8 @@ fun ApiContext.editMessageLiveLocation(
     latitude: Double,
     longitude: Double,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: Either<Message, Boolean>?) -> Unit
-): ApiContext = sendRequestEitherCallback<Message, Boolean>(
+    callback: (result: Message?) -> Unit
+): ApiContext = sendRequestCallback<Message?>(
     "editMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -64,7 +67,7 @@ suspend fun ApiContext.editMessageLiveLocationAwait(
     latitude: Double,
     longitude: Double,
     replyMarkup: InlineKeyboardMarkup? = null
-): Either<Message, Boolean>? = sendRequestEitherAwait<Message, Boolean>(
+): Message? = sendRequestAwait<Message?>(
     "editMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),

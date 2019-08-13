@@ -22,7 +22,7 @@ fun ApiContext.editMessageMedia(
     inlineMessageId: String? = null,
     media: InputMedia,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Either<Message, Boolean>?> = sendRequestEither<Message, Boolean>(
+): Future<Message?> = sendRequest<Message?>(
     "editMessageMedia",
     listOf(
         Pair("chat_id", chatId),
@@ -39,8 +39,8 @@ fun ApiContext.editMessageMedia(
     inlineMessageId: String? = null,
     media: InputMedia,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: Either<Message, Boolean>?) -> Unit
-): ApiContext = sendRequestEitherCallback<Message, Boolean>(
+    callback: (result: Message?) -> Unit
+): ApiContext = sendRequestCallback<Message?>(
     "editMessageMedia",
     listOf(
         Pair("chat_id", chatId),
@@ -58,7 +58,7 @@ suspend fun ApiContext.editMessageMediaAwait(
     inlineMessageId: String? = null,
     media: InputMedia,
     replyMarkup: InlineKeyboardMarkup? = null
-): Either<Message, Boolean>? = sendRequestEitherAwait<Message, Boolean>(
+): Message? = sendRequestAwait<Message?>(
     "editMessageMedia",
     listOf(
         Pair("chat_id", chatId),

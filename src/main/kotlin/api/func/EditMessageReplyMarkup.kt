@@ -2,7 +2,10 @@
 
 package api.func
 
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import api.type.InlineKeyboardMarkup
 import api.type.Message
 import io.vertx.core.Future
@@ -20,7 +23,7 @@ fun ApiContext.editMessageReplyMarkup(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Either<Message, Boolean>?> = sendRequestEither<Message, Boolean>(
+): Future<Message?> = sendRequest<Message?>(
     "editMessageReplyMarkup",
     listOf(
         Pair("chat_id", chatId),
@@ -35,8 +38,8 @@ fun ApiContext.editMessageReplyMarkup(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: Either<Message, Boolean>?) -> Unit
-): ApiContext = sendRequestEitherCallback<Message, Boolean>(
+    callback: (result: Message?) -> Unit
+): ApiContext = sendRequestCallback<Message?>(
     "editMessageReplyMarkup",
     listOf(
         Pair("chat_id", chatId),
@@ -52,7 +55,7 @@ suspend fun ApiContext.editMessageReplyMarkupAwait(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Either<Message, Boolean>? = sendRequestEitherAwait<Message, Boolean>(
+): Message? = sendRequestAwait<Message?>(
     "editMessageReplyMarkup",
     listOf(
         Pair("chat_id", chatId),

@@ -2,7 +2,10 @@
 
 package api.func
 
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import api.type.Message
 import io.vertx.core.Future
 
@@ -25,7 +28,7 @@ fun ApiContext.setGameScore(
     chatId: Int? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null
-): Future<Either<Message, Boolean>?> = sendRequestEither<Message, Boolean>(
+): Future<Message?> = sendRequest<Message?>(
     "setGameScore",
     listOf(
         Pair("user_id", userId),
@@ -46,8 +49,8 @@ fun ApiContext.setGameScore(
     chatId: Int? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null,
-    callback: (result: Either<Message, Boolean>?) -> Unit
-): ApiContext = sendRequestEitherCallback<Message, Boolean>(
+    callback: (result: Message?) -> Unit
+): ApiContext = sendRequestCallback<Message?>(
     "setGameScore",
     listOf(
         Pair("user_id", userId),
@@ -69,7 +72,7 @@ suspend fun ApiContext.setGameScoreAwait(
     chatId: Int? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null
-): Either<Message, Boolean>? = sendRequestEitherAwait<Message, Boolean>(
+): Message? = sendRequestAwait<Message?>(
     "setGameScore",
     listOf(
         Pair("user_id", userId),
