@@ -2,9 +2,10 @@
 
 package api.func
 
+import api.type.*
 import api.*
-import api.type.Message
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * As of [v.4.0](https://telegram.org/blog/video-messages-and-telescope), Telegram clients support rounded square mp4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent [Message][Message] is returned.
@@ -38,8 +39,8 @@ fun ApiContext.sendVideoNote(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    )
-)
+    ),
+    object : TypeReference<Message> {})
 
 fun ApiContext.sendVideoNote(
     chatId: String,
@@ -50,7 +51,7 @@ fun ApiContext.sendVideoNote(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: Message?) -> Unit
+    callback: (result: AsyncResult<Message?>) -> Unit
 ): ApiContext = sendRequestCallback<Message?>(
     "sendVideoNote",
     listOf(
@@ -63,8 +64,8 @@ fun ApiContext.sendVideoNote(
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
     ),
-    callback
-)
+    callback,
+    object : TypeReference<Message> {})
 
 suspend fun ApiContext.sendVideoNoteAwait(
     chatId: String,
@@ -86,5 +87,5 @@ suspend fun ApiContext.sendVideoNoteAwait(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    )
-)
+    ),
+    object : TypeReference<Message> {})

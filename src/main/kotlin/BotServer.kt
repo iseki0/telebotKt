@@ -1,5 +1,7 @@
 import api.ApiContext
+import api.Either
 import api.InputFile
+import api.TypeReference
 import io.vertx.core.Future
 import io.vertx.core.http.HttpClientOptions
 import io.vertx.core.json.Json
@@ -21,7 +23,11 @@ class BotContextImpl : ApiContext {
 
     private val baseUrl: String = TODO()
 
-    override fun <T> doSendRequest(command: String, args: List<Pair<String, Any?>>, resultType: Class<T>): Future<T?> =
+    override fun <T> doSendRequest(
+        command: String,
+        args: List<Pair<String, Any?>>,
+        resultType: TypeReference<*>
+    ): Future<T?> =
         Future.future { promise ->
             val url = baseUrl + command
             val request = webClient.postAbs(baseUrl)
@@ -34,7 +40,11 @@ class BotContextImpl : ApiContext {
                 }
             }
             request.sendMultipartForm(form) {
-                TODO()
+                try {
+                    parseResult<T>(it.result().bodyAsString(),resultType)
+                } catch (e: Exception) {
+                    promise.fail(e)
+                }
             }
         }
 }
@@ -55,3 +65,28 @@ fun isSimpleType(o: Any?): Boolean =
         Double -> true
         else -> false
     }
+
+class TelegramRequestException(val errorCode: Int, val description: String) :
+    RuntimeException("$errorCode - $description")
+
+
+fun <T> parseResult(str:String,resultType:TypeReference<*>):T?{
+    val mapper=Json.mapper
+    val resultTree=mapper.readTree(str)
+    if (resultTree.get("ok").asBoolean()) {
+        val type=resultType::class.supertypes.find { it.classifier==TypeReference::class }!!.arguments[0]!!.type!!
+        if (type.classifier == Either::class){
+            val l=type.arguments[0].type!!.classifier as Class<*> // object type
+            val r=type.arguments[1].type!!.classifier as Class<*> // simple type
+            if (resultTree["result"].isPojo){
+                return Either.Left( mapper.readValue(mapper.treeAsTokens(resultTree["result"]),l)) as T
+            }
+        }else{
+
+        }
+
+    }else{
+        throw TelegramRequestException(resultTree.get("error_code").asInt(),resultTree.get("description").asText())
+    }
+    TODO()
+}

@@ -2,10 +2,10 @@
 
 package api.func
 
+import api.type.*
 import api.*
-import api.type.InlineKeyboardMarkup
-import api.type.Message
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to edit captions of messages. On success, if edited message is sent by the bot, the edited [Message][Message] is returned, otherwise *True* is returned.
@@ -22,29 +22,9 @@ fun ApiContext.editMessageCaption(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
-    "editMessageCaption",
-    listOf(
-        Pair("chat_id", chatId),
-        Pair("message_id", messageId),
-        Pair("inline_message_id", inlineMessageId),
-        Pair("caption", caption),
-        Pair("parse_mode", parseMode),
-        Pair("reply_markup", replyMarkup)
-    )
-)
-
-fun ApiContext.editMessageCaption(
-    chatId: String? = null,
-    messageId: Int? = null,
-    inlineMessageId: String? = null,
-    caption: String? = null,
-    parseMode: ParseMode? = null,
-    replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+): Future<Either<Message, Boolean>?> = sendRequest<Either<Message, Boolean>?>(
     "editMessageCaption",
     listOf(
         Pair("chat_id", chatId),
@@ -54,17 +34,17 @@ fun ApiContext.editMessageCaption(
         Pair("parse_mode", parseMode),
         Pair("reply_markup", replyMarkup)
     ),
-    callback
-)
+    object : TypeReference<Either<Message, Boolean>> {})
 
-suspend fun ApiContext.editMessageCaptionAwait(
+fun ApiContext.editMessageCaption(
     chatId: String? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
-    replyMarkup: InlineKeyboardMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+    parseMode: String? = null,
+    replyMarkup: InlineKeyboardMarkup? = null,
+    callback: (result: AsyncResult<Either<Message, Boolean>?>) -> Unit
+): ApiContext = sendRequestCallback<Either<Message, Boolean>?>(
     "editMessageCaption",
     listOf(
         Pair("chat_id", chatId),
@@ -73,5 +53,25 @@ suspend fun ApiContext.editMessageCaptionAwait(
         Pair("caption", caption),
         Pair("parse_mode", parseMode),
         Pair("reply_markup", replyMarkup)
-    )
-)
+    ),
+    callback,
+    object : TypeReference<Either<Message, Boolean>> {})
+
+suspend fun ApiContext.editMessageCaptionAwait(
+    chatId: String? = null,
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    caption: String? = null,
+    parseMode: String? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
+): Either<Message, Boolean>? = sendRequestAwait<Either<Message, Boolean>?>(
+    "editMessageCaption",
+    listOf(
+        Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("caption", caption),
+        Pair("parse_mode", parseMode),
+        Pair("reply_markup", replyMarkup)
+    ),
+    object : TypeReference<Either<Message, Boolean>> {})

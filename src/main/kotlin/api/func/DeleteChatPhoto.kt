@@ -2,11 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.type.*
+import api.*
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns *True* on success.
@@ -16,13 +15,19 @@ import io.vertx.core.Future
  */
 fun ApiContext.deleteChatPhoto(
     chatId: String
-): Future<Boolean?> = sendRequest<Boolean?>("deleteChatPhoto", listOf(Pair("chat_id", chatId)))
+): Future<Boolean?> =
+    sendRequest<Boolean?>("deleteChatPhoto", listOf(Pair("chat_id", chatId)), object : TypeReference<Boolean> {})
 
 fun ApiContext.deleteChatPhoto(
     chatId: String,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>("deleteChatPhoto", listOf(Pair("chat_id", chatId)), callback)
+    callback: (result: AsyncResult<Boolean?>) -> Unit
+): ApiContext = sendRequestCallback<Boolean?>(
+    "deleteChatPhoto",
+    listOf(Pair("chat_id", chatId)),
+    callback,
+    object : TypeReference<Boolean> {})
 
 suspend fun ApiContext.deleteChatPhotoAwait(
     chatId: String
-): Boolean? = sendRequestAwait<Boolean?>("deleteChatPhoto", listOf(Pair("chat_id", chatId)))
+): Boolean? =
+    sendRequestAwait<Boolean?>("deleteChatPhoto", listOf(Pair("chat_id", chatId)), object : TypeReference<Boolean> {})

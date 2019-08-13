@@ -2,9 +2,10 @@
 
 package api.func
 
+import api.type.*
 import api.*
-import api.type.Message
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to send text messages. On success, the sent [Message][Message] is returned.
@@ -20,7 +21,7 @@ import io.vertx.core.Future
 fun ApiContext.sendMessage(
     chatId: String,
     text: String,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableWebPagePreview: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
@@ -35,18 +36,18 @@ fun ApiContext.sendMessage(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    )
-)
+    ),
+    object : TypeReference<Message> {})
 
 fun ApiContext.sendMessage(
     chatId: String,
     text: String,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableWebPagePreview: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: Message?) -> Unit
+    callback: (result: AsyncResult<Message?>) -> Unit
 ): ApiContext = sendRequestCallback<Message?>(
     "sendMessage",
     listOf(
@@ -58,13 +59,13 @@ fun ApiContext.sendMessage(
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
     ),
-    callback
-)
+    callback,
+    object : TypeReference<Message> {})
 
 suspend fun ApiContext.sendMessageAwait(
     chatId: String,
     text: String,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableWebPagePreview: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
@@ -79,5 +80,5 @@ suspend fun ApiContext.sendMessageAwait(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    )
-)
+    ),
+    object : TypeReference<Message> {})

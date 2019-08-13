@@ -2,13 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
-import api.type.ShippingOption
-import api.type.Update
+import api.type.*
+import api.*
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * If you sent an invoice requesting a shipping address and the parameter *is_flexible* was specified, the Bot API will send an [Update][Update] with a *shipping_query* field to the bot. Use this method to reply to shipping queries. On success, True is returned.
@@ -30,15 +27,15 @@ fun ApiContext.answerShippingQuery(
         Pair("ok", ok),
         Pair("shipping_options", shippingOptions),
         Pair("error_message", errorMessage)
-    )
-)
+    ),
+    object : TypeReference<Boolean> {})
 
 fun ApiContext.answerShippingQuery(
     shippingQueryId: String,
     ok: Boolean,
     shippingOptions: List<ShippingOption>? = null,
     errorMessage: String? = null,
-    callback: (result: Boolean?) -> Unit
+    callback: (result: AsyncResult<Boolean?>) -> Unit
 ): ApiContext = sendRequestCallback<Boolean?>(
     "answerShippingQuery",
     listOf(
@@ -47,8 +44,8 @@ fun ApiContext.answerShippingQuery(
         Pair("shipping_options", shippingOptions),
         Pair("error_message", errorMessage)
     ),
-    callback
-)
+    callback,
+    object : TypeReference<Boolean> {})
 
 suspend fun ApiContext.answerShippingQueryAwait(
     shippingQueryId: String,
@@ -62,5 +59,5 @@ suspend fun ApiContext.answerShippingQueryAwait(
         Pair("ok", ok),
         Pair("shipping_options", shippingOptions),
         Pair("error_message", errorMessage)
-    )
-)
+    ),
+    object : TypeReference<Boolean> {})

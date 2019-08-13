@@ -2,12 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
-import api.type.GameHighScore
+import api.type.*
+import api.*
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to get data for high score tables. Will return the score of the specified user and several of his neighbors in a game. On success, returns an *Array* of [GameHighScore][GameHighScore] objects.
@@ -23,23 +21,7 @@ fun ApiContext.getGameHighScores(
     chatId: Int? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null
-): Future<List<GameHighScore>?> = sendRequest<List<GameHighScore>?>(
-    "getGameHighScores",
-    listOf(
-        Pair("user_id", userId),
-        Pair("chat_id", chatId),
-        Pair("message_id", messageId),
-        Pair("inline_message_id", inlineMessageId)
-    )
-)
-
-fun ApiContext.getGameHighScores(
-    userId: Int,
-    chatId: Int? = null,
-    messageId: Int? = null,
-    inlineMessageId: String? = null,
-    callback: (result: List<GameHighScore>?) -> Unit
-): ApiContext = sendRequestCallback<List<GameHighScore>?>(
+): Future<Array<GameHighScore>?> = sendRequest<Array<GameHighScore>?>(
     "getGameHighScores",
     listOf(
         Pair("user_id", userId),
@@ -47,20 +29,36 @@ fun ApiContext.getGameHighScores(
         Pair("message_id", messageId),
         Pair("inline_message_id", inlineMessageId)
     ),
-    callback
-)
+    object : TypeReference<Array<GameHighScore>> {})
 
-suspend fun ApiContext.getGameHighScoresAwait(
+fun ApiContext.getGameHighScores(
     userId: Int,
     chatId: Int? = null,
     messageId: Int? = null,
-    inlineMessageId: String? = null
-): List<GameHighScore>? = sendRequestAwait<List<GameHighScore>?>(
+    inlineMessageId: String? = null,
+    callback: (result: AsyncResult<Array<GameHighScore>?>) -> Unit
+): ApiContext = sendRequestCallback<Array<GameHighScore>?>(
     "getGameHighScores",
     listOf(
         Pair("user_id", userId),
         Pair("chat_id", chatId),
         Pair("message_id", messageId),
         Pair("inline_message_id", inlineMessageId)
-    )
-)
+    ),
+    callback,
+    object : TypeReference<Array<GameHighScore>> {})
+
+suspend fun ApiContext.getGameHighScoresAwait(
+    userId: Int,
+    chatId: Int? = null,
+    messageId: Int? = null,
+    inlineMessageId: String? = null
+): Array<GameHighScore>? = sendRequestAwait<Array<GameHighScore>?>(
+    "getGameHighScores",
+    listOf(
+        Pair("user_id", userId),
+        Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId)
+    ),
+    object : TypeReference<Array<GameHighScore>> {})

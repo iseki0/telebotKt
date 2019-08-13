@@ -2,11 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.type.*
+import api.*
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns *True* on success.
@@ -18,16 +17,25 @@ import io.vertx.core.Future
 fun ApiContext.setChatTitle(
     chatId: String,
     title: String
-): Future<Boolean?> = sendRequest<Boolean?>("setChatTitle", listOf(Pair("chat_id", chatId), Pair("title", title)))
+): Future<Boolean?> = sendRequest<Boolean?>(
+    "setChatTitle",
+    listOf(Pair("chat_id", chatId), Pair("title", title)),
+    object : TypeReference<Boolean> {})
 
 fun ApiContext.setChatTitle(
     chatId: String,
     title: String,
-    callback: (result: Boolean?) -> Unit
-): ApiContext =
-    sendRequestCallback<Boolean?>("setChatTitle", listOf(Pair("chat_id", chatId), Pair("title", title)), callback)
+    callback: (result: AsyncResult<Boolean?>) -> Unit
+): ApiContext = sendRequestCallback<Boolean?>(
+    "setChatTitle",
+    listOf(Pair("chat_id", chatId), Pair("title", title)),
+    callback,
+    object : TypeReference<Boolean> {})
 
 suspend fun ApiContext.setChatTitleAwait(
     chatId: String,
     title: String
-): Boolean? = sendRequestAwait<Boolean?>("setChatTitle", listOf(Pair("chat_id", chatId), Pair("title", title)))
+): Boolean? = sendRequestAwait<Boolean?>(
+    "setChatTitle",
+    listOf(Pair("chat_id", chatId), Pair("title", title)),
+    object : TypeReference<Boolean> {})

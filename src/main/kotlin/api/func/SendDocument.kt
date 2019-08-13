@@ -2,9 +2,10 @@
 
 package api.func
 
+import api.type.*
 import api.*
-import api.type.Message
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to send general files. On success, the sent [Message][Message] is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
@@ -23,7 +24,7 @@ fun ApiContext.sendDocument(
     document: InputFile,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
@@ -38,19 +39,19 @@ fun ApiContext.sendDocument(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    )
-)
+    ),
+    object : TypeReference<Message> {})
 
 fun ApiContext.sendDocument(
     chatId: String,
     document: InputFile,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: Message?) -> Unit
+    callback: (result: AsyncResult<Message?>) -> Unit
 ): ApiContext = sendRequestCallback<Message?>(
     "sendDocument",
     listOf(
@@ -63,15 +64,15 @@ fun ApiContext.sendDocument(
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
     ),
-    callback
-)
+    callback,
+    object : TypeReference<Message> {})
 
 suspend fun ApiContext.sendDocumentAwait(
     chatId: String,
     document: InputFile,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
@@ -86,5 +87,5 @@ suspend fun ApiContext.sendDocumentAwait(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    )
-)
+    ),
+    object : TypeReference<Message> {})

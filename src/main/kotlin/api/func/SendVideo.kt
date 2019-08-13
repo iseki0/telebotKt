@@ -2,10 +2,10 @@
 
 package api.func
 
+import api.type.*
 import api.*
-import api.type.Document
-import api.type.Message
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as [Document][Document]). On success, the sent [Message][Message] is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
@@ -31,7 +31,7 @@ fun ApiContext.sendVideo(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     supportsStreaming: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
@@ -51,8 +51,8 @@ fun ApiContext.sendVideo(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    )
-)
+    ),
+    object : TypeReference<Message> {})
 
 fun ApiContext.sendVideo(
     chatId: String,
@@ -62,12 +62,12 @@ fun ApiContext.sendVideo(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     supportsStreaming: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: Message?) -> Unit
+    callback: (result: AsyncResult<Message?>) -> Unit
 ): ApiContext = sendRequestCallback<Message?>(
     "sendVideo",
     listOf(
@@ -84,8 +84,8 @@ fun ApiContext.sendVideo(
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
     ),
-    callback
-)
+    callback,
+    object : TypeReference<Message> {})
 
 suspend fun ApiContext.sendVideoAwait(
     chatId: String,
@@ -95,7 +95,7 @@ suspend fun ApiContext.sendVideoAwait(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     supportsStreaming: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
@@ -115,5 +115,5 @@ suspend fun ApiContext.sendVideoAwait(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    )
-)
+    ),
+    object : TypeReference<Message> {})

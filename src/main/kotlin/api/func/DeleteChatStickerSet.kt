@@ -2,11 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.type.*
+import api.*
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field *can_set_sticker_set* optionally returned in [getChat][getChat] requests to check if the bot can use this method. Returns *True* on success.
@@ -15,13 +14,21 @@ import io.vertx.core.Future
  */
 fun ApiContext.deleteChatStickerSet(
     chatId: String
-): Future<Boolean?> = sendRequest<Boolean?>("deleteChatStickerSet", listOf(Pair("chat_id", chatId)))
+): Future<Boolean?> =
+    sendRequest<Boolean?>("deleteChatStickerSet", listOf(Pair("chat_id", chatId)), object : TypeReference<Boolean> {})
 
 fun ApiContext.deleteChatStickerSet(
     chatId: String,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>("deleteChatStickerSet", listOf(Pair("chat_id", chatId)), callback)
+    callback: (result: AsyncResult<Boolean?>) -> Unit
+): ApiContext = sendRequestCallback<Boolean?>(
+    "deleteChatStickerSet",
+    listOf(Pair("chat_id", chatId)),
+    callback,
+    object : TypeReference<Boolean> {})
 
 suspend fun ApiContext.deleteChatStickerSetAwait(
     chatId: String
-): Boolean? = sendRequestAwait<Boolean?>("deleteChatStickerSet", listOf(Pair("chat_id", chatId)))
+): Boolean? = sendRequestAwait<Boolean?>(
+    "deleteChatStickerSet",
+    listOf(Pair("chat_id", chatId)),
+    object : TypeReference<Boolean> {})

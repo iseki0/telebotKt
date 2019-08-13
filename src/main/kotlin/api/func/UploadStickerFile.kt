@@ -2,9 +2,10 @@
 
 package api.func
 
+import api.type.*
 import api.*
-import api.type.File
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to upload a .png file with a sticker for later use in *createNewStickerSet* and *addStickerToSet* methods (can be used multiple times). Returns the uploaded [File][File] on success.
@@ -15,21 +16,25 @@ import io.vertx.core.Future
 fun ApiContext.uploadStickerFile(
     userId: Int,
     pngSticker: InputFile
-): Future<File?> =
-    sendRequest<File?>("uploadStickerFile", listOf(Pair("user_id", userId), Pair("png_sticker", pngSticker)))
+): Future<File?> = sendRequest<File?>(
+    "uploadStickerFile",
+    listOf(Pair("user_id", userId), Pair("png_sticker", pngSticker)),
+    object : TypeReference<File> {})
 
 fun ApiContext.uploadStickerFile(
     userId: Int,
     pngSticker: InputFile,
-    callback: (result: File?) -> Unit
+    callback: (result: AsyncResult<File?>) -> Unit
 ): ApiContext = sendRequestCallback<File?>(
     "uploadStickerFile",
     listOf(Pair("user_id", userId), Pair("png_sticker", pngSticker)),
-    callback
-)
+    callback,
+    object : TypeReference<File> {})
 
 suspend fun ApiContext.uploadStickerFileAwait(
     userId: Int,
     pngSticker: InputFile
-): File? =
-    sendRequestAwait<File?>("uploadStickerFile", listOf(Pair("user_id", userId), Pair("png_sticker", pngSticker)))
+): File? = sendRequestAwait<File?>(
+    "uploadStickerFile",
+    listOf(Pair("user_id", userId), Pair("png_sticker", pngSticker)),
+    object : TypeReference<File> {})

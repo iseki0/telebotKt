@@ -2,12 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
-import api.type.Chat
+import api.type.*
+import api.*
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Returns a [Chat][Chat] object on success.
@@ -16,13 +14,14 @@ import io.vertx.core.Future
  */
 fun ApiContext.getChat(
     chatId: String
-): Future<Chat?> = sendRequest<Chat?>("getChat", listOf(Pair("chat_id", chatId)))
+): Future<Chat?> = sendRequest<Chat?>("getChat", listOf(Pair("chat_id", chatId)), object : TypeReference<Chat> {})
 
 fun ApiContext.getChat(
     chatId: String,
-    callback: (result: Chat?) -> Unit
-): ApiContext = sendRequestCallback<Chat?>("getChat", listOf(Pair("chat_id", chatId)), callback)
+    callback: (result: AsyncResult<Chat?>) -> Unit
+): ApiContext =
+    sendRequestCallback<Chat?>("getChat", listOf(Pair("chat_id", chatId)), callback, object : TypeReference<Chat> {})
 
 suspend fun ApiContext.getChatAwait(
     chatId: String
-): Chat? = sendRequestAwait<Chat?>("getChat", listOf(Pair("chat_id", chatId)))
+): Chat? = sendRequestAwait<Chat?>("getChat", listOf(Pair("chat_id", chatId)), object : TypeReference<Chat> {})

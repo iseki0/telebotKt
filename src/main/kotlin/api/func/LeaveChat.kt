@@ -2,11 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.type.*
+import api.*
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method for your bot to leave a group, supergroup or channel. Returns *True* on success.
@@ -15,13 +14,19 @@ import io.vertx.core.Future
  */
 fun ApiContext.leaveChat(
     chatId: String
-): Future<Boolean?> = sendRequest<Boolean?>("leaveChat", listOf(Pair("chat_id", chatId)))
+): Future<Boolean?> =
+    sendRequest<Boolean?>("leaveChat", listOf(Pair("chat_id", chatId)), object : TypeReference<Boolean> {})
 
 fun ApiContext.leaveChat(
     chatId: String,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>("leaveChat", listOf(Pair("chat_id", chatId)), callback)
+    callback: (result: AsyncResult<Boolean?>) -> Unit
+): ApiContext = sendRequestCallback<Boolean?>(
+    "leaveChat",
+    listOf(Pair("chat_id", chatId)),
+    callback,
+    object : TypeReference<Boolean> {})
 
 suspend fun ApiContext.leaveChatAwait(
     chatId: String
-): Boolean? = sendRequestAwait<Boolean?>("leaveChat", listOf(Pair("chat_id", chatId)))
+): Boolean? =
+    sendRequestAwait<Boolean?>("leaveChat", listOf(Pair("chat_id", chatId)), object : TypeReference<Boolean> {})

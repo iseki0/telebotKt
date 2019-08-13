@@ -2,13 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
-import api.type.InlineKeyboardMarkup
-import api.type.Message
+import api.type.*
+import api.*
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to stop updating a live location message before *live_period* expires. On success, if the message was sent by the bot, the sent [Message][Message] is returned, otherwise *True* is returned.
@@ -23,23 +20,7 @@ fun ApiContext.stopMessageLiveLocation(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
-    "stopMessageLiveLocation",
-    listOf(
-        Pair("chat_id", chatId),
-        Pair("message_id", messageId),
-        Pair("inline_message_id", inlineMessageId),
-        Pair("reply_markup", replyMarkup)
-    )
-)
-
-fun ApiContext.stopMessageLiveLocation(
-    chatId: String? = null,
-    messageId: Int? = null,
-    inlineMessageId: String? = null,
-    replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+): Future<Either<Message, Boolean>?> = sendRequest<Either<Message, Boolean>?>(
     "stopMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -47,20 +28,36 @@ fun ApiContext.stopMessageLiveLocation(
         Pair("inline_message_id", inlineMessageId),
         Pair("reply_markup", replyMarkup)
     ),
-    callback
-)
+    object : TypeReference<Either<Message, Boolean>> {})
 
-suspend fun ApiContext.stopMessageLiveLocationAwait(
+fun ApiContext.stopMessageLiveLocation(
     chatId: String? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null,
-    replyMarkup: InlineKeyboardMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+    replyMarkup: InlineKeyboardMarkup? = null,
+    callback: (result: AsyncResult<Either<Message, Boolean>?>) -> Unit
+): ApiContext = sendRequestCallback<Either<Message, Boolean>?>(
     "stopMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
         Pair("message_id", messageId),
         Pair("inline_message_id", inlineMessageId),
         Pair("reply_markup", replyMarkup)
-    )
-)
+    ),
+    callback,
+    object : TypeReference<Either<Message, Boolean>> {})
+
+suspend fun ApiContext.stopMessageLiveLocationAwait(
+    chatId: String? = null,
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
+): Either<Message, Boolean>? = sendRequestAwait<Either<Message, Boolean>?>(
+    "stopMessageLiveLocation",
+    listOf(
+        Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("reply_markup", replyMarkup)
+    ),
+    object : TypeReference<Either<Message, Boolean>> {})

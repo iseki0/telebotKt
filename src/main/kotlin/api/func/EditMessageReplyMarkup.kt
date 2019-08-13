@@ -2,13 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
-import api.type.InlineKeyboardMarkup
-import api.type.Message
+import api.type.*
+import api.*
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to edit only the reply markup of messages. On success, if edited message is sent by the bot, the edited [Message][Message] is returned, otherwise *True* is returned.
@@ -23,23 +20,7 @@ fun ApiContext.editMessageReplyMarkup(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
-    "editMessageReplyMarkup",
-    listOf(
-        Pair("chat_id", chatId),
-        Pair("message_id", messageId),
-        Pair("inline_message_id", inlineMessageId),
-        Pair("reply_markup", replyMarkup)
-    )
-)
-
-fun ApiContext.editMessageReplyMarkup(
-    chatId: String? = null,
-    messageId: Int? = null,
-    inlineMessageId: String? = null,
-    replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+): Future<Either<Message, Boolean>?> = sendRequest<Either<Message, Boolean>?>(
     "editMessageReplyMarkup",
     listOf(
         Pair("chat_id", chatId),
@@ -47,20 +28,36 @@ fun ApiContext.editMessageReplyMarkup(
         Pair("inline_message_id", inlineMessageId),
         Pair("reply_markup", replyMarkup)
     ),
-    callback
-)
+    object : TypeReference<Either<Message, Boolean>> {})
 
-suspend fun ApiContext.editMessageReplyMarkupAwait(
+fun ApiContext.editMessageReplyMarkup(
     chatId: String? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null,
-    replyMarkup: InlineKeyboardMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+    replyMarkup: InlineKeyboardMarkup? = null,
+    callback: (result: AsyncResult<Either<Message, Boolean>?>) -> Unit
+): ApiContext = sendRequestCallback<Either<Message, Boolean>?>(
     "editMessageReplyMarkup",
     listOf(
         Pair("chat_id", chatId),
         Pair("message_id", messageId),
         Pair("inline_message_id", inlineMessageId),
         Pair("reply_markup", replyMarkup)
-    )
-)
+    ),
+    callback,
+    object : TypeReference<Either<Message, Boolean>> {})
+
+suspend fun ApiContext.editMessageReplyMarkupAwait(
+    chatId: String? = null,
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
+): Either<Message, Boolean>? = sendRequestAwait<Either<Message, Boolean>?>(
+    "editMessageReplyMarkup",
+    listOf(
+        Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("reply_markup", replyMarkup)
+    ),
+    object : TypeReference<Either<Message, Boolean>> {})

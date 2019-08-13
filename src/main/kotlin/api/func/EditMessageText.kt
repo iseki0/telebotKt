@@ -2,10 +2,10 @@
 
 package api.func
 
+import api.type.*
 import api.*
-import api.type.InlineKeyboardMarkup
-import api.type.Message
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to edit text and [game](https://core.telegram.org#games) messages. On success, if edited message is sent by the bot, the edited [Message][Message] is returned, otherwise *True* is returned.
@@ -23,32 +23,10 @@ fun ApiContext.editMessageText(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     text: String,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableWebPagePreview: Boolean? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
-    "editMessageText",
-    listOf(
-        Pair("chat_id", chatId),
-        Pair("message_id", messageId),
-        Pair("inline_message_id", inlineMessageId),
-        Pair("text", text),
-        Pair("parse_mode", parseMode),
-        Pair("disable_web_page_preview", disableWebPagePreview),
-        Pair("reply_markup", replyMarkup)
-    )
-)
-
-fun ApiContext.editMessageText(
-    chatId: String? = null,
-    messageId: Int? = null,
-    inlineMessageId: String? = null,
-    text: String,
-    parseMode: ParseMode? = null,
-    disableWebPagePreview: Boolean? = null,
-    replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+): Future<Either<Message, Boolean>?> = sendRequest<Either<Message, Boolean>?>(
     "editMessageText",
     listOf(
         Pair("chat_id", chatId),
@@ -59,18 +37,18 @@ fun ApiContext.editMessageText(
         Pair("disable_web_page_preview", disableWebPagePreview),
         Pair("reply_markup", replyMarkup)
     ),
-    callback
-)
+    object : TypeReference<Either<Message, Boolean>> {})
 
-suspend fun ApiContext.editMessageTextAwait(
+fun ApiContext.editMessageText(
     chatId: String? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     text: String,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableWebPagePreview: Boolean? = null,
-    replyMarkup: InlineKeyboardMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+    replyMarkup: InlineKeyboardMarkup? = null,
+    callback: (result: AsyncResult<Either<Message, Boolean>?>) -> Unit
+): ApiContext = sendRequestCallback<Either<Message, Boolean>?>(
     "editMessageText",
     listOf(
         Pair("chat_id", chatId),
@@ -80,5 +58,27 @@ suspend fun ApiContext.editMessageTextAwait(
         Pair("parse_mode", parseMode),
         Pair("disable_web_page_preview", disableWebPagePreview),
         Pair("reply_markup", replyMarkup)
-    )
-)
+    ),
+    callback,
+    object : TypeReference<Either<Message, Boolean>> {})
+
+suspend fun ApiContext.editMessageTextAwait(
+    chatId: String? = null,
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    text: String,
+    parseMode: String? = null,
+    disableWebPagePreview: Boolean? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
+): Either<Message, Boolean>? = sendRequestAwait<Either<Message, Boolean>?>(
+    "editMessageText",
+    listOf(
+        Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("text", text),
+        Pair("parse_mode", parseMode),
+        Pair("disable_web_page_preview", disableWebPagePreview),
+        Pair("reply_markup", replyMarkup)
+    ),
+    object : TypeReference<Either<Message, Boolean>> {})

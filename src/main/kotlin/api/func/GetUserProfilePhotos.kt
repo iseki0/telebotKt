@@ -2,12 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
-import api.type.UserProfilePhotos
+import api.type.*
+import api.*
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to get a list of profile pictures for a user. Returns a [UserProfilePhotos][UserProfilePhotos] object.
@@ -22,19 +20,19 @@ fun ApiContext.getUserProfilePhotos(
     limit: Int? = null
 ): Future<UserProfilePhotos?> = sendRequest<UserProfilePhotos?>(
     "getUserProfilePhotos",
-    listOf(Pair("user_id", userId), Pair("offset", offset), Pair("limit", limit))
-)
+    listOf(Pair("user_id", userId), Pair("offset", offset), Pair("limit", limit)),
+    object : TypeReference<UserProfilePhotos> {})
 
 fun ApiContext.getUserProfilePhotos(
     userId: Int,
     offset: Int? = null,
     limit: Int? = null,
-    callback: (result: UserProfilePhotos?) -> Unit
+    callback: (result: AsyncResult<UserProfilePhotos?>) -> Unit
 ): ApiContext = sendRequestCallback<UserProfilePhotos?>(
     "getUserProfilePhotos",
     listOf(Pair("user_id", userId), Pair("offset", offset), Pair("limit", limit)),
-    callback
-)
+    callback,
+    object : TypeReference<UserProfilePhotos> {})
 
 suspend fun ApiContext.getUserProfilePhotosAwait(
     userId: Int,
@@ -42,5 +40,5 @@ suspend fun ApiContext.getUserProfilePhotosAwait(
     limit: Int? = null
 ): UserProfilePhotos? = sendRequestAwait<UserProfilePhotos?>(
     "getUserProfilePhotos",
-    listOf(Pair("user_id", userId), Pair("offset", offset), Pair("limit", limit))
-)
+    listOf(Pair("user_id", userId), Pair("offset", offset), Pair("limit", limit)),
+    object : TypeReference<UserProfilePhotos> {})

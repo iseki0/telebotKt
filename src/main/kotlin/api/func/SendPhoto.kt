@@ -2,9 +2,10 @@
 
 package api.func
 
+import api.type.*
 import api.*
-import api.type.Message
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to send photos. On success, the sent [Message][Message] is returned.
@@ -21,7 +22,7 @@ fun ApiContext.sendPhoto(
     chatId: String,
     photo: InputFile,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
@@ -35,18 +36,18 @@ fun ApiContext.sendPhoto(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    )
-)
+    ),
+    object : TypeReference<Message> {})
 
 fun ApiContext.sendPhoto(
     chatId: String,
     photo: InputFile,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: Message?) -> Unit
+    callback: (result: AsyncResult<Message?>) -> Unit
 ): ApiContext = sendRequestCallback<Message?>(
     "sendPhoto",
     listOf(
@@ -58,14 +59,14 @@ fun ApiContext.sendPhoto(
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
     ),
-    callback
-)
+    callback,
+    object : TypeReference<Message> {})
 
 suspend fun ApiContext.sendPhotoAwait(
     chatId: String,
     photo: InputFile,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
@@ -79,5 +80,5 @@ suspend fun ApiContext.sendPhotoAwait(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    )
-)
+    ),
+    object : TypeReference<Message> {})

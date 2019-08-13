@@ -2,13 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
-import api.type.InlineKeyboardMarkup
-import api.type.Poll
+import api.type.*
+import api.*
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to stop a poll which was sent by the bot. On success, the stopped [Poll][Poll] with the final results is returned.
@@ -23,19 +20,19 @@ fun ApiContext.stopPoll(
     replyMarkup: InlineKeyboardMarkup? = null
 ): Future<Poll?> = sendRequest<Poll?>(
     "stopPoll",
-    listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("reply_markup", replyMarkup))
-)
+    listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("reply_markup", replyMarkup)),
+    object : TypeReference<Poll> {})
 
 fun ApiContext.stopPoll(
     chatId: String,
     messageId: Int,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: Poll?) -> Unit
+    callback: (result: AsyncResult<Poll?>) -> Unit
 ): ApiContext = sendRequestCallback<Poll?>(
     "stopPoll",
     listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("reply_markup", replyMarkup)),
-    callback
-)
+    callback,
+    object : TypeReference<Poll> {})
 
 suspend fun ApiContext.stopPollAwait(
     chatId: String,
@@ -43,5 +40,5 @@ suspend fun ApiContext.stopPollAwait(
     replyMarkup: InlineKeyboardMarkup? = null
 ): Poll? = sendRequestAwait<Poll?>(
     "stopPoll",
-    listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("reply_markup", replyMarkup))
-)
+    listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("reply_markup", replyMarkup)),
+    object : TypeReference<Poll> {})

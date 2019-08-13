@@ -2,11 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.type.*
+import api.*
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns *True* on success.
@@ -17,21 +16,25 @@ import io.vertx.core.Future
 fun ApiContext.setChatDescription(
     chatId: String,
     description: String? = null
-): Future<Boolean?> =
-    sendRequest<Boolean?>("setChatDescription", listOf(Pair("chat_id", chatId), Pair("description", description)))
+): Future<Boolean?> = sendRequest<Boolean?>(
+    "setChatDescription",
+    listOf(Pair("chat_id", chatId), Pair("description", description)),
+    object : TypeReference<Boolean> {})
 
 fun ApiContext.setChatDescription(
     chatId: String,
     description: String? = null,
-    callback: (result: Boolean?) -> Unit
+    callback: (result: AsyncResult<Boolean?>) -> Unit
 ): ApiContext = sendRequestCallback<Boolean?>(
     "setChatDescription",
     listOf(Pair("chat_id", chatId), Pair("description", description)),
-    callback
-)
+    callback,
+    object : TypeReference<Boolean> {})
 
 suspend fun ApiContext.setChatDescriptionAwait(
     chatId: String,
     description: String? = null
-): Boolean? =
-    sendRequestAwait<Boolean?>("setChatDescription", listOf(Pair("chat_id", chatId), Pair("description", description)))
+): Boolean? = sendRequestAwait<Boolean?>(
+    "setChatDescription",
+    listOf(Pair("chat_id", chatId), Pair("description", description)),
+    object : TypeReference<Boolean> {})

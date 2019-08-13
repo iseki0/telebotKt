@@ -2,8 +2,10 @@
 
 package api.func
 
+import api.type.*
 import api.*
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns *True* on success.
@@ -15,17 +17,26 @@ import io.vertx.core.Future
  */
 fun ApiContext.sendChatAction(
     chatId: String,
-    action: ChatActionType
-): Future<Boolean?> = sendRequest<Boolean?>("sendChatAction", listOf(Pair("chat_id", chatId), Pair("action", action)))
+    action: String
+): Future<Boolean?> = sendRequest<Boolean?>(
+    "sendChatAction",
+    listOf(Pair("chat_id", chatId), Pair("action", action)),
+    object : TypeReference<Boolean> {})
 
 fun ApiContext.sendChatAction(
     chatId: String,
-    action: ChatActionType,
-    callback: (result: Boolean?) -> Unit
-): ApiContext =
-    sendRequestCallback<Boolean?>("sendChatAction", listOf(Pair("chat_id", chatId), Pair("action", action)), callback)
+    action: String,
+    callback: (result: AsyncResult<Boolean?>) -> Unit
+): ApiContext = sendRequestCallback<Boolean?>(
+    "sendChatAction",
+    listOf(Pair("chat_id", chatId), Pair("action", action)),
+    callback,
+    object : TypeReference<Boolean> {})
 
 suspend fun ApiContext.sendChatActionAwait(
     chatId: String,
-    action: ChatActionType
-): Boolean? = sendRequestAwait<Boolean?>("sendChatAction", listOf(Pair("chat_id", chatId), Pair("action", action)))
+    action: String
+): Boolean? = sendRequestAwait<Boolean?>(
+    "sendChatAction",
+    listOf(Pair("chat_id", chatId), Pair("action", action)),
+    object : TypeReference<Boolean> {})

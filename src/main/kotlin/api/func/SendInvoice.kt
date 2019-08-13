@@ -2,14 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
-import api.type.InlineKeyboardMarkup
-import api.type.LabeledPrice
-import api.type.Message
+import api.type.*
+import api.*
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to send invoices. On success, the sent [Message][Message] is returned.
@@ -88,8 +84,8 @@ fun ApiContext.sendInvoice(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    )
-)
+    ),
+    object : TypeReference<Message> {})
 
 fun ApiContext.sendInvoice(
     chatId: Int,
@@ -115,7 +111,7 @@ fun ApiContext.sendInvoice(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: Message?) -> Unit
+    callback: (result: AsyncResult<Message?>) -> Unit
 ): ApiContext = sendRequestCallback<Message?>(
     "sendInvoice",
     listOf(
@@ -143,8 +139,8 @@ fun ApiContext.sendInvoice(
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
     ),
-    callback
-)
+    callback,
+    object : TypeReference<Message> {})
 
 suspend fun ApiContext.sendInvoiceAwait(
     chatId: Int,
@@ -196,5 +192,5 @@ suspend fun ApiContext.sendInvoiceAwait(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    )
-)
+    ),
+    object : TypeReference<Message> {})

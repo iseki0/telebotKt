@@ -2,13 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
-import api.type.Game
-import api.type.InlineKeyboardButton
+import api.type.*
+import api.*
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to send answers to callback queries sent from [inline keyboards](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating). The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, *True* is returned.
@@ -34,8 +31,8 @@ fun ApiContext.answerCallbackQuery(
         Pair("show_alert", showAlert),
         Pair("url", url),
         Pair("cache_time", cacheTime)
-    )
-)
+    ),
+    object : TypeReference<Boolean> {})
 
 fun ApiContext.answerCallbackQuery(
     callbackQueryId: String,
@@ -43,7 +40,7 @@ fun ApiContext.answerCallbackQuery(
     showAlert: Boolean? = null,
     url: String? = null,
     cacheTime: Int? = null,
-    callback: (result: Boolean?) -> Unit
+    callback: (result: AsyncResult<Boolean?>) -> Unit
 ): ApiContext = sendRequestCallback<Boolean?>(
     "answerCallbackQuery",
     listOf(
@@ -53,8 +50,8 @@ fun ApiContext.answerCallbackQuery(
         Pair("url", url),
         Pair("cache_time", cacheTime)
     ),
-    callback
-)
+    callback,
+    object : TypeReference<Boolean> {})
 
 suspend fun ApiContext.answerCallbackQueryAwait(
     callbackQueryId: String,
@@ -70,5 +67,5 @@ suspend fun ApiContext.answerCallbackQueryAwait(
         Pair("show_alert", showAlert),
         Pair("url", url),
         Pair("cache_time", cacheTime)
-    )
-)
+    ),
+    object : TypeReference<Boolean> {})

@@ -2,12 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
-import api.type.Message
+import api.type.*
+import api.*
 import io.vertx.core.Future
+import io.vertx.core.AsyncResult
 
 /**
  * Use this method to set the score of the specified user in a game. On success, if the message was sent by the bot, returns the edited [Message][Message], otherwise returns *True*. Returns an error, if the new score is not greater than the user's current score in the chat and *force* is *False*.
@@ -28,29 +26,7 @@ fun ApiContext.setGameScore(
     chatId: Int? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null
-): Future<Message?> = sendRequest<Message?>(
-    "setGameScore",
-    listOf(
-        Pair("user_id", userId),
-        Pair("score", score),
-        Pair("force", force),
-        Pair("disable_edit_message", disableEditMessage),
-        Pair("chat_id", chatId),
-        Pair("message_id", messageId),
-        Pair("inline_message_id", inlineMessageId)
-    )
-)
-
-fun ApiContext.setGameScore(
-    userId: Int,
-    score: Int,
-    force: Boolean? = null,
-    disableEditMessage: Boolean? = null,
-    chatId: Int? = null,
-    messageId: Int? = null,
-    inlineMessageId: String? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+): Future<Either<Message, Boolean>?> = sendRequest<Either<Message, Boolean>?>(
     "setGameScore",
     listOf(
         Pair("user_id", userId),
@@ -61,18 +37,18 @@ fun ApiContext.setGameScore(
         Pair("message_id", messageId),
         Pair("inline_message_id", inlineMessageId)
     ),
-    callback
-)
+    object : TypeReference<Either<Message, Boolean>> {})
 
-suspend fun ApiContext.setGameScoreAwait(
+fun ApiContext.setGameScore(
     userId: Int,
     score: Int,
     force: Boolean? = null,
     disableEditMessage: Boolean? = null,
     chatId: Int? = null,
     messageId: Int? = null,
-    inlineMessageId: String? = null
-): Message? = sendRequestAwait<Message?>(
+    inlineMessageId: String? = null,
+    callback: (result: AsyncResult<Either<Message, Boolean>?>) -> Unit
+): ApiContext = sendRequestCallback<Either<Message, Boolean>?>(
     "setGameScore",
     listOf(
         Pair("user_id", userId),
@@ -82,5 +58,27 @@ suspend fun ApiContext.setGameScoreAwait(
         Pair("chat_id", chatId),
         Pair("message_id", messageId),
         Pair("inline_message_id", inlineMessageId)
-    )
-)
+    ),
+    callback,
+    object : TypeReference<Either<Message, Boolean>> {})
+
+suspend fun ApiContext.setGameScoreAwait(
+    userId: Int,
+    score: Int,
+    force: Boolean? = null,
+    disableEditMessage: Boolean? = null,
+    chatId: Int? = null,
+    messageId: Int? = null,
+    inlineMessageId: String? = null
+): Either<Message, Boolean>? = sendRequestAwait<Either<Message, Boolean>?>(
+    "setGameScore",
+    listOf(
+        Pair("user_id", userId),
+        Pair("score", score),
+        Pair("force", force),
+        Pair("disable_edit_message", disableEditMessage),
+        Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId)
+    ),
+    object : TypeReference<Either<Message, Boolean>> {})
