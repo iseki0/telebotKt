@@ -2,10 +2,12 @@
 
 package api.func
 
-import api.type.*
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
+import api.type.StickerSet
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to get a sticker set. On success, a [StickerSet][StickerSet] object is returned.
@@ -14,19 +16,13 @@ import io.vertx.core.AsyncResult
  */
 fun ApiContext.getStickerSet(
     name: String
-): Future<StickerSet?> =
-    sendRequest<StickerSet?>("getStickerSet", listOf(Pair("name", name)), object : TypeReference<StickerSet> {})
+): Future<StickerSet?> = sendRequest<StickerSet?>("getStickerSet", listOf(Pair("name", name)))
 
 fun ApiContext.getStickerSet(
     name: String,
-    callback: (result: AsyncResult<StickerSet?>) -> Unit
-): ApiContext = sendRequestCallback<StickerSet?>(
-    "getStickerSet",
-    listOf(Pair("name", name)),
-    callback,
-    object : TypeReference<StickerSet> {})
+    callback: (result: StickerSet?) -> Unit
+): ApiContext = sendRequestCallback<StickerSet?>("getStickerSet", listOf(Pair("name", name)), callback)
 
 suspend fun ApiContext.getStickerSetAwait(
     name: String
-): StickerSet? =
-    sendRequestAwait<StickerSet?>("getStickerSet", listOf(Pair("name", name)), object : TypeReference<StickerSet> {})
+): StickerSet? = sendRequestAwait<StickerSet?>("getStickerSet", listOf(Pair("name", name)))

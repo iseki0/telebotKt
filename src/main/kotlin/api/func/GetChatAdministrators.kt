@@ -2,10 +2,12 @@
 
 package api.func
 
-import api.type.*
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
+import api.type.ChatMember
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to get a list of administrators in a chat. On success, returns an Array of [ChatMember][ChatMember] objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.
@@ -14,23 +16,15 @@ import io.vertx.core.AsyncResult
  */
 fun ApiContext.getChatAdministrators(
     chatId: String
-): Future<Array<ChatMember>?> = sendRequest<Array<ChatMember>?>(
-    "getChatAdministrators",
-    listOf(Pair("chat_id", chatId)),
-    object : TypeReference<Array<ChatMember>> {})
+): Future<List<ChatMember>?> =
+    sendRequest<List<ChatMember>?>("getChatAdministrators", listOf(Pair("chat_id", chatId)))
 
 fun ApiContext.getChatAdministrators(
     chatId: String,
-    callback: (result: AsyncResult<Array<ChatMember>?>) -> Unit
-): ApiContext = sendRequestCallback<Array<ChatMember>?>(
-    "getChatAdministrators",
-    listOf(Pair("chat_id", chatId)),
-    callback,
-    object : TypeReference<Array<ChatMember>> {})
+    callback: (result: List<ChatMember>?) -> Unit
+): ApiContext =
+    sendRequestCallback<List<ChatMember>?>("getChatAdministrators", listOf(Pair("chat_id", chatId)), callback)
 
 suspend fun ApiContext.getChatAdministratorsAwait(
     chatId: String
-): Array<ChatMember>? = sendRequestAwait<Array<ChatMember>?>(
-    "getChatAdministrators",
-    listOf(Pair("chat_id", chatId)),
-    object : TypeReference<Array<ChatMember>> {})
+): List<ChatMember>? = sendRequestAwait<List<ChatMember>?>("getChatAdministrators", listOf(Pair("chat_id", chatId)))

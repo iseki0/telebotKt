@@ -2,10 +2,8 @@
 
 package api.func
 
-import api.type.*
 import api.*
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns *True* on success.
@@ -17,25 +15,16 @@ import io.vertx.core.AsyncResult
 fun ApiContext.setChatPhoto(
     chatId: String,
     photo: InputFile
-): Future<Boolean?> = sendRequest<Boolean?>(
-    "setChatPhoto",
-    listOf(Pair("chat_id", chatId), Pair("photo", photo)),
-    object : TypeReference<Boolean> {})
+): Future<Boolean?> = sendRequest<Boolean?>("setChatPhoto", listOf(Pair("chat_id", chatId), Pair("photo", photo)))
 
 fun ApiContext.setChatPhoto(
     chatId: String,
     photo: InputFile,
-    callback: (result: AsyncResult<Boolean?>) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
-    "setChatPhoto",
-    listOf(Pair("chat_id", chatId), Pair("photo", photo)),
-    callback,
-    object : TypeReference<Boolean> {})
+    callback: (result: Boolean?) -> Unit
+): ApiContext =
+    sendRequestCallback<Boolean?>("setChatPhoto", listOf(Pair("chat_id", chatId), Pair("photo", photo)), callback)
 
 suspend fun ApiContext.setChatPhotoAwait(
     chatId: String,
     photo: InputFile
-): Boolean? = sendRequestAwait<Boolean?>(
-    "setChatPhoto",
-    listOf(Pair("chat_id", chatId), Pair("photo", photo)),
-    object : TypeReference<Boolean> {})
+): Boolean? = sendRequestAwait<Boolean?>("setChatPhoto", listOf(Pair("chat_id", chatId), Pair("photo", photo)))

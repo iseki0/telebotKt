@@ -2,10 +2,10 @@
 
 package api.func
 
-import api.type.*
 import api.*
+import api.type.InlineKeyboardMarkup
+import api.type.Message
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to edit animation, audio, document, photo, or video messages. If a message is a part of a message album, then it can be edited only to a photo or a video. Otherwise, message type can be changed arbitrarily. When inline message is edited, new file can't be uploaded. Use previously uploaded file via its file_id or specify a URL. On success, if the edited message was sent by the bot, the edited [Message][Message] is returned, otherwise *True* is returned.
@@ -22,7 +22,7 @@ fun ApiContext.editMessageMedia(
     inlineMessageId: String? = null,
     media: InputMedia,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Either<Message, Boolean>?> = sendRequest<Either<Message, Boolean>?>(
+): Future<Message?> = sendRequest<Message?>(
     "editMessageMedia",
     listOf(
         Pair("chat_id", chatId),
@@ -30,8 +30,8 @@ fun ApiContext.editMessageMedia(
         Pair("inline_message_id", inlineMessageId),
         Pair("media", media),
         Pair("reply_markup", replyMarkup)
-    ),
-    object : TypeReference<Either<Message, Boolean>> {})
+    )
+)
 
 fun ApiContext.editMessageMedia(
     chatId: String? = null,
@@ -39,8 +39,8 @@ fun ApiContext.editMessageMedia(
     inlineMessageId: String? = null,
     media: InputMedia,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: AsyncResult<Either<Message, Boolean>?>) -> Unit
-): ApiContext = sendRequestCallback<Either<Message, Boolean>?>(
+    callback: (result: Message?) -> Unit
+): ApiContext = sendRequestCallback<Message?>(
     "editMessageMedia",
     listOf(
         Pair("chat_id", chatId),
@@ -49,8 +49,8 @@ fun ApiContext.editMessageMedia(
         Pair("media", media),
         Pair("reply_markup", replyMarkup)
     ),
-    callback,
-    object : TypeReference<Either<Message, Boolean>> {})
+    callback
+)
 
 suspend fun ApiContext.editMessageMediaAwait(
     chatId: String? = null,
@@ -58,7 +58,7 @@ suspend fun ApiContext.editMessageMediaAwait(
     inlineMessageId: String? = null,
     media: InputMedia,
     replyMarkup: InlineKeyboardMarkup? = null
-): Either<Message, Boolean>? = sendRequestAwait<Either<Message, Boolean>?>(
+): Message? = sendRequestAwait<Message?>(
     "editMessageMedia",
     listOf(
         Pair("chat_id", chatId),
@@ -66,5 +66,5 @@ suspend fun ApiContext.editMessageMediaAwait(
         Pair("inline_message_id", inlineMessageId),
         Pair("media", media),
         Pair("reply_markup", replyMarkup)
-    ),
-    object : TypeReference<Either<Message, Boolean>> {})
+    )
+)

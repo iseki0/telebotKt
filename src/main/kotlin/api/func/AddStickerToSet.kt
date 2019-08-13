@@ -2,10 +2,10 @@
 
 package api.func
 
-import api.type.*
 import api.*
+import api.type.MaskPosition
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
+
 
 /**
  * Use this method to add a new sticker to a set created by the bot. Returns *True* on success.
@@ -30,8 +30,8 @@ fun ApiContext.addStickerToSet(
         Pair("png_sticker", pngSticker),
         Pair("emojis", emojis),
         Pair("mask_position", maskPosition)
-    ),
-    object : TypeReference<Boolean> {})
+    )
+)
 
 fun ApiContext.addStickerToSet(
     userId: Int,
@@ -39,7 +39,7 @@ fun ApiContext.addStickerToSet(
     pngSticker: InputFile,
     emojis: String,
     maskPosition: MaskPosition? = null,
-    callback: (result: AsyncResult<Boolean?>) -> Unit
+    callback: (result: Boolean?) -> Unit
 ): ApiContext = sendRequestCallback<Boolean?>(
     "addStickerToSet",
     listOf(
@@ -49,8 +49,8 @@ fun ApiContext.addStickerToSet(
         Pair("emojis", emojis),
         Pair("mask_position", maskPosition)
     ),
-    callback,
-    object : TypeReference<Boolean> {})
+    callback
+)
 
 suspend fun ApiContext.addStickerToSetAwait(
     userId: Int,
@@ -66,5 +66,5 @@ suspend fun ApiContext.addStickerToSetAwait(
         Pair("png_sticker", pngSticker),
         Pair("emojis", emojis),
         Pair("mask_position", maskPosition)
-    ),
-    object : TypeReference<Boolean> {})
+    )
+)

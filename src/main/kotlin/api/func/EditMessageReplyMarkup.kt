@@ -2,10 +2,13 @@
 
 package api.func
 
-import api.type.*
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
+import api.type.InlineKeyboardMarkup
+import api.type.Message
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to edit only the reply markup of messages. On success, if edited message is sent by the bot, the edited [Message][Message] is returned, otherwise *True* is returned.
@@ -20,23 +23,23 @@ fun ApiContext.editMessageReplyMarkup(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Either<Message, Boolean>?> = sendRequest<Either<Message, Boolean>?>(
+): Future<Message?> = sendRequest<Message?>(
     "editMessageReplyMarkup",
     listOf(
         Pair("chat_id", chatId),
         Pair("message_id", messageId),
         Pair("inline_message_id", inlineMessageId),
         Pair("reply_markup", replyMarkup)
-    ),
-    object : TypeReference<Either<Message, Boolean>> {})
+    )
+)
 
 fun ApiContext.editMessageReplyMarkup(
     chatId: String? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: AsyncResult<Either<Message, Boolean>?>) -> Unit
-): ApiContext = sendRequestCallback<Either<Message, Boolean>?>(
+    callback: (result: Message?) -> Unit
+): ApiContext = sendRequestCallback<Message?>(
     "editMessageReplyMarkup",
     listOf(
         Pair("chat_id", chatId),
@@ -44,20 +47,20 @@ fun ApiContext.editMessageReplyMarkup(
         Pair("inline_message_id", inlineMessageId),
         Pair("reply_markup", replyMarkup)
     ),
-    callback,
-    object : TypeReference<Either<Message, Boolean>> {})
+    callback
+)
 
 suspend fun ApiContext.editMessageReplyMarkupAwait(
     chatId: String? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Either<Message, Boolean>? = sendRequestAwait<Either<Message, Boolean>?>(
+): Message? = sendRequestAwait<Message?>(
     "editMessageReplyMarkup",
     listOf(
         Pair("chat_id", chatId),
         Pair("message_id", messageId),
         Pair("inline_message_id", inlineMessageId),
         Pair("reply_markup", replyMarkup)
-    ),
-    object : TypeReference<Either<Message, Boolean>> {})
+    )
+)

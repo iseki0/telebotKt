@@ -2,10 +2,9 @@
 
 package api.func
 
-import api.type.*
 import api.*
+import api.type.InlineKeyboardMarkup
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to send answers to an inline query. On success, *True* is returned.
@@ -37,8 +36,8 @@ fun ApiContext.answerInlineQuery(
         Pair("next_offset", nextOffset),
         Pair("switch_pm_text", switchPmText),
         Pair("switch_pm_parameter", switchPmParameter)
-    ),
-    object : TypeReference<Boolean> {})
+    )
+)
 
 fun ApiContext.answerInlineQuery(
     inlineQueryId: String,
@@ -48,7 +47,7 @@ fun ApiContext.answerInlineQuery(
     nextOffset: String? = null,
     switchPmText: String? = null,
     switchPmParameter: String? = null,
-    callback: (result: AsyncResult<Boolean?>) -> Unit
+    callback: (result: Boolean?) -> Unit
 ): ApiContext = sendRequestCallback<Boolean?>(
     "answerInlineQuery",
     listOf(
@@ -60,8 +59,8 @@ fun ApiContext.answerInlineQuery(
         Pair("switch_pm_text", switchPmText),
         Pair("switch_pm_parameter", switchPmParameter)
     ),
-    callback,
-    object : TypeReference<Boolean> {})
+    callback
+)
 
 suspend fun ApiContext.answerInlineQueryAwait(
     inlineQueryId: String,
@@ -81,5 +80,5 @@ suspend fun ApiContext.answerInlineQueryAwait(
         Pair("next_offset", nextOffset),
         Pair("switch_pm_text", switchPmText),
         Pair("switch_pm_parameter", switchPmParameter)
-    ),
-    object : TypeReference<Boolean> {})
+    )
+)

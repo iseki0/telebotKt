@@ -2,10 +2,11 @@
 
 package api.func
 
-import api.type.*
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to unpin a message in a group, a supergroup, or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns *True* on success.
@@ -14,19 +15,13 @@ import io.vertx.core.AsyncResult
  */
 fun ApiContext.unpinChatMessage(
     chatId: String
-): Future<Boolean?> =
-    sendRequest<Boolean?>("unpinChatMessage", listOf(Pair("chat_id", chatId)), object : TypeReference<Boolean> {})
+): Future<Boolean?> = sendRequest<Boolean?>("unpinChatMessage", listOf(Pair("chat_id", chatId)))
 
 fun ApiContext.unpinChatMessage(
     chatId: String,
-    callback: (result: AsyncResult<Boolean?>) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
-    "unpinChatMessage",
-    listOf(Pair("chat_id", chatId)),
-    callback,
-    object : TypeReference<Boolean> {})
+    callback: (result: Boolean?) -> Unit
+): ApiContext = sendRequestCallback<Boolean?>("unpinChatMessage", listOf(Pair("chat_id", chatId)), callback)
 
 suspend fun ApiContext.unpinChatMessageAwait(
     chatId: String
-): Boolean? =
-    sendRequestAwait<Boolean?>("unpinChatMessage", listOf(Pair("chat_id", chatId)), object : TypeReference<Boolean> {})
+): Boolean? = sendRequestAwait<Boolean?>("unpinChatMessage", listOf(Pair("chat_id", chatId)))

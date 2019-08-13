@@ -2,10 +2,9 @@
 
 package api.func
 
-import api.type.*
 import api.*
+import api.type.Message
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent [Message][Message] is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
@@ -30,7 +29,7 @@ fun ApiContext.sendAnimation(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
@@ -48,8 +47,8 @@ fun ApiContext.sendAnimation(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    ),
-    object : TypeReference<Message> {})
+    )
+)
 
 fun ApiContext.sendAnimation(
     chatId: String,
@@ -59,11 +58,11 @@ fun ApiContext.sendAnimation(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: AsyncResult<Message?>) -> Unit
+    callback: (result: Message?) -> Unit
 ): ApiContext = sendRequestCallback<Message?>(
     "sendAnimation",
     listOf(
@@ -79,8 +78,8 @@ fun ApiContext.sendAnimation(
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
     ),
-    callback,
-    object : TypeReference<Message> {})
+    callback
+)
 
 suspend fun ApiContext.sendAnimationAwait(
     chatId: String,
@@ -90,7 +89,7 @@ suspend fun ApiContext.sendAnimationAwait(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
@@ -108,5 +107,5 @@ suspend fun ApiContext.sendAnimationAwait(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    ),
-    object : TypeReference<Message> {})
+    )
+)

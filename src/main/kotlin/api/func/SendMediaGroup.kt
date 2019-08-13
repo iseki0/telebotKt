@@ -2,10 +2,9 @@
 
 package api.func
 
-import api.type.*
 import api.*
+import api.type.Message
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to send a group of photos or videos as an album. On success, an array of the sent [Messages][Message] is returned.
@@ -17,26 +16,26 @@ import io.vertx.core.AsyncResult
  */
 fun ApiContext.sendMediaGroup(
     chatId: String,
-    media: List<InputMediaPhoto>,
+    media: List<MediaGroupable>,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null
-): Future<Array<Message>?> = sendRequest<Array<Message>?>(
+): Future<List<Message>?> = sendRequest<List<Message>?>(
     "sendMediaGroup",
     listOf(
         Pair("chat_id", chatId),
         Pair("media", media),
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId)
-    ),
-    object : TypeReference<Array<Message>> {})
+    )
+)
 
 fun ApiContext.sendMediaGroup(
     chatId: String,
-    media: List<InputMediaPhoto>,
+    media: List<MediaGroupable>,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
-    callback: (result: AsyncResult<Array<Message>?>) -> Unit
-): ApiContext = sendRequestCallback<Array<Message>?>(
+    callback: (result: List<Message>?) -> Unit
+): ApiContext = sendRequestCallback<List<Message>?>(
     "sendMediaGroup",
     listOf(
         Pair("chat_id", chatId),
@@ -44,20 +43,20 @@ fun ApiContext.sendMediaGroup(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId)
     ),
-    callback,
-    object : TypeReference<Array<Message>> {})
+    callback
+)
 
 suspend fun ApiContext.sendMediaGroupAwait(
     chatId: String,
-    media: List<InputMediaPhoto>,
+    media: List<MediaGroupable>,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null
-): Array<Message>? = sendRequestAwait<Array<Message>?>(
+): List<Message>? = sendRequestAwait<List<Message>?>(
     "sendMediaGroup",
     listOf(
         Pair("chat_id", chatId),
         Pair("media", media),
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId)
-    ),
-    object : TypeReference<Array<Message>> {})
+    )
+)

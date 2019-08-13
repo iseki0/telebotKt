@@ -2,10 +2,8 @@
 
 package api.func
 
-import api.type.*
 import api.*
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns *True* on success.
@@ -17,25 +15,21 @@ import io.vertx.core.AsyncResult
 fun ApiContext.setPassportDataErrors(
     userId: Int,
     errors: List<PassportElementError>
-): Future<Boolean?> = sendRequest<Boolean?>(
-    "setPassportDataErrors",
-    listOf(Pair("user_id", userId), Pair("errors", errors)),
-    object : TypeReference<Boolean> {})
+): Future<Boolean?> =
+    sendRequest<Boolean?>("setPassportDataErrors", listOf(Pair("user_id", userId), Pair("errors", errors)))
 
 fun ApiContext.setPassportDataErrors(
     userId: Int,
     errors: List<PassportElementError>,
-    callback: (result: AsyncResult<Boolean?>) -> Unit
+    callback: (result: Boolean?) -> Unit
 ): ApiContext = sendRequestCallback<Boolean?>(
     "setPassportDataErrors",
     listOf(Pair("user_id", userId), Pair("errors", errors)),
-    callback,
-    object : TypeReference<Boolean> {})
+    callback
+)
 
 suspend fun ApiContext.setPassportDataErrorsAwait(
     userId: Int,
     errors: List<PassportElementError>
-): Boolean? = sendRequestAwait<Boolean?>(
-    "setPassportDataErrors",
-    listOf(Pair("user_id", userId), Pair("errors", errors)),
-    object : TypeReference<Boolean> {})
+): Boolean? =
+    sendRequestAwait<Boolean?>("setPassportDataErrors", listOf(Pair("user_id", userId), Pair("errors", errors)))

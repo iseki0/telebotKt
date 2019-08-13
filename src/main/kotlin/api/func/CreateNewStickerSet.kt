@@ -2,10 +2,9 @@
 
 package api.func
 
-import api.type.*
 import api.*
+import api.type.MaskPosition
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to create new sticker set owned by a user. The bot will be able to edit the created sticker set. Returns *True* on success.
@@ -36,8 +35,8 @@ fun ApiContext.createNewStickerSet(
         Pair("emojis", emojis),
         Pair("contains_masks", containsMasks),
         Pair("mask_position", maskPosition)
-    ),
-    object : TypeReference<Boolean> {})
+    )
+)
 
 fun ApiContext.createNewStickerSet(
     userId: Int,
@@ -47,7 +46,7 @@ fun ApiContext.createNewStickerSet(
     emojis: String,
     containsMasks: Boolean? = null,
     maskPosition: MaskPosition? = null,
-    callback: (result: AsyncResult<Boolean?>) -> Unit
+    callback: (result: Boolean?) -> Unit
 ): ApiContext = sendRequestCallback<Boolean?>(
     "createNewStickerSet",
     listOf(
@@ -59,8 +58,8 @@ fun ApiContext.createNewStickerSet(
         Pair("contains_masks", containsMasks),
         Pair("mask_position", maskPosition)
     ),
-    callback,
-    object : TypeReference<Boolean> {})
+    callback
+)
 
 suspend fun ApiContext.createNewStickerSetAwait(
     userId: Int,
@@ -80,5 +79,5 @@ suspend fun ApiContext.createNewStickerSetAwait(
         Pair("emojis", emojis),
         Pair("contains_masks", containsMasks),
         Pair("mask_position", maskPosition)
-    ),
-    object : TypeReference<Boolean> {})
+    )
+)

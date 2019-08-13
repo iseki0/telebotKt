@@ -2,10 +2,9 @@
 
 package api.func
 
-import api.type.*
 import api.*
+import api.type.Message
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .mp3 format. On success, the sent [Message][Message] is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
@@ -27,7 +26,7 @@ fun ApiContext.sendAudio(
     chatId: String,
     audio: InputFile,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     duration: Int? = null,
     performer: String? = null,
     title: String? = null,
@@ -49,14 +48,14 @@ fun ApiContext.sendAudio(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    ),
-    object : TypeReference<Message> {})
+    )
+)
 
 fun ApiContext.sendAudio(
     chatId: String,
     audio: InputFile,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     duration: Int? = null,
     performer: String? = null,
     title: String? = null,
@@ -64,7 +63,7 @@ fun ApiContext.sendAudio(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: AsyncResult<Message?>) -> Unit
+    callback: (result: Message?) -> Unit
 ): ApiContext = sendRequestCallback<Message?>(
     "sendAudio",
     listOf(
@@ -80,14 +79,14 @@ fun ApiContext.sendAudio(
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
     ),
-    callback,
-    object : TypeReference<Message> {})
+    callback
+)
 
 suspend fun ApiContext.sendAudioAwait(
     chatId: String,
     audio: InputFile,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     duration: Int? = null,
     performer: String? = null,
     title: String? = null,
@@ -109,5 +108,5 @@ suspend fun ApiContext.sendAudioAwait(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    ),
-    object : TypeReference<Message> {})
+    )
+)

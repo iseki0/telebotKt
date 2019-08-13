@@ -2,10 +2,12 @@
 
 package api.func
 
-import api.type.*
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
+import api.type.ChatPermissions
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass *True* for all permissions to lift restrictions from a user. Returns *True* on success.
@@ -27,15 +29,15 @@ fun ApiContext.restrictChatMember(
         Pair("user_id", userId),
         Pair("permissions", permissions),
         Pair("until_date", untilDate)
-    ),
-    object : TypeReference<Boolean> {})
+    )
+)
 
 fun ApiContext.restrictChatMember(
     chatId: String,
     userId: Int,
     permissions: ChatPermissions,
     untilDate: Int? = null,
-    callback: (result: AsyncResult<Boolean?>) -> Unit
+    callback: (result: Boolean?) -> Unit
 ): ApiContext = sendRequestCallback<Boolean?>(
     "restrictChatMember",
     listOf(
@@ -44,8 +46,8 @@ fun ApiContext.restrictChatMember(
         Pair("permissions", permissions),
         Pair("until_date", untilDate)
     ),
-    callback,
-    object : TypeReference<Boolean> {})
+    callback
+)
 
 suspend fun ApiContext.restrictChatMemberAwait(
     chatId: String,
@@ -59,5 +61,5 @@ suspend fun ApiContext.restrictChatMemberAwait(
         Pair("user_id", userId),
         Pair("permissions", permissions),
         Pair("until_date", untilDate)
-    ),
-    object : TypeReference<Boolean> {})
+    )
+)

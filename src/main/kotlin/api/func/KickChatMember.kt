@@ -2,10 +2,11 @@
 
 package api.func
 
-import api.type.*
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to kick a user from a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the group on their own using invite links, etc., unless [unbanned][unbanChatMember] first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns *True* on success.
@@ -21,19 +22,19 @@ fun ApiContext.kickChatMember(
     untilDate: Int? = null
 ): Future<Boolean?> = sendRequest<Boolean?>(
     "kickChatMember",
-    listOf(Pair("chat_id", chatId), Pair("user_id", userId), Pair("until_date", untilDate)),
-    object : TypeReference<Boolean> {})
+    listOf(Pair("chat_id", chatId), Pair("user_id", userId), Pair("until_date", untilDate))
+)
 
 fun ApiContext.kickChatMember(
     chatId: String,
     userId: Int,
     untilDate: Int? = null,
-    callback: (result: AsyncResult<Boolean?>) -> Unit
+    callback: (result: Boolean?) -> Unit
 ): ApiContext = sendRequestCallback<Boolean?>(
     "kickChatMember",
     listOf(Pair("chat_id", chatId), Pair("user_id", userId), Pair("until_date", untilDate)),
-    callback,
-    object : TypeReference<Boolean> {})
+    callback
+)
 
 suspend fun ApiContext.kickChatMemberAwait(
     chatId: String,
@@ -41,5 +42,5 @@ suspend fun ApiContext.kickChatMemberAwait(
     untilDate: Int? = null
 ): Boolean? = sendRequestAwait<Boolean?>(
     "kickChatMember",
-    listOf(Pair("chat_id", chatId), Pair("user_id", userId), Pair("until_date", untilDate)),
-    object : TypeReference<Boolean> {})
+    listOf(Pair("chat_id", chatId), Pair("user_id", userId), Pair("until_date", untilDate))
+)

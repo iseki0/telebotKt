@@ -2,10 +2,11 @@
 
 package api.func
 
-import api.type.*
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Pass *False* for all boolean parameters to demote a user. Returns *True* on success.
@@ -45,8 +46,8 @@ fun ApiContext.promoteChatMember(
         Pair("can_restrict_members", canRestrictMembers),
         Pair("can_pin_messages", canPinMessages),
         Pair("can_promote_members", canPromoteMembers)
-    ),
-    object : TypeReference<Boolean> {})
+    )
+)
 
 fun ApiContext.promoteChatMember(
     chatId: String,
@@ -59,7 +60,7 @@ fun ApiContext.promoteChatMember(
     canRestrictMembers: Boolean? = null,
     canPinMessages: Boolean? = null,
     canPromoteMembers: Boolean? = null,
-    callback: (result: AsyncResult<Boolean?>) -> Unit
+    callback: (result: Boolean?) -> Unit
 ): ApiContext = sendRequestCallback<Boolean?>(
     "promoteChatMember",
     listOf(
@@ -74,8 +75,8 @@ fun ApiContext.promoteChatMember(
         Pair("can_pin_messages", canPinMessages),
         Pair("can_promote_members", canPromoteMembers)
     ),
-    callback,
-    object : TypeReference<Boolean> {})
+    callback
+)
 
 suspend fun ApiContext.promoteChatMemberAwait(
     chatId: String,
@@ -101,5 +102,5 @@ suspend fun ApiContext.promoteChatMemberAwait(
         Pair("can_restrict_members", canRestrictMembers),
         Pair("can_pin_messages", canPinMessages),
         Pair("can_promote_members", canPromoteMembers)
-    ),
-    object : TypeReference<Boolean> {})
+    )
+)

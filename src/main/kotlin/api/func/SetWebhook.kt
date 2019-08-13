@@ -2,10 +2,9 @@
 
 package api.func
 
-import api.type.*
 import api.*
+import api.type.Update
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized [Update][Update]. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns *True* on success.
@@ -20,7 +19,7 @@ fun ApiContext.setWebhook(
     url: String,
     certificate: InputFile? = null,
     maxConnections: Int? = null,
-    allowedUpdates: List<String>? = null
+    allowedUpdates: List<AllowedUpdate>? = null
 ): Future<Boolean?> = sendRequest<Boolean?>(
     "setWebhook",
     listOf(
@@ -28,15 +27,15 @@ fun ApiContext.setWebhook(
         Pair("certificate", certificate),
         Pair("max_connections", maxConnections),
         Pair("allowed_updates", allowedUpdates)
-    ),
-    object : TypeReference<Boolean> {})
+    )
+)
 
 fun ApiContext.setWebhook(
     url: String,
     certificate: InputFile? = null,
     maxConnections: Int? = null,
     allowedUpdates: List<String>? = null,
-    callback: (result: AsyncResult<Boolean?>) -> Unit
+    callback: (result: Boolean?) -> Unit
 ): ApiContext = sendRequestCallback<Boolean?>(
     "setWebhook",
     listOf(
@@ -45,8 +44,8 @@ fun ApiContext.setWebhook(
         Pair("max_connections", maxConnections),
         Pair("allowed_updates", allowedUpdates)
     ),
-    callback,
-    object : TypeReference<Boolean> {})
+    callback
+)
 
 suspend fun ApiContext.setWebhookAwait(
     url: String,
@@ -60,5 +59,5 @@ suspend fun ApiContext.setWebhookAwait(
         Pair("certificate", certificate),
         Pair("max_connections", maxConnections),
         Pair("allowed_updates", allowedUpdates)
-    ),
-    object : TypeReference<Boolean> {})
+    )
+)

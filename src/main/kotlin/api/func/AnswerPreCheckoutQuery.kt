@@ -2,10 +2,12 @@
 
 package api.func
 
-import api.type.*
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
+import api.type.Update
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an [Update][Update] with the field *pre_checkout_query*. Use this method to respond to such pre-checkout queries. On success, True is returned. **Note:** The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
@@ -20,19 +22,19 @@ fun ApiContext.answerPreCheckoutQuery(
     errorMessage: String? = null
 ): Future<Boolean?> = sendRequest<Boolean?>(
     "answerPreCheckoutQuery",
-    listOf(Pair("pre_checkout_query_id", preCheckoutQueryId), Pair("ok", ok), Pair("error_message", errorMessage)),
-    object : TypeReference<Boolean> {})
+    listOf(Pair("pre_checkout_query_id", preCheckoutQueryId), Pair("ok", ok), Pair("error_message", errorMessage))
+)
 
 fun ApiContext.answerPreCheckoutQuery(
     preCheckoutQueryId: String,
     ok: Boolean,
     errorMessage: String? = null,
-    callback: (result: AsyncResult<Boolean?>) -> Unit
+    callback: (result: Boolean?) -> Unit
 ): ApiContext = sendRequestCallback<Boolean?>(
     "answerPreCheckoutQuery",
     listOf(Pair("pre_checkout_query_id", preCheckoutQueryId), Pair("ok", ok), Pair("error_message", errorMessage)),
-    callback,
-    object : TypeReference<Boolean> {})
+    callback
+)
 
 suspend fun ApiContext.answerPreCheckoutQueryAwait(
     preCheckoutQueryId: String,
@@ -40,5 +42,5 @@ suspend fun ApiContext.answerPreCheckoutQueryAwait(
     errorMessage: String? = null
 ): Boolean? = sendRequestAwait<Boolean?>(
     "answerPreCheckoutQuery",
-    listOf(Pair("pre_checkout_query_id", preCheckoutQueryId), Pair("ok", ok), Pair("error_message", errorMessage)),
-    object : TypeReference<Boolean> {})
+    listOf(Pair("pre_checkout_query_id", preCheckoutQueryId), Pair("ok", ok), Pair("error_message", errorMessage))
+)

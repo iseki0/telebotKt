@@ -2,10 +2,9 @@
 
 package api.func
 
-import api.type.*
 import api.*
+import api.type.Message
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to send static .WEBP or [animated](https://telegram.org/blog/animated-stickers) .TGS stickers. On success, the sent [Message][Message] is returned.
@@ -30,8 +29,8 @@ fun ApiContext.sendSticker(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    ),
-    object : TypeReference<Message> {})
+    )
+)
 
 fun ApiContext.sendSticker(
     chatId: String,
@@ -39,7 +38,7 @@ fun ApiContext.sendSticker(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: AsyncResult<Message?>) -> Unit
+    callback: (result: Message?) -> Unit
 ): ApiContext = sendRequestCallback<Message?>(
     "sendSticker",
     listOf(
@@ -49,8 +48,8 @@ fun ApiContext.sendSticker(
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
     ),
-    callback,
-    object : TypeReference<Message> {})
+    callback
+)
 
 suspend fun ApiContext.sendStickerAwait(
     chatId: String,
@@ -66,5 +65,5 @@ suspend fun ApiContext.sendStickerAwait(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    ),
-    object : TypeReference<Message> {})
+    )
+)

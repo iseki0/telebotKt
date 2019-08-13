@@ -2,10 +2,11 @@
 
 package api.func
 
-import api.type.*
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to delete a message, including service messages, with the following limitations:
@@ -23,25 +24,21 @@ import io.vertx.core.AsyncResult
 fun ApiContext.deleteMessage(
     chatId: String,
     messageId: Int
-): Future<Boolean?> = sendRequest<Boolean?>(
-    "deleteMessage",
-    listOf(Pair("chat_id", chatId), Pair("message_id", messageId)),
-    object : TypeReference<Boolean> {})
+): Future<Boolean?> =
+    sendRequest<Boolean?>("deleteMessage", listOf(Pair("chat_id", chatId), Pair("message_id", messageId)))
 
 fun ApiContext.deleteMessage(
     chatId: String,
     messageId: Int,
-    callback: (result: AsyncResult<Boolean?>) -> Unit
+    callback: (result: Boolean?) -> Unit
 ): ApiContext = sendRequestCallback<Boolean?>(
     "deleteMessage",
     listOf(Pair("chat_id", chatId), Pair("message_id", messageId)),
-    callback,
-    object : TypeReference<Boolean> {})
+    callback
+)
 
 suspend fun ApiContext.deleteMessageAwait(
     chatId: String,
     messageId: Int
-): Boolean? = sendRequestAwait<Boolean?>(
-    "deleteMessage",
-    listOf(Pair("chat_id", chatId), Pair("message_id", messageId)),
-    object : TypeReference<Boolean> {})
+): Boolean? =
+    sendRequestAwait<Boolean?>("deleteMessage", listOf(Pair("chat_id", chatId), Pair("message_id", messageId)))

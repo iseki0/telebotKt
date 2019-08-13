@@ -2,10 +2,12 @@
 
 package api.func
 
-import api.type.*
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
+import api.type.Message
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to forward messages of any kind. On success, the sent [Message][Message] is returned.
@@ -27,15 +29,15 @@ fun ApiContext.forwardMessage(
         Pair("from_chat_id", fromChatId),
         Pair("disable_notification", disableNotification),
         Pair("message_id", messageId)
-    ),
-    object : TypeReference<Message> {})
+    )
+)
 
 fun ApiContext.forwardMessage(
     chatId: String,
     fromChatId: String,
     disableNotification: Boolean? = null,
     messageId: Int,
-    callback: (result: AsyncResult<Message?>) -> Unit
+    callback: (result: Message?) -> Unit
 ): ApiContext = sendRequestCallback<Message?>(
     "forwardMessage",
     listOf(
@@ -44,8 +46,8 @@ fun ApiContext.forwardMessage(
         Pair("disable_notification", disableNotification),
         Pair("message_id", messageId)
     ),
-    callback,
-    object : TypeReference<Message> {})
+    callback
+)
 
 suspend fun ApiContext.forwardMessageAwait(
     chatId: String,
@@ -59,5 +61,5 @@ suspend fun ApiContext.forwardMessageAwait(
         Pair("from_chat_id", fromChatId),
         Pair("disable_notification", disableNotification),
         Pair("message_id", messageId)
-    ),
-    object : TypeReference<Message> {})
+    )
+)

@@ -2,10 +2,12 @@
 
 package api.func
 
-import api.type.*
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
+import api.type.ChatPermissions
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the *can_restrict_members* admin rights. Returns *True* on success.
@@ -16,25 +18,21 @@ import io.vertx.core.AsyncResult
 fun ApiContext.setChatPermissions(
     chatId: String,
     permissions: ChatPermissions
-): Future<Boolean?> = sendRequest<Boolean?>(
-    "setChatPermissions",
-    listOf(Pair("chat_id", chatId), Pair("permissions", permissions)),
-    object : TypeReference<Boolean> {})
+): Future<Boolean?> =
+    sendRequest<Boolean?>("setChatPermissions", listOf(Pair("chat_id", chatId), Pair("permissions", permissions)))
 
 fun ApiContext.setChatPermissions(
     chatId: String,
     permissions: ChatPermissions,
-    callback: (result: AsyncResult<Boolean?>) -> Unit
+    callback: (result: Boolean?) -> Unit
 ): ApiContext = sendRequestCallback<Boolean?>(
     "setChatPermissions",
     listOf(Pair("chat_id", chatId), Pair("permissions", permissions)),
-    callback,
-    object : TypeReference<Boolean> {})
+    callback
+)
 
 suspend fun ApiContext.setChatPermissionsAwait(
     chatId: String,
     permissions: ChatPermissions
-): Boolean? = sendRequestAwait<Boolean?>(
-    "setChatPermissions",
-    listOf(Pair("chat_id", chatId), Pair("permissions", permissions)),
-    object : TypeReference<Boolean> {})
+): Boolean? =
+    sendRequestAwait<Boolean?>("setChatPermissions", listOf(Pair("chat_id", chatId), Pair("permissions", permissions)))

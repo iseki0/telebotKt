@@ -2,10 +2,12 @@
 
 package api.func
 
-import api.type.*
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
+import api.type.ChatMember
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to get information about a member of a chat. Returns a [ChatMember][ChatMember] object on success.
@@ -16,25 +18,21 @@ import io.vertx.core.AsyncResult
 fun ApiContext.getChatMember(
     chatId: String,
     userId: Int
-): Future<ChatMember?> = sendRequest<ChatMember?>(
-    "getChatMember",
-    listOf(Pair("chat_id", chatId), Pair("user_id", userId)),
-    object : TypeReference<ChatMember> {})
+): Future<ChatMember?> =
+    sendRequest<ChatMember?>("getChatMember", listOf(Pair("chat_id", chatId), Pair("user_id", userId)))
 
 fun ApiContext.getChatMember(
     chatId: String,
     userId: Int,
-    callback: (result: AsyncResult<ChatMember?>) -> Unit
+    callback: (result: ChatMember?) -> Unit
 ): ApiContext = sendRequestCallback<ChatMember?>(
     "getChatMember",
     listOf(Pair("chat_id", chatId), Pair("user_id", userId)),
-    callback,
-    object : TypeReference<ChatMember> {})
+    callback
+)
 
 suspend fun ApiContext.getChatMemberAwait(
     chatId: String,
     userId: Int
-): ChatMember? = sendRequestAwait<ChatMember?>(
-    "getChatMember",
-    listOf(Pair("chat_id", chatId), Pair("user_id", userId)),
-    object : TypeReference<ChatMember> {})
+): ChatMember? =
+    sendRequestAwait<ChatMember?>("getChatMember", listOf(Pair("chat_id", chatId), Pair("user_id", userId)))

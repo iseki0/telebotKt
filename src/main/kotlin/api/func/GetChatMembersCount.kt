@@ -2,10 +2,11 @@
 
 package api.func
 
-import api.type.*
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to get the number of members in a chat. Returns *Int* on success.
@@ -14,18 +15,13 @@ import io.vertx.core.AsyncResult
  */
 fun ApiContext.getChatMembersCount(
     chatId: String
-): Future<Int?> =
-    sendRequest<Int?>("getChatMembersCount", listOf(Pair("chat_id", chatId)), object : TypeReference<Int> {})
+): Future<Int?> = sendRequest<Int?>("getChatMembersCount", listOf(Pair("chat_id", chatId)))
 
 fun ApiContext.getChatMembersCount(
     chatId: String,
-    callback: (result: AsyncResult<Int?>) -> Unit
-): ApiContext = sendRequestCallback<Int?>(
-    "getChatMembersCount",
-    listOf(Pair("chat_id", chatId)),
-    callback,
-    object : TypeReference<Int> {})
+    callback: (result: Int?) -> Unit
+): ApiContext = sendRequestCallback<Int?>("getChatMembersCount", listOf(Pair("chat_id", chatId)), callback)
 
 suspend fun ApiContext.getChatMembersCountAwait(
     chatId: String
-): Int? = sendRequestAwait<Int?>("getChatMembersCount", listOf(Pair("chat_id", chatId)), object : TypeReference<Int> {})
+): Int? = sendRequestAwait<Int?>("getChatMembersCount", listOf(Pair("chat_id", chatId)))

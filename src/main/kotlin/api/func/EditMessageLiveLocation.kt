@@ -2,10 +2,13 @@
 
 package api.func
 
-import api.type.*
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
+import api.type.InlineKeyboardMarkup
+import api.type.Message
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to edit live location messages. A location can be edited until its *live_period* expires or editing is explicitly disabled by a call to [stopMessageLiveLocation][stopMessageLiveLocation]. On success, if the edited message was sent by the bot, the edited [Message][Message] is returned, otherwise *True* is returned.
@@ -24,7 +27,7 @@ fun ApiContext.editMessageLiveLocation(
     latitude: Double,
     longitude: Double,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Either<Message, Boolean>?> = sendRequest<Either<Message, Boolean>?>(
+): Future<Message?> = sendRequest<Message?>(
     "editMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -33,8 +36,8 @@ fun ApiContext.editMessageLiveLocation(
         Pair("latitude", latitude),
         Pair("longitude", longitude),
         Pair("reply_markup", replyMarkup)
-    ),
-    object : TypeReference<Either<Message, Boolean>> {})
+    )
+)
 
 fun ApiContext.editMessageLiveLocation(
     chatId: String? = null,
@@ -43,8 +46,8 @@ fun ApiContext.editMessageLiveLocation(
     latitude: Double,
     longitude: Double,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: AsyncResult<Either<Message, Boolean>?>) -> Unit
-): ApiContext = sendRequestCallback<Either<Message, Boolean>?>(
+    callback: (result: Message?) -> Unit
+): ApiContext = sendRequestCallback<Message?>(
     "editMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -54,8 +57,8 @@ fun ApiContext.editMessageLiveLocation(
         Pair("longitude", longitude),
         Pair("reply_markup", replyMarkup)
     ),
-    callback,
-    object : TypeReference<Either<Message, Boolean>> {})
+    callback
+)
 
 suspend fun ApiContext.editMessageLiveLocationAwait(
     chatId: String? = null,
@@ -64,7 +67,7 @@ suspend fun ApiContext.editMessageLiveLocationAwait(
     latitude: Double,
     longitude: Double,
     replyMarkup: InlineKeyboardMarkup? = null
-): Either<Message, Boolean>? = sendRequestAwait<Either<Message, Boolean>?>(
+): Message? = sendRequestAwait<Message?>(
     "editMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -73,5 +76,5 @@ suspend fun ApiContext.editMessageLiveLocationAwait(
         Pair("latitude", latitude),
         Pair("longitude", longitude),
         Pair("reply_markup", replyMarkup)
-    ),
-    object : TypeReference<Either<Message, Boolean>> {})
+    )
+)

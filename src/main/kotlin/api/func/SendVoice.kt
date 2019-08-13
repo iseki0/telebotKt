@@ -2,10 +2,11 @@
 
 package api.func
 
-import api.type.*
 import api.*
+import api.type.Audio
+import api.type.Document
+import api.type.Message
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as [Audio][Audio] or [Document][Document]). On success, the sent [Message][Message] is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
@@ -23,7 +24,7 @@ fun ApiContext.sendVoice(
     chatId: String,
     voice: InputFile,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     duration: Int? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
@@ -39,19 +40,19 @@ fun ApiContext.sendVoice(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    ),
-    object : TypeReference<Message> {})
+    )
+)
 
 fun ApiContext.sendVoice(
     chatId: String,
     voice: InputFile,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     duration: Int? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: AsyncResult<Message?>) -> Unit
+    callback: (result: Message?) -> Unit
 ): ApiContext = sendRequestCallback<Message?>(
     "sendVoice",
     listOf(
@@ -64,14 +65,14 @@ fun ApiContext.sendVoice(
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
     ),
-    callback,
-    object : TypeReference<Message> {})
+    callback
+)
 
 suspend fun ApiContext.sendVoiceAwait(
     chatId: String,
     voice: InputFile,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     duration: Int? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
@@ -87,5 +88,5 @@ suspend fun ApiContext.sendVoiceAwait(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    ),
-    object : TypeReference<Message> {})
+    )
+)

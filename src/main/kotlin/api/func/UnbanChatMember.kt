@@ -2,10 +2,11 @@
 
 package api.func
 
-import api.type.*
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to unban a previously kicked user in a supergroup or channel. The user will **not** return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. Returns *True* on success.
@@ -16,25 +17,16 @@ import io.vertx.core.AsyncResult
 fun ApiContext.unbanChatMember(
     chatId: String,
     userId: Int
-): Future<Boolean?> = sendRequest<Boolean?>(
-    "unbanChatMember",
-    listOf(Pair("chat_id", chatId), Pair("user_id", userId)),
-    object : TypeReference<Boolean> {})
+): Future<Boolean?> = sendRequest<Boolean?>("unbanChatMember", listOf(Pair("chat_id", chatId), Pair("user_id", userId)))
 
 fun ApiContext.unbanChatMember(
     chatId: String,
     userId: Int,
-    callback: (result: AsyncResult<Boolean?>) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
-    "unbanChatMember",
-    listOf(Pair("chat_id", chatId), Pair("user_id", userId)),
-    callback,
-    object : TypeReference<Boolean> {})
+    callback: (result: Boolean?) -> Unit
+): ApiContext =
+    sendRequestCallback<Boolean?>("unbanChatMember", listOf(Pair("chat_id", chatId), Pair("user_id", userId)), callback)
 
 suspend fun ApiContext.unbanChatMemberAwait(
     chatId: String,
     userId: Int
-): Boolean? = sendRequestAwait<Boolean?>(
-    "unbanChatMember",
-    listOf(Pair("chat_id", chatId), Pair("user_id", userId)),
-    object : TypeReference<Boolean> {})
+): Boolean? = sendRequestAwait<Boolean?>("unbanChatMember", listOf(Pair("chat_id", chatId), Pair("user_id", userId)))

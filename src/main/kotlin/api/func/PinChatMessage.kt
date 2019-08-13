@@ -2,10 +2,11 @@
 
 package api.func
 
-import api.type.*
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to pin a message in a group, a supergroup, or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns *True* on success.
@@ -20,19 +21,19 @@ fun ApiContext.pinChatMessage(
     disableNotification: Boolean? = null
 ): Future<Boolean?> = sendRequest<Boolean?>(
     "pinChatMessage",
-    listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("disable_notification", disableNotification)),
-    object : TypeReference<Boolean> {})
+    listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("disable_notification", disableNotification))
+)
 
 fun ApiContext.pinChatMessage(
     chatId: String,
     messageId: Int,
     disableNotification: Boolean? = null,
-    callback: (result: AsyncResult<Boolean?>) -> Unit
+    callback: (result: Boolean?) -> Unit
 ): ApiContext = sendRequestCallback<Boolean?>(
     "pinChatMessage",
     listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("disable_notification", disableNotification)),
-    callback,
-    object : TypeReference<Boolean> {})
+    callback
+)
 
 suspend fun ApiContext.pinChatMessageAwait(
     chatId: String,
@@ -40,5 +41,5 @@ suspend fun ApiContext.pinChatMessageAwait(
     disableNotification: Boolean? = null
 ): Boolean? = sendRequestAwait<Boolean?>(
     "pinChatMessage",
-    listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("disable_notification", disableNotification)),
-    object : TypeReference<Boolean> {})
+    listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("disable_notification", disableNotification))
+)

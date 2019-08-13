@@ -2,10 +2,13 @@
 
 package api.func
 
-import api.type.*
-import api.*
+import api.ApiContext
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
+import api.type.InlineKeyboardMarkup
+import api.type.Message
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to send a game. On success, the sent [Message][Message] is returned.
@@ -30,8 +33,8 @@ fun ApiContext.sendGame(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    ),
-    object : TypeReference<Message> {})
+    )
+)
 
 fun ApiContext.sendGame(
     chatId: Int,
@@ -39,7 +42,7 @@ fun ApiContext.sendGame(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: AsyncResult<Message?>) -> Unit
+    callback: (result: Message?) -> Unit
 ): ApiContext = sendRequestCallback<Message?>(
     "sendGame",
     listOf(
@@ -49,8 +52,8 @@ fun ApiContext.sendGame(
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
     ),
-    callback,
-    object : TypeReference<Message> {})
+    callback
+)
 
 suspend fun ApiContext.sendGameAwait(
     chatId: Int,
@@ -66,5 +69,5 @@ suspend fun ApiContext.sendGameAwait(
         Pair("disable_notification", disableNotification),
         Pair("reply_to_message_id", replyToMessageId),
         Pair("reply_markup", replyMarkup)
-    ),
-    object : TypeReference<Message> {})
+    )
+)

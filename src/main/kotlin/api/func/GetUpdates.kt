@@ -2,10 +2,9 @@
 
 package api.func
 
-import api.type.*
 import api.*
+import api.type.Update
 import io.vertx.core.Future
-import io.vertx.core.AsyncResult
 
 /**
  * Use this method to receive incoming updates using long polling ([wiki](http://en.wikipedia.org/wiki/Push_technology#Long_polling)). An Array of [Update][Update] objects is returned.
@@ -19,24 +18,24 @@ fun ApiContext.getUpdates(
     offset: Int? = null,
     limit: Int? = null,
     timeout: Int? = null,
-    allowedUpdates: List<String>? = null
-): Future<Array<Update>?> = sendRequest<Array<Update>?>(
+    allowedUpdates: List<AllowedUpdate>? = null
+): Future<List<Update>?> = sendRequest<List<Update>?>(
     "getUpdates",
     listOf(
         Pair("offset", offset),
         Pair("limit", limit),
         Pair("timeout", timeout),
         Pair("allowed_updates", allowedUpdates)
-    ),
-    object : TypeReference<Array<Update>> {})
+    )
+)
 
 fun ApiContext.getUpdates(
     offset: Int? = null,
     limit: Int? = null,
     timeout: Int? = null,
     allowedUpdates: List<String>? = null,
-    callback: (result: AsyncResult<Array<Update>?>) -> Unit
-): ApiContext = sendRequestCallback<Array<Update>?>(
+    callback: (result: List<Update>?) -> Unit
+): ApiContext = sendRequestCallback<List<Update>?>(
     "getUpdates",
     listOf(
         Pair("offset", offset),
@@ -44,20 +43,20 @@ fun ApiContext.getUpdates(
         Pair("timeout", timeout),
         Pair("allowed_updates", allowedUpdates)
     ),
-    callback,
-    object : TypeReference<Array<Update>> {})
+    callback
+)
 
 suspend fun ApiContext.getUpdatesAwait(
     offset: Int? = null,
     limit: Int? = null,
     timeout: Int? = null,
     allowedUpdates: List<String>? = null
-): Array<Update>? = sendRequestAwait<Array<Update>?>(
+): List<Update>? = sendRequestAwait<List<Update>?>(
     "getUpdates",
     listOf(
         Pair("offset", offset),
         Pair("limit", limit),
         Pair("timeout", timeout),
         Pair("allowed_updates", allowedUpdates)
-    ),
-    object : TypeReference<Array<Update>> {})
+    )
+)
