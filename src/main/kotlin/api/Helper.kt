@@ -1,14 +1,20 @@
 package api
 
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
-inline fun <reified T> ApiContext.sendRequest(command: String, args: List<Pair<String, Any?>>): Future<T?> =
+inline fun <reified T> ApiContext.sendRequest(
+    command: String,
+    args: List<Pair<String, Any?>>,
+    collectionRawType: Class<*>? = null
+): Future<T?> =
     doSendRequest(command, args, T::class.java)
 
 inline fun <reified T> ApiContext.sendRequestCallback(
     command: String,
     args: List<Pair<String, Any?>>,
-    crossinline callback: (T?) -> Unit
+    crossinline callback: (AsyncResult<T?>) -> Unit,
+    rawType: Class<*>? = null
 ): ApiContext {
 
     TODO()

@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -26,7 +27,7 @@ fun ApiContext.sendAudio(
     chatId: String,
     audio: InputFile,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     duration: Int? = null,
     performer: String? = null,
     title: String? = null,
@@ -34,7 +35,7 @@ fun ApiContext.sendAudio(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
+): Future<SendAudioResult?> = sendRequest<SendAudioResult?>(
     "sendAudio",
     listOf(
         Pair("chat_id", chatId),
@@ -55,7 +56,7 @@ fun ApiContext.sendAudio(
     chatId: String,
     audio: InputFile,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     duration: Int? = null,
     performer: String? = null,
     title: String? = null,
@@ -63,8 +64,8 @@ fun ApiContext.sendAudio(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+    callback: (result: AsyncResult<SendAudioResult?>) -> Unit
+): ApiContext = sendRequestCallback<SendAudioResult?>(
     "sendAudio",
     listOf(
         Pair("chat_id", chatId),
@@ -86,7 +87,7 @@ suspend fun ApiContext.sendAudioAwait(
     chatId: String,
     audio: InputFile,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     duration: Int? = null,
     performer: String? = null,
     title: String? = null,
@@ -94,7 +95,7 @@ suspend fun ApiContext.sendAudioAwait(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+): SendAudioResult? = sendRequestAwait<SendAudioResult?>(
     "sendAudio",
     listOf(
         Pair("chat_id", chatId),

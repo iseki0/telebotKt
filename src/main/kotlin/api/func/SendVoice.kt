@@ -6,6 +6,7 @@ import api.*
 import api.type.Audio
 import api.type.Document
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -24,12 +25,12 @@ fun ApiContext.sendVoice(
     chatId: String,
     voice: InputFile,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     duration: Int? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
+): Future<SendVoiceResult?> = sendRequest<SendVoiceResult?>(
     "sendVoice",
     listOf(
         Pair("chat_id", chatId),
@@ -47,13 +48,13 @@ fun ApiContext.sendVoice(
     chatId: String,
     voice: InputFile,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     duration: Int? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+    callback: (result: AsyncResult<SendVoiceResult?>) -> Unit
+): ApiContext = sendRequestCallback<SendVoiceResult?>(
     "sendVoice",
     listOf(
         Pair("chat_id", chatId),
@@ -72,12 +73,12 @@ suspend fun ApiContext.sendVoiceAwait(
     chatId: String,
     voice: InputFile,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     duration: Int? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+): SendVoiceResult? = sendRequestAwait<SendVoiceResult?>(
     "sendVoice",
     listOf(
         Pair("chat_id", chatId),

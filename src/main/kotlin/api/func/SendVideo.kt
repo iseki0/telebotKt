@@ -5,6 +5,7 @@ package api.func
 import api.*
 import api.type.Document
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -31,12 +32,12 @@ fun ApiContext.sendVideo(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     supportsStreaming: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
+): Future<SendVideoResult?> = sendRequest<SendVideoResult?>(
     "sendVideo",
     listOf(
         Pair("chat_id", chatId),
@@ -62,13 +63,13 @@ fun ApiContext.sendVideo(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     supportsStreaming: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+    callback: (result: AsyncResult<SendVideoResult?>) -> Unit
+): ApiContext = sendRequestCallback<SendVideoResult?>(
     "sendVideo",
     listOf(
         Pair("chat_id", chatId),
@@ -95,12 +96,12 @@ suspend fun ApiContext.sendVideoAwait(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     supportsStreaming: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+): SendVideoResult? = sendRequestAwait<SendVideoResult?>(
     "sendVideo",
     listOf(
         Pair("chat_id", chatId),

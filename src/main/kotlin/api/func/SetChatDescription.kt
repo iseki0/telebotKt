@@ -2,10 +2,8 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -17,14 +15,16 @@ import io.vertx.core.Future
 fun ApiContext.setChatDescription(
     chatId: String,
     description: String? = null
-): Future<Boolean?> =
-    sendRequest<Boolean?>("setChatDescription", listOf(Pair("chat_id", chatId), Pair("description", description)))
+): Future<SetChatDescriptionResult?> = sendRequest<SetChatDescriptionResult?>(
+    "setChatDescription",
+    listOf(Pair("chat_id", chatId), Pair("description", description))
+)
 
 fun ApiContext.setChatDescription(
     chatId: String,
     description: String? = null,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
+    callback: (result: AsyncResult<SetChatDescriptionResult?>) -> Unit
+): ApiContext = sendRequestCallback<SetChatDescriptionResult?>(
     "setChatDescription",
     listOf(Pair("chat_id", chatId), Pair("description", description)),
     callback
@@ -33,5 +33,7 @@ fun ApiContext.setChatDescription(
 suspend fun ApiContext.setChatDescriptionAwait(
     chatId: String,
     description: String? = null
-): Boolean? =
-    sendRequestAwait<Boolean?>("setChatDescription", listOf(Pair("chat_id", chatId), Pair("description", description)))
+): SetChatDescriptionResult? = sendRequestAwait<SetChatDescriptionResult?>(
+    "setChatDescription",
+    listOf(Pair("chat_id", chatId), Pair("description", description))
+)

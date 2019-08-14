@@ -2,10 +2,8 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -15,13 +13,16 @@ import io.vertx.core.Future
  */
 fun ApiContext.deleteStickerFromSet(
     sticker: String
-): Future<Boolean?> = sendRequest<Boolean?>("deleteStickerFromSet", listOf(Pair("sticker", sticker)))
+): Future<DeleteStickerFromSetResult?> =
+    sendRequest<DeleteStickerFromSetResult?>("deleteStickerFromSet", listOf(Pair("sticker", sticker)))
 
 fun ApiContext.deleteStickerFromSet(
     sticker: String,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>("deleteStickerFromSet", listOf(Pair("sticker", sticker)), callback)
+    callback: (result: AsyncResult<DeleteStickerFromSetResult?>) -> Unit
+): ApiContext =
+    sendRequestCallback<DeleteStickerFromSetResult?>("deleteStickerFromSet", listOf(Pair("sticker", sticker)), callback)
 
 suspend fun ApiContext.deleteStickerFromSetAwait(
     sticker: String
-): Boolean? = sendRequestAwait<Boolean?>("deleteStickerFromSet", listOf(Pair("sticker", sticker)))
+): DeleteStickerFromSetResult? =
+    sendRequestAwait<DeleteStickerFromSetResult?>("deleteStickerFromSet", listOf(Pair("sticker", sticker)))

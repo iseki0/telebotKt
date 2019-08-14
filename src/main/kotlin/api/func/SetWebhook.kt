@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.Update
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -19,8 +20,8 @@ fun ApiContext.setWebhook(
     url: String,
     certificate: InputFile? = null,
     maxConnections: Int? = null,
-    allowedUpdates: List<AllowedUpdate>? = null
-): Future<Boolean?> = sendRequest<Boolean?>(
+    allowedUpdates: List<String>? = null
+): Future<SetWebhookResult?> = sendRequest<SetWebhookResult?>(
     "setWebhook",
     listOf(
         Pair("url", url),
@@ -35,8 +36,8 @@ fun ApiContext.setWebhook(
     certificate: InputFile? = null,
     maxConnections: Int? = null,
     allowedUpdates: List<String>? = null,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
+    callback: (result: AsyncResult<SetWebhookResult?>) -> Unit
+): ApiContext = sendRequestCallback<SetWebhookResult?>(
     "setWebhook",
     listOf(
         Pair("url", url),
@@ -52,7 +53,7 @@ suspend fun ApiContext.setWebhookAwait(
     certificate: InputFile? = null,
     maxConnections: Int? = null,
     allowedUpdates: List<String>? = null
-): Boolean? = sendRequestAwait<Boolean?>(
+): SetWebhookResult? = sendRequestAwait<SetWebhookResult?>(
     "setWebhook",
     listOf(
         Pair("url", url),

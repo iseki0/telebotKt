@@ -2,11 +2,9 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -22,7 +20,7 @@ fun ApiContext.forwardMessage(
     fromChatId: String,
     disableNotification: Boolean? = null,
     messageId: Int
-): Future<Message?> = sendRequest<Message?>(
+): Future<ForwardMessageResult?> = sendRequest<ForwardMessageResult?>(
     "forwardMessage",
     listOf(
         Pair("chat_id", chatId),
@@ -37,8 +35,8 @@ fun ApiContext.forwardMessage(
     fromChatId: String,
     disableNotification: Boolean? = null,
     messageId: Int,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+    callback: (result: AsyncResult<ForwardMessageResult?>) -> Unit
+): ApiContext = sendRequestCallback<ForwardMessageResult?>(
     "forwardMessage",
     listOf(
         Pair("chat_id", chatId),
@@ -54,7 +52,7 @@ suspend fun ApiContext.forwardMessageAwait(
     fromChatId: String,
     disableNotification: Boolean? = null,
     messageId: Int
-): Message? = sendRequestAwait<Message?>(
+): ForwardMessageResult? = sendRequestAwait<ForwardMessageResult?>(
     "forwardMessage",
     listOf(
         Pair("chat_id", chatId),

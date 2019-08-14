@@ -21,7 +21,12 @@ class BotContextImpl : ApiContext {
 
     private val baseUrl: String = TODO()
 
-    override fun <T> doSendRequest(command: String, args: List<Pair<String, Any?>>, resultType: Class<T>): Future<T?> =
+    override fun <T> doSendRequest(
+        command: String,
+        args: List<Pair<String, Any?>>,
+        resultType: Class<T>,
+        rawType: Class<*>?
+    ): Future<T?> =
         Future.future { promise ->
             val url = baseUrl + command
             val request = webClient.postAbs(baseUrl)

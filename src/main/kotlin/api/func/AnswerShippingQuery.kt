@@ -2,12 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
 import api.type.ShippingOption
 import api.type.Update
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -23,7 +21,7 @@ fun ApiContext.answerShippingQuery(
     ok: Boolean,
     shippingOptions: List<ShippingOption>? = null,
     errorMessage: String? = null
-): Future<Boolean?> = sendRequest<Boolean?>(
+): Future<AnswerShippingQueryResult?> = sendRequest<AnswerShippingQueryResult?>(
     "answerShippingQuery",
     listOf(
         Pair("shipping_query_id", shippingQueryId),
@@ -38,8 +36,8 @@ fun ApiContext.answerShippingQuery(
     ok: Boolean,
     shippingOptions: List<ShippingOption>? = null,
     errorMessage: String? = null,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
+    callback: (result: AsyncResult<AnswerShippingQueryResult?>) -> Unit
+): ApiContext = sendRequestCallback<AnswerShippingQueryResult?>(
     "answerShippingQuery",
     listOf(
         Pair("shipping_query_id", shippingQueryId),
@@ -55,7 +53,7 @@ suspend fun ApiContext.answerShippingQueryAwait(
     ok: Boolean,
     shippingOptions: List<ShippingOption>? = null,
     errorMessage: String? = null
-): Boolean? = sendRequestAwait<Boolean?>(
+): AnswerShippingQueryResult? = sendRequestAwait<AnswerShippingQueryResult?>(
     "answerShippingQuery",
     listOf(
         Pair("shipping_query_id", shippingQueryId),

@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.MaskPosition
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -25,7 +26,7 @@ fun ApiContext.createNewStickerSet(
     emojis: String,
     containsMasks: Boolean? = null,
     maskPosition: MaskPosition? = null
-): Future<Boolean?> = sendRequest<Boolean?>(
+): Future<CreateNewStickerSetResult?> = sendRequest<CreateNewStickerSetResult?>(
     "createNewStickerSet",
     listOf(
         Pair("user_id", userId),
@@ -46,8 +47,8 @@ fun ApiContext.createNewStickerSet(
     emojis: String,
     containsMasks: Boolean? = null,
     maskPosition: MaskPosition? = null,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
+    callback: (result: AsyncResult<CreateNewStickerSetResult?>) -> Unit
+): ApiContext = sendRequestCallback<CreateNewStickerSetResult?>(
     "createNewStickerSet",
     listOf(
         Pair("user_id", userId),
@@ -69,7 +70,7 @@ suspend fun ApiContext.createNewStickerSetAwait(
     emojis: String,
     containsMasks: Boolean? = null,
     maskPosition: MaskPosition? = null
-): Boolean? = sendRequestAwait<Boolean?>(
+): CreateNewStickerSetResult? = sendRequestAwait<CreateNewStickerSetResult?>(
     "createNewStickerSet",
     listOf(
         Pair("user_id", userId),

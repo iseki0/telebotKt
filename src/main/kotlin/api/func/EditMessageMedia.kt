@@ -5,6 +5,7 @@ package api.func
 import api.*
 import api.type.InlineKeyboardMarkup
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -17,12 +18,12 @@ import io.vertx.core.Future
  * @param[replyMarkup] A JSON-serialized object for a new [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
 fun ApiContext.editMessageMedia(
-    chatId: String? = null,
+    chatId: String,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     media: InputMedia,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
+): Future<EditMessageMediaResultMessage?> = sendRequest<EditMessageMediaResultMessage?>(
     "editMessageMedia",
     listOf(
         Pair("chat_id", chatId),
@@ -34,13 +35,13 @@ fun ApiContext.editMessageMedia(
 )
 
 fun ApiContext.editMessageMedia(
-    chatId: String? = null,
+    chatId: String,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     media: InputMedia,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+    callback: (result: AsyncResult<EditMessageMediaResultMessage?>) -> Unit
+): ApiContext = sendRequestCallback<EditMessageMediaResultMessage?>(
     "editMessageMedia",
     listOf(
         Pair("chat_id", chatId),
@@ -53,15 +54,62 @@ fun ApiContext.editMessageMedia(
 )
 
 suspend fun ApiContext.editMessageMediaAwait(
-    chatId: String? = null,
+    chatId: String,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     media: InputMedia,
     replyMarkup: InlineKeyboardMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+): EditMessageMediaResultMessage? = sendRequestAwait<EditMessageMediaResultMessage?>(
     "editMessageMedia",
     listOf(
         Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("media", media),
+        Pair("reply_markup", replyMarkup)
+    )
+)
+
+fun ApiContext.editMessageMedia(
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    media: InputMedia,
+    replyMarkup: InlineKeyboardMarkup? = null
+): Future<EditMessageMediaResultBoolean?> = sendRequest<EditMessageMediaResultBoolean?>(
+    "editMessageMedia",
+    listOf(
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("media", media),
+        Pair("reply_markup", replyMarkup)
+    )
+)
+
+fun ApiContext.editMessageMedia(
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    media: InputMedia,
+    replyMarkup: InlineKeyboardMarkup? = null,
+    callback: (result: AsyncResult<EditMessageMediaResultBoolean?>) -> Unit
+): ApiContext = sendRequestCallback<EditMessageMediaResultBoolean?>(
+    "editMessageMedia",
+    listOf(
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("media", media),
+        Pair("reply_markup", replyMarkup)
+    ),
+    callback
+)
+
+suspend fun ApiContext.editMessageMediaAwait(
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    media: InputMedia,
+    replyMarkup: InlineKeyboardMarkup? = null
+): EditMessageMediaResultBoolean? = sendRequestAwait<EditMessageMediaResultBoolean?>(
+    "editMessageMedia",
+    listOf(
         Pair("message_id", messageId),
         Pair("inline_message_id", inlineMessageId),
         Pair("media", media),

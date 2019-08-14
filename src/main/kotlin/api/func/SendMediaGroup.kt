@@ -3,7 +3,9 @@
 package api.func
 
 import api.*
+import api.type.InputMediaPhoto
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -16,10 +18,10 @@ import io.vertx.core.Future
  */
 fun ApiContext.sendMediaGroup(
     chatId: String,
-    media: List<MediaGroupable>,
+    media: List<InputMediaPhoto>,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null
-): Future<List<Message>?> = sendRequest<List<Message>?>(
+): Future<SendMediaGroupResult?> = sendRequest<SendMediaGroupResult?>(
     "sendMediaGroup",
     listOf(
         Pair("chat_id", chatId),
@@ -31,11 +33,11 @@ fun ApiContext.sendMediaGroup(
 
 fun ApiContext.sendMediaGroup(
     chatId: String,
-    media: List<MediaGroupable>,
+    media: List<InputMediaPhoto>,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
-    callback: (result: List<Message>?) -> Unit
-): ApiContext = sendRequestCallback<List<Message>?>(
+    callback: (result: AsyncResult<SendMediaGroupResult?>) -> Unit
+): ApiContext = sendRequestCallback<SendMediaGroupResult?>(
     "sendMediaGroup",
     listOf(
         Pair("chat_id", chatId),
@@ -48,10 +50,10 @@ fun ApiContext.sendMediaGroup(
 
 suspend fun ApiContext.sendMediaGroupAwait(
     chatId: String,
-    media: List<MediaGroupable>,
+    media: List<InputMediaPhoto>,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null
-): List<Message>? = sendRequestAwait<List<Message>?>(
+): SendMediaGroupResult? = sendRequestAwait<SendMediaGroupResult?>(
     "sendMediaGroup",
     listOf(
         Pair("chat_id", chatId),

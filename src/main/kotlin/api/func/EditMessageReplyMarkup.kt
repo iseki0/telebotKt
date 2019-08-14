@@ -2,12 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
 import api.type.InlineKeyboardMarkup
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -19,11 +17,11 @@ import io.vertx.core.Future
  * @param[replyMarkup] A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
 fun ApiContext.editMessageReplyMarkup(
-    chatId: String? = null,
+    chatId: String,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
+): Future<EditMessageReplyMarkupResultMessage?> = sendRequest<EditMessageReplyMarkupResultMessage?>(
     "editMessageReplyMarkup",
     listOf(
         Pair("chat_id", chatId),
@@ -34,12 +32,12 @@ fun ApiContext.editMessageReplyMarkup(
 )
 
 fun ApiContext.editMessageReplyMarkup(
-    chatId: String? = null,
+    chatId: String,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+    callback: (result: AsyncResult<EditMessageReplyMarkupResultMessage?>) -> Unit
+): ApiContext = sendRequestCallback<EditMessageReplyMarkupResultMessage?>(
     "editMessageReplyMarkup",
     listOf(
         Pair("chat_id", chatId),
@@ -51,11 +49,11 @@ fun ApiContext.editMessageReplyMarkup(
 )
 
 suspend fun ApiContext.editMessageReplyMarkupAwait(
-    chatId: String? = null,
+    chatId: String,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+): EditMessageReplyMarkupResultMessage? = sendRequestAwait<EditMessageReplyMarkupResultMessage?>(
     "editMessageReplyMarkup",
     listOf(
         Pair("chat_id", chatId),
@@ -63,4 +61,37 @@ suspend fun ApiContext.editMessageReplyMarkupAwait(
         Pair("inline_message_id", inlineMessageId),
         Pair("reply_markup", replyMarkup)
     )
+)
+
+fun ApiContext.editMessageReplyMarkup(
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
+): Future<EditMessageReplyMarkupResultBoolean?> = sendRequest<EditMessageReplyMarkupResultBoolean?>(
+    "editMessageReplyMarkup",
+    listOf(Pair("message_id", messageId), Pair("inline_message_id", inlineMessageId), Pair("reply_markup", replyMarkup))
+)
+
+fun ApiContext.editMessageReplyMarkup(
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    replyMarkup: InlineKeyboardMarkup? = null,
+    callback: (result: AsyncResult<EditMessageReplyMarkupResultBoolean?>) -> Unit
+): ApiContext = sendRequestCallback<EditMessageReplyMarkupResultBoolean?>(
+    "editMessageReplyMarkup",
+    listOf(
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("reply_markup", replyMarkup)
+    ),
+    callback
+)
+
+suspend fun ApiContext.editMessageReplyMarkupAwait(
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
+): EditMessageReplyMarkupResultBoolean? = sendRequestAwait<EditMessageReplyMarkupResultBoolean?>(
+    "editMessageReplyMarkup",
+    listOf(Pair("message_id", messageId), Pair("inline_message_id", inlineMessageId), Pair("reply_markup", replyMarkup))
 )

@@ -2,12 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
 import api.type.InlineKeyboardMarkup
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -19,11 +17,11 @@ import io.vertx.core.Future
  * @param[replyMarkup] A JSON-serialized object for a new [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
 fun ApiContext.stopMessageLiveLocation(
-    chatId: String? = null,
+    chatId: String,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
+): Future<StopMessageLiveLocationResultMessage?> = sendRequest<StopMessageLiveLocationResultMessage?>(
     "stopMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -34,12 +32,12 @@ fun ApiContext.stopMessageLiveLocation(
 )
 
 fun ApiContext.stopMessageLiveLocation(
-    chatId: String? = null,
+    chatId: String,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+    callback: (result: AsyncResult<StopMessageLiveLocationResultMessage?>) -> Unit
+): ApiContext = sendRequestCallback<StopMessageLiveLocationResultMessage?>(
     "stopMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -51,11 +49,11 @@ fun ApiContext.stopMessageLiveLocation(
 )
 
 suspend fun ApiContext.stopMessageLiveLocationAwait(
-    chatId: String? = null,
+    chatId: String,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+): StopMessageLiveLocationResultMessage? = sendRequestAwait<StopMessageLiveLocationResultMessage?>(
     "stopMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -63,4 +61,37 @@ suspend fun ApiContext.stopMessageLiveLocationAwait(
         Pair("inline_message_id", inlineMessageId),
         Pair("reply_markup", replyMarkup)
     )
+)
+
+fun ApiContext.stopMessageLiveLocation(
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
+): Future<StopMessageLiveLocationResultBoolean?> = sendRequest<StopMessageLiveLocationResultBoolean?>(
+    "stopMessageLiveLocation",
+    listOf(Pair("message_id", messageId), Pair("inline_message_id", inlineMessageId), Pair("reply_markup", replyMarkup))
+)
+
+fun ApiContext.stopMessageLiveLocation(
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    replyMarkup: InlineKeyboardMarkup? = null,
+    callback: (result: AsyncResult<StopMessageLiveLocationResultBoolean?>) -> Unit
+): ApiContext = sendRequestCallback<StopMessageLiveLocationResultBoolean?>(
+    "stopMessageLiveLocation",
+    listOf(
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("reply_markup", replyMarkup)
+    ),
+    callback
+)
+
+suspend fun ApiContext.stopMessageLiveLocationAwait(
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
+): StopMessageLiveLocationResultBoolean? = sendRequestAwait<StopMessageLiveLocationResultBoolean?>(
+    "stopMessageLiveLocation",
+    listOf(Pair("message_id", messageId), Pair("inline_message_id", inlineMessageId), Pair("reply_markup", replyMarkup))
 )

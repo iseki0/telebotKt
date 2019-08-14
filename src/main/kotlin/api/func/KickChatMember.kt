@@ -2,10 +2,8 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -20,7 +18,7 @@ fun ApiContext.kickChatMember(
     chatId: String,
     userId: Int,
     untilDate: Int? = null
-): Future<Boolean?> = sendRequest<Boolean?>(
+): Future<KickChatMemberResult?> = sendRequest<KickChatMemberResult?>(
     "kickChatMember",
     listOf(Pair("chat_id", chatId), Pair("user_id", userId), Pair("until_date", untilDate))
 )
@@ -29,8 +27,8 @@ fun ApiContext.kickChatMember(
     chatId: String,
     userId: Int,
     untilDate: Int? = null,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
+    callback: (result: AsyncResult<KickChatMemberResult?>) -> Unit
+): ApiContext = sendRequestCallback<KickChatMemberResult?>(
     "kickChatMember",
     listOf(Pair("chat_id", chatId), Pair("user_id", userId), Pair("until_date", untilDate)),
     callback
@@ -40,7 +38,7 @@ suspend fun ApiContext.kickChatMemberAwait(
     chatId: String,
     userId: Int,
     untilDate: Int? = null
-): Boolean? = sendRequestAwait<Boolean?>(
+): KickChatMemberResult? = sendRequestAwait<KickChatMemberResult?>(
     "kickChatMember",
     listOf(Pair("chat_id", chatId), Pair("user_id", userId), Pair("until_date", untilDate))
 )

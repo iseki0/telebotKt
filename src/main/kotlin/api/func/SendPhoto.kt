@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -21,11 +22,11 @@ fun ApiContext.sendPhoto(
     chatId: String,
     photo: InputFile,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
+): Future<SendPhotoResult?> = sendRequest<SendPhotoResult?>(
     "sendPhoto",
     listOf(
         Pair("chat_id", chatId),
@@ -42,12 +43,12 @@ fun ApiContext.sendPhoto(
     chatId: String,
     photo: InputFile,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+    callback: (result: AsyncResult<SendPhotoResult?>) -> Unit
+): ApiContext = sendRequestCallback<SendPhotoResult?>(
     "sendPhoto",
     listOf(
         Pair("chat_id", chatId),
@@ -65,11 +66,11 @@ suspend fun ApiContext.sendPhotoAwait(
     chatId: String,
     photo: InputFile,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+): SendPhotoResult? = sendRequestAwait<SendPhotoResult?>(
     "sendPhoto",
     listOf(
         Pair("chat_id", chatId),

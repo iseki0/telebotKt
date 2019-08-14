@@ -2,11 +2,9 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
 import api.type.ChatMember
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -18,14 +16,14 @@ import io.vertx.core.Future
 fun ApiContext.getChatMember(
     chatId: String,
     userId: Int
-): Future<ChatMember?> =
-    sendRequest<ChatMember?>("getChatMember", listOf(Pair("chat_id", chatId), Pair("user_id", userId)))
+): Future<GetChatMemberResult?> =
+    sendRequest<GetChatMemberResult?>("getChatMember", listOf(Pair("chat_id", chatId), Pair("user_id", userId)))
 
 fun ApiContext.getChatMember(
     chatId: String,
     userId: Int,
-    callback: (result: ChatMember?) -> Unit
-): ApiContext = sendRequestCallback<ChatMember?>(
+    callback: (result: AsyncResult<GetChatMemberResult?>) -> Unit
+): ApiContext = sendRequestCallback<GetChatMemberResult?>(
     "getChatMember",
     listOf(Pair("chat_id", chatId), Pair("user_id", userId)),
     callback
@@ -34,5 +32,5 @@ fun ApiContext.getChatMember(
 suspend fun ApiContext.getChatMemberAwait(
     chatId: String,
     userId: Int
-): ChatMember? =
-    sendRequestAwait<ChatMember?>("getChatMember", listOf(Pair("chat_id", chatId), Pair("user_id", userId)))
+): GetChatMemberResult? =
+    sendRequestAwait<GetChatMemberResult?>("getChatMember", listOf(Pair("chat_id", chatId), Pair("user_id", userId)))

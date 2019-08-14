@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -29,11 +30,11 @@ fun ApiContext.sendAnimation(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
+): Future<SendAnimationResult?> = sendRequest<SendAnimationResult?>(
     "sendAnimation",
     listOf(
         Pair("chat_id", chatId),
@@ -58,12 +59,12 @@ fun ApiContext.sendAnimation(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+    callback: (result: AsyncResult<SendAnimationResult?>) -> Unit
+): ApiContext = sendRequestCallback<SendAnimationResult?>(
     "sendAnimation",
     listOf(
         Pair("chat_id", chatId),
@@ -89,11 +90,11 @@ suspend fun ApiContext.sendAnimationAwait(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+): SendAnimationResult? = sendRequestAwait<SendAnimationResult?>(
     "sendAnimation",
     listOf(
         Pair("chat_id", chatId),

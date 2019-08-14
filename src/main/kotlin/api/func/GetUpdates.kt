@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.Update
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -18,8 +19,8 @@ fun ApiContext.getUpdates(
     offset: Int? = null,
     limit: Int? = null,
     timeout: Int? = null,
-    allowedUpdates: List<AllowedUpdate>? = null
-): Future<List<Update>?> = sendRequest<List<Update>?>(
+    allowedUpdates: List<String>? = null
+): Future<GetUpdatesResult?> = sendRequest<GetUpdatesResult?>(
     "getUpdates",
     listOf(
         Pair("offset", offset),
@@ -34,8 +35,8 @@ fun ApiContext.getUpdates(
     limit: Int? = null,
     timeout: Int? = null,
     allowedUpdates: List<String>? = null,
-    callback: (result: List<Update>?) -> Unit
-): ApiContext = sendRequestCallback<List<Update>?>(
+    callback: (result: AsyncResult<GetUpdatesResult?>) -> Unit
+): ApiContext = sendRequestCallback<GetUpdatesResult?>(
     "getUpdates",
     listOf(
         Pair("offset", offset),
@@ -51,7 +52,7 @@ suspend fun ApiContext.getUpdatesAwait(
     limit: Int? = null,
     timeout: Int? = null,
     allowedUpdates: List<String>? = null
-): List<Update>? = sendRequestAwait<List<Update>?>(
+): GetUpdatesResult? = sendRequestAwait<GetUpdatesResult?>(
     "getUpdates",
     listOf(
         Pair("offset", offset),

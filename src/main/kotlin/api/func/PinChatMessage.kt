@@ -2,10 +2,8 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -19,7 +17,7 @@ fun ApiContext.pinChatMessage(
     chatId: String,
     messageId: Int,
     disableNotification: Boolean? = null
-): Future<Boolean?> = sendRequest<Boolean?>(
+): Future<PinChatMessageResult?> = sendRequest<PinChatMessageResult?>(
     "pinChatMessage",
     listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("disable_notification", disableNotification))
 )
@@ -28,8 +26,8 @@ fun ApiContext.pinChatMessage(
     chatId: String,
     messageId: Int,
     disableNotification: Boolean? = null,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
+    callback: (result: AsyncResult<PinChatMessageResult?>) -> Unit
+): ApiContext = sendRequestCallback<PinChatMessageResult?>(
     "pinChatMessage",
     listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("disable_notification", disableNotification)),
     callback
@@ -39,7 +37,7 @@ suspend fun ApiContext.pinChatMessageAwait(
     chatId: String,
     messageId: Int,
     disableNotification: Boolean? = null
-): Boolean? = sendRequestAwait<Boolean?>(
+): PinChatMessageResult? = sendRequestAwait<PinChatMessageResult?>(
     "pinChatMessage",
     listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("disable_notification", disableNotification))
 )

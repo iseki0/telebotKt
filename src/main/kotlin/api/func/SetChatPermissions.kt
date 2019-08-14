@@ -2,11 +2,9 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
 import api.type.ChatPermissions
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -18,14 +16,16 @@ import io.vertx.core.Future
 fun ApiContext.setChatPermissions(
     chatId: String,
     permissions: ChatPermissions
-): Future<Boolean?> =
-    sendRequest<Boolean?>("setChatPermissions", listOf(Pair("chat_id", chatId), Pair("permissions", permissions)))
+): Future<SetChatPermissionsResult?> = sendRequest<SetChatPermissionsResult?>(
+    "setChatPermissions",
+    listOf(Pair("chat_id", chatId), Pair("permissions", permissions))
+)
 
 fun ApiContext.setChatPermissions(
     chatId: String,
     permissions: ChatPermissions,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
+    callback: (result: AsyncResult<SetChatPermissionsResult?>) -> Unit
+): ApiContext = sendRequestCallback<SetChatPermissionsResult?>(
     "setChatPermissions",
     listOf(Pair("chat_id", chatId), Pair("permissions", permissions)),
     callback
@@ -34,5 +34,7 @@ fun ApiContext.setChatPermissions(
 suspend fun ApiContext.setChatPermissionsAwait(
     chatId: String,
     permissions: ChatPermissions
-): Boolean? =
-    sendRequestAwait<Boolean?>("setChatPermissions", listOf(Pair("chat_id", chatId), Pair("permissions", permissions)))
+): SetChatPermissionsResult? = sendRequestAwait<SetChatPermissionsResult?>(
+    "setChatPermissions",
+    listOf(Pair("chat_id", chatId), Pair("permissions", permissions))
+)

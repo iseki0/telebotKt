@@ -2,11 +2,9 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
 import api.type.Chat
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -16,13 +14,13 @@ import io.vertx.core.Future
  */
 fun ApiContext.getChat(
     chatId: String
-): Future<Chat?> = sendRequest<Chat?>("getChat", listOf(Pair("chat_id", chatId)))
+): Future<GetChatResult?> = sendRequest<GetChatResult?>("getChat", listOf(Pair("chat_id", chatId)))
 
 fun ApiContext.getChat(
     chatId: String,
-    callback: (result: Chat?) -> Unit
-): ApiContext = sendRequestCallback<Chat?>("getChat", listOf(Pair("chat_id", chatId)), callback)
+    callback: (result: AsyncResult<GetChatResult?>) -> Unit
+): ApiContext = sendRequestCallback<GetChatResult?>("getChat", listOf(Pair("chat_id", chatId)), callback)
 
 suspend fun ApiContext.getChatAwait(
     chatId: String
-): Chat? = sendRequestAwait<Chat?>("getChat", listOf(Pair("chat_id", chatId)))
+): GetChatResult? = sendRequestAwait<GetChatResult?>("getChat", listOf(Pair("chat_id", chatId)))

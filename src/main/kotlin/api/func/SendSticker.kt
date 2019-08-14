@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -21,7 +22,7 @@ fun ApiContext.sendSticker(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
+): Future<SendStickerResult?> = sendRequest<SendStickerResult?>(
     "sendSticker",
     listOf(
         Pair("chat_id", chatId),
@@ -38,8 +39,8 @@ fun ApiContext.sendSticker(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+    callback: (result: AsyncResult<SendStickerResult?>) -> Unit
+): ApiContext = sendRequestCallback<SendStickerResult?>(
     "sendSticker",
     listOf(
         Pair("chat_id", chatId),
@@ -57,7 +58,7 @@ suspend fun ApiContext.sendStickerAwait(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+): SendStickerResult? = sendRequestAwait<SendStickerResult?>(
     "sendSticker",
     listOf(
         Pair("chat_id", chatId),

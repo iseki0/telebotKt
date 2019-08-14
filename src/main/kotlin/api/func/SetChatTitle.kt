@@ -2,10 +2,8 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -18,16 +16,21 @@ import io.vertx.core.Future
 fun ApiContext.setChatTitle(
     chatId: String,
     title: String
-): Future<Boolean?> = sendRequest<Boolean?>("setChatTitle", listOf(Pair("chat_id", chatId), Pair("title", title)))
+): Future<SetChatTitleResult?> =
+    sendRequest<SetChatTitleResult?>("setChatTitle", listOf(Pair("chat_id", chatId), Pair("title", title)))
 
 fun ApiContext.setChatTitle(
     chatId: String,
     title: String,
-    callback: (result: Boolean?) -> Unit
-): ApiContext =
-    sendRequestCallback<Boolean?>("setChatTitle", listOf(Pair("chat_id", chatId), Pair("title", title)), callback)
+    callback: (result: AsyncResult<SetChatTitleResult?>) -> Unit
+): ApiContext = sendRequestCallback<SetChatTitleResult?>(
+    "setChatTitle",
+    listOf(Pair("chat_id", chatId), Pair("title", title)),
+    callback
+)
 
 suspend fun ApiContext.setChatTitleAwait(
     chatId: String,
     title: String
-): Boolean? = sendRequestAwait<Boolean?>("setChatTitle", listOf(Pair("chat_id", chatId), Pair("title", title)))
+): SetChatTitleResult? =
+    sendRequestAwait<SetChatTitleResult?>("setChatTitle", listOf(Pair("chat_id", chatId), Pair("title", title)))

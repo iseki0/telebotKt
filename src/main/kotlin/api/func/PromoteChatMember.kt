@@ -2,10 +2,8 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -33,7 +31,7 @@ fun ApiContext.promoteChatMember(
     canRestrictMembers: Boolean? = null,
     canPinMessages: Boolean? = null,
     canPromoteMembers: Boolean? = null
-): Future<Boolean?> = sendRequest<Boolean?>(
+): Future<PromoteChatMemberResult?> = sendRequest<PromoteChatMemberResult?>(
     "promoteChatMember",
     listOf(
         Pair("chat_id", chatId),
@@ -60,8 +58,8 @@ fun ApiContext.promoteChatMember(
     canRestrictMembers: Boolean? = null,
     canPinMessages: Boolean? = null,
     canPromoteMembers: Boolean? = null,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
+    callback: (result: AsyncResult<PromoteChatMemberResult?>) -> Unit
+): ApiContext = sendRequestCallback<PromoteChatMemberResult?>(
     "promoteChatMember",
     listOf(
         Pair("chat_id", chatId),
@@ -89,7 +87,7 @@ suspend fun ApiContext.promoteChatMemberAwait(
     canRestrictMembers: Boolean? = null,
     canPinMessages: Boolean? = null,
     canPromoteMembers: Boolean? = null
-): Boolean? = sendRequestAwait<Boolean?>(
+): PromoteChatMemberResult? = sendRequestAwait<PromoteChatMemberResult?>(
     "promoteChatMember",
     listOf(
         Pair("chat_id", chatId),

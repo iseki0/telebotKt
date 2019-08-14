@@ -2,11 +2,9 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
 import api.type.GameHighScore
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -23,7 +21,7 @@ fun ApiContext.getGameHighScores(
     chatId: Int? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null
-): Future<List<GameHighScore>?> = sendRequest<List<GameHighScore>?>(
+): Future<GetGameHighScoresResult?> = sendRequest<GetGameHighScoresResult?>(
     "getGameHighScores",
     listOf(
         Pair("user_id", userId),
@@ -38,8 +36,8 @@ fun ApiContext.getGameHighScores(
     chatId: Int? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null,
-    callback: (result: List<GameHighScore>?) -> Unit
-): ApiContext = sendRequestCallback<List<GameHighScore>?>(
+    callback: (result: AsyncResult<GetGameHighScoresResult?>) -> Unit
+): ApiContext = sendRequestCallback<GetGameHighScoresResult?>(
     "getGameHighScores",
     listOf(
         Pair("user_id", userId),
@@ -55,7 +53,7 @@ suspend fun ApiContext.getGameHighScoresAwait(
     chatId: Int? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null
-): List<GameHighScore>? = sendRequestAwait<List<GameHighScore>?>(
+): GetGameHighScoresResult? = sendRequestAwait<GetGameHighScoresResult?>(
     "getGameHighScores",
     listOf(
         Pair("user_id", userId),

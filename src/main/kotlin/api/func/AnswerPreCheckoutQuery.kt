@@ -2,11 +2,9 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
 import api.type.Update
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -20,7 +18,7 @@ fun ApiContext.answerPreCheckoutQuery(
     preCheckoutQueryId: String,
     ok: Boolean,
     errorMessage: String? = null
-): Future<Boolean?> = sendRequest<Boolean?>(
+): Future<AnswerPreCheckoutQueryResult?> = sendRequest<AnswerPreCheckoutQueryResult?>(
     "answerPreCheckoutQuery",
     listOf(Pair("pre_checkout_query_id", preCheckoutQueryId), Pair("ok", ok), Pair("error_message", errorMessage))
 )
@@ -29,8 +27,8 @@ fun ApiContext.answerPreCheckoutQuery(
     preCheckoutQueryId: String,
     ok: Boolean,
     errorMessage: String? = null,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
+    callback: (result: AsyncResult<AnswerPreCheckoutQueryResult?>) -> Unit
+): ApiContext = sendRequestCallback<AnswerPreCheckoutQueryResult?>(
     "answerPreCheckoutQuery",
     listOf(Pair("pre_checkout_query_id", preCheckoutQueryId), Pair("ok", ok), Pair("error_message", errorMessage)),
     callback
@@ -40,7 +38,7 @@ suspend fun ApiContext.answerPreCheckoutQueryAwait(
     preCheckoutQueryId: String,
     ok: Boolean,
     errorMessage: String? = null
-): Boolean? = sendRequestAwait<Boolean?>(
+): AnswerPreCheckoutQueryResult? = sendRequestAwait<AnswerPreCheckoutQueryResult?>(
     "answerPreCheckoutQuery",
     listOf(Pair("pre_checkout_query_id", preCheckoutQueryId), Pair("ok", ok), Pair("error_message", errorMessage))
 )

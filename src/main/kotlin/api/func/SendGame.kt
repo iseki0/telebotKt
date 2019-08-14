@@ -2,12 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
 import api.type.InlineKeyboardMarkup
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -25,7 +23,7 @@ fun ApiContext.sendGame(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
+): Future<SendGameResult?> = sendRequest<SendGameResult?>(
     "sendGame",
     listOf(
         Pair("chat_id", chatId),
@@ -42,8 +40,8 @@ fun ApiContext.sendGame(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+    callback: (result: AsyncResult<SendGameResult?>) -> Unit
+): ApiContext = sendRequestCallback<SendGameResult?>(
     "sendGame",
     listOf(
         Pair("chat_id", chatId),
@@ -61,7 +59,7 @@ suspend fun ApiContext.sendGameAwait(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+): SendGameResult? = sendRequestAwait<SendGameResult?>(
     "sendGame",
     listOf(
         Pair("chat_id", chatId),

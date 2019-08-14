@@ -2,11 +2,9 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
 import api.type.File
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -16,13 +14,13 @@ import io.vertx.core.Future
  */
 fun ApiContext.getFile(
     fileId: String
-): Future<File?> = sendRequest<File?>("getFile", listOf(Pair("file_id", fileId)))
+): Future<GetFileResult?> = sendRequest<GetFileResult?>("getFile", listOf(Pair("file_id", fileId)))
 
 fun ApiContext.getFile(
     fileId: String,
-    callback: (result: File?) -> Unit
-): ApiContext = sendRequestCallback<File?>("getFile", listOf(Pair("file_id", fileId)), callback)
+    callback: (result: AsyncResult<GetFileResult?>) -> Unit
+): ApiContext = sendRequestCallback<GetFileResult?>("getFile", listOf(Pair("file_id", fileId)), callback)
 
 suspend fun ApiContext.getFileAwait(
     fileId: String
-): File? = sendRequestAwait<File?>("getFile", listOf(Pair("file_id", fileId)))
+): GetFileResult? = sendRequestAwait<GetFileResult?>("getFile", listOf(Pair("file_id", fileId)))

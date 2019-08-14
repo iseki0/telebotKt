@@ -2,10 +2,8 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -15,13 +13,13 @@ import io.vertx.core.Future
  */
 fun ApiContext.leaveChat(
     chatId: String
-): Future<Boolean?> = sendRequest<Boolean?>("leaveChat", listOf(Pair("chat_id", chatId)))
+): Future<LeaveChatResult?> = sendRequest<LeaveChatResult?>("leaveChat", listOf(Pair("chat_id", chatId)))
 
 fun ApiContext.leaveChat(
     chatId: String,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>("leaveChat", listOf(Pair("chat_id", chatId)), callback)
+    callback: (result: AsyncResult<LeaveChatResult?>) -> Unit
+): ApiContext = sendRequestCallback<LeaveChatResult?>("leaveChat", listOf(Pair("chat_id", chatId)), callback)
 
 suspend fun ApiContext.leaveChatAwait(
     chatId: String
-): Boolean? = sendRequestAwait<Boolean?>("leaveChat", listOf(Pair("chat_id", chatId)))
+): LeaveChatResult? = sendRequestAwait<LeaveChatResult?>("leaveChat", listOf(Pair("chat_id", chatId)))

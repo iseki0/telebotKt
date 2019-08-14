@@ -2,12 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
 import api.type.Game
 import api.type.InlineKeyboardButton
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -26,7 +24,7 @@ fun ApiContext.answerCallbackQuery(
     showAlert: Boolean? = null,
     url: String? = null,
     cacheTime: Int? = null
-): Future<Boolean?> = sendRequest<Boolean?>(
+): Future<AnswerCallbackQueryResult?> = sendRequest<AnswerCallbackQueryResult?>(
     "answerCallbackQuery",
     listOf(
         Pair("callback_query_id", callbackQueryId),
@@ -43,8 +41,8 @@ fun ApiContext.answerCallbackQuery(
     showAlert: Boolean? = null,
     url: String? = null,
     cacheTime: Int? = null,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
+    callback: (result: AsyncResult<AnswerCallbackQueryResult?>) -> Unit
+): ApiContext = sendRequestCallback<AnswerCallbackQueryResult?>(
     "answerCallbackQuery",
     listOf(
         Pair("callback_query_id", callbackQueryId),
@@ -62,7 +60,7 @@ suspend fun ApiContext.answerCallbackQueryAwait(
     showAlert: Boolean? = null,
     url: String? = null,
     cacheTime: Int? = null
-): Boolean? = sendRequestAwait<Boolean?>(
+): AnswerCallbackQueryResult? = sendRequestAwait<AnswerCallbackQueryResult?>(
     "answerCallbackQuery",
     listOf(
         Pair("callback_query_id", callbackQueryId),

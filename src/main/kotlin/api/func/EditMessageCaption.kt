@@ -5,6 +5,7 @@ package api.func
 import api.*
 import api.type.InlineKeyboardMarkup
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -18,13 +19,13 @@ import io.vertx.core.Future
  * @param[replyMarkup] A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
 fun ApiContext.editMessageCaption(
-    chatId: String? = null,
+    chatId: String,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
+): Future<EditMessageCaptionResultMessage?> = sendRequest<EditMessageCaptionResultMessage?>(
     "editMessageCaption",
     listOf(
         Pair("chat_id", chatId),
@@ -37,14 +38,14 @@ fun ApiContext.editMessageCaption(
 )
 
 fun ApiContext.editMessageCaption(
-    chatId: String? = null,
+    chatId: String,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+    callback: (result: AsyncResult<EditMessageCaptionResultMessage?>) -> Unit
+): ApiContext = sendRequestCallback<EditMessageCaptionResultMessage?>(
     "editMessageCaption",
     listOf(
         Pair("chat_id", chatId),
@@ -58,16 +59,70 @@ fun ApiContext.editMessageCaption(
 )
 
 suspend fun ApiContext.editMessageCaptionAwait(
-    chatId: String? = null,
+    chatId: String,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+): EditMessageCaptionResultMessage? = sendRequestAwait<EditMessageCaptionResultMessage?>(
     "editMessageCaption",
     listOf(
         Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("caption", caption),
+        Pair("parse_mode", parseMode),
+        Pair("reply_markup", replyMarkup)
+    )
+)
+
+
+fun ApiContext.editMessageCaption(
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    caption: String? = null,
+    parseMode: String? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
+): Future<EditMessageCaptionResultBoolean?> = sendRequest<EditMessageCaptionResultBoolean?>(
+    "editMessageCaption",
+    listOf(
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("caption", caption),
+        Pair("parse_mode", parseMode),
+        Pair("reply_markup", replyMarkup)
+    )
+)
+
+fun ApiContext.editMessageCaption(
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    caption: String? = null,
+    parseMode: String? = null,
+    replyMarkup: InlineKeyboardMarkup? = null,
+    callback: (result: AsyncResult<EditMessageCaptionResultBoolean?>) -> Unit
+): ApiContext = sendRequestCallback<EditMessageCaptionResultBoolean?>(
+    "editMessageCaption",
+    listOf(
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("caption", caption),
+        Pair("parse_mode", parseMode),
+        Pair("reply_markup", replyMarkup)
+    ),
+    callback
+)
+
+suspend fun ApiContext.editMessageCaptionAwait(
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    caption: String? = null,
+    parseMode: String? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
+): EditMessageCaptionResultBoolean? = sendRequestAwait<EditMessageCaptionResultBoolean?>(
+    "editMessageCaption",
+    listOf(
         Pair("message_id", messageId),
         Pair("inline_message_id", inlineMessageId),
         Pair("caption", caption),

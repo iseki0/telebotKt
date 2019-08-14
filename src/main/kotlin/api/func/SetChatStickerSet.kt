@@ -2,10 +2,8 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -17,7 +15,7 @@ import io.vertx.core.Future
 fun ApiContext.setChatStickerSet(
     chatId: String,
     stickerSetName: String
-): Future<Boolean?> = sendRequest<Boolean?>(
+): Future<SetChatStickerSetResult?> = sendRequest<SetChatStickerSetResult?>(
     "setChatStickerSet",
     listOf(Pair("chat_id", chatId), Pair("sticker_set_name", stickerSetName))
 )
@@ -25,8 +23,8 @@ fun ApiContext.setChatStickerSet(
 fun ApiContext.setChatStickerSet(
     chatId: String,
     stickerSetName: String,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
+    callback: (result: AsyncResult<SetChatStickerSetResult?>) -> Unit
+): ApiContext = sendRequestCallback<SetChatStickerSetResult?>(
     "setChatStickerSet",
     listOf(Pair("chat_id", chatId), Pair("sticker_set_name", stickerSetName)),
     callback
@@ -35,7 +33,7 @@ fun ApiContext.setChatStickerSet(
 suspend fun ApiContext.setChatStickerSetAwait(
     chatId: String,
     stickerSetName: String
-): Boolean? = sendRequestAwait<Boolean?>(
+): SetChatStickerSetResult? = sendRequestAwait<SetChatStickerSetResult?>(
     "setChatStickerSet",
     listOf(Pair("chat_id", chatId), Pair("sticker_set_name", stickerSetName))
 )

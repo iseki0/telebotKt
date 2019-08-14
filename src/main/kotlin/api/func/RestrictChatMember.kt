@@ -2,11 +2,9 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
 import api.type.ChatPermissions
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -22,7 +20,7 @@ fun ApiContext.restrictChatMember(
     userId: Int,
     permissions: ChatPermissions,
     untilDate: Int? = null
-): Future<Boolean?> = sendRequest<Boolean?>(
+): Future<RestrictChatMemberResult?> = sendRequest<RestrictChatMemberResult?>(
     "restrictChatMember",
     listOf(
         Pair("chat_id", chatId),
@@ -37,8 +35,8 @@ fun ApiContext.restrictChatMember(
     userId: Int,
     permissions: ChatPermissions,
     untilDate: Int? = null,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
+    callback: (result: AsyncResult<RestrictChatMemberResult?>) -> Unit
+): ApiContext = sendRequestCallback<RestrictChatMemberResult?>(
     "restrictChatMember",
     listOf(
         Pair("chat_id", chatId),
@@ -54,7 +52,7 @@ suspend fun ApiContext.restrictChatMemberAwait(
     userId: Int,
     permissions: ChatPermissions,
     untilDate: Int? = null
-): Boolean? = sendRequestAwait<Boolean?>(
+): RestrictChatMemberResult? = sendRequestAwait<RestrictChatMemberResult?>(
     "restrictChatMember",
     listOf(
         Pair("chat_id", chatId),

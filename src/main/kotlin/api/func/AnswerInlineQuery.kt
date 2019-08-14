@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.InlineKeyboardMarkup
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -26,7 +27,7 @@ fun ApiContext.answerInlineQuery(
     nextOffset: String? = null,
     switchPmText: String? = null,
     switchPmParameter: String? = null
-): Future<Boolean?> = sendRequest<Boolean?>(
+): Future<AnswerInlineQueryResult?> = sendRequest<AnswerInlineQueryResult?>(
     "answerInlineQuery",
     listOf(
         Pair("inline_query_id", inlineQueryId),
@@ -47,8 +48,8 @@ fun ApiContext.answerInlineQuery(
     nextOffset: String? = null,
     switchPmText: String? = null,
     switchPmParameter: String? = null,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
+    callback: (result: AsyncResult<AnswerInlineQueryResult?>) -> Unit
+): ApiContext = sendRequestCallback<AnswerInlineQueryResult?>(
     "answerInlineQuery",
     listOf(
         Pair("inline_query_id", inlineQueryId),
@@ -70,7 +71,7 @@ suspend fun ApiContext.answerInlineQueryAwait(
     nextOffset: String? = null,
     switchPmText: String? = null,
     switchPmParameter: String? = null
-): Boolean? = sendRequestAwait<Boolean?>(
+): AnswerInlineQueryResult? = sendRequestAwait<AnswerInlineQueryResult?>(
     "answerInlineQuery",
     listOf(
         Pair("inline_query_id", inlineQueryId),

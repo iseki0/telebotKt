@@ -5,6 +5,7 @@ package api.func
 import api.*
 import api.type.InlineKeyboardMarkup
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -19,14 +20,14 @@ import io.vertx.core.Future
  * @param[replyMarkup] A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
  */
 fun ApiContext.editMessageText(
-    chatId: String? = null,
+    chatId: String,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     text: String,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableWebPagePreview: Boolean? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
+): Future<EditMessageTextResultMessage?> = sendRequest<EditMessageTextResultMessage?>(
     "editMessageText",
     listOf(
         Pair("chat_id", chatId),
@@ -40,15 +41,15 @@ fun ApiContext.editMessageText(
 )
 
 fun ApiContext.editMessageText(
-    chatId: String? = null,
+    chatId: String,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     text: String,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableWebPagePreview: Boolean? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+    callback: (result: AsyncResult<EditMessageTextResultMessage?>) -> Unit
+): ApiContext = sendRequestCallback<EditMessageTextResultMessage?>(
     "editMessageText",
     listOf(
         Pair("chat_id", chatId),
@@ -63,17 +64,77 @@ fun ApiContext.editMessageText(
 )
 
 suspend fun ApiContext.editMessageTextAwait(
-    chatId: String? = null,
+    chatId: String,
     messageId: Int? = null,
     inlineMessageId: String? = null,
     text: String,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableWebPagePreview: Boolean? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+): EditMessageTextResultMessage? = sendRequestAwait<EditMessageTextResultMessage?>(
     "editMessageText",
     listOf(
         Pair("chat_id", chatId),
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("text", text),
+        Pair("parse_mode", parseMode),
+        Pair("disable_web_page_preview", disableWebPagePreview),
+        Pair("reply_markup", replyMarkup)
+    )
+)
+
+
+fun ApiContext.editMessageText(
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    text: String,
+    parseMode: String? = null,
+    disableWebPagePreview: Boolean? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
+): Future<EditMessageTextResultBoolean?> = sendRequest<EditMessageTextResultBoolean?>(
+    "editMessageText",
+    listOf(
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("text", text),
+        Pair("parse_mode", parseMode),
+        Pair("disable_web_page_preview", disableWebPagePreview),
+        Pair("reply_markup", replyMarkup)
+    )
+)
+
+fun ApiContext.editMessageText(
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    text: String,
+    parseMode: String? = null,
+    disableWebPagePreview: Boolean? = null,
+    replyMarkup: InlineKeyboardMarkup? = null,
+    callback: (result: AsyncResult<EditMessageTextResultBoolean?>) -> Unit
+): ApiContext = sendRequestCallback<EditMessageTextResultBoolean?>(
+    "editMessageText",
+    listOf(
+        Pair("message_id", messageId),
+        Pair("inline_message_id", inlineMessageId),
+        Pair("text", text),
+        Pair("parse_mode", parseMode),
+        Pair("disable_web_page_preview", disableWebPagePreview),
+        Pair("reply_markup", replyMarkup)
+    ),
+    callback
+)
+
+suspend fun ApiContext.editMessageTextAwait(
+    messageId: Int? = null,
+    inlineMessageId: String? = null,
+    text: String,
+    parseMode: String? = null,
+    disableWebPagePreview: Boolean? = null,
+    replyMarkup: InlineKeyboardMarkup? = null
+): EditMessageTextResultBoolean? = sendRequestAwait<EditMessageTextResultBoolean?>(
+    "editMessageText",
+    listOf(
         Pair("message_id", messageId),
         Pair("inline_message_id", inlineMessageId),
         Pair("text", text),

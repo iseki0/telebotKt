@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -27,7 +28,7 @@ fun ApiContext.sendVideoNote(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
+): Future<SendVideoNoteResult?> = sendRequest<SendVideoNoteResult?>(
     "sendVideoNote",
     listOf(
         Pair("chat_id", chatId),
@@ -50,8 +51,8 @@ fun ApiContext.sendVideoNote(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+    callback: (result: AsyncResult<SendVideoNoteResult?>) -> Unit
+): ApiContext = sendRequestCallback<SendVideoNoteResult?>(
     "sendVideoNote",
     listOf(
         Pair("chat_id", chatId),
@@ -75,7 +76,7 @@ suspend fun ApiContext.sendVideoNoteAwait(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+): SendVideoNoteResult? = sendRequestAwait<SendVideoNoteResult?>(
     "sendVideoNote",
     listOf(
         Pair("chat_id", chatId),

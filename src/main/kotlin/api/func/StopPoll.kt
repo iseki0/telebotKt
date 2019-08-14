@@ -2,12 +2,10 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
 import api.type.InlineKeyboardMarkup
 import api.type.Poll
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -21,7 +19,7 @@ fun ApiContext.stopPoll(
     chatId: String,
     messageId: Int,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<Poll?> = sendRequest<Poll?>(
+): Future<StopPollResult?> = sendRequest<StopPollResult?>(
     "stopPoll",
     listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("reply_markup", replyMarkup))
 )
@@ -30,8 +28,8 @@ fun ApiContext.stopPoll(
     chatId: String,
     messageId: Int,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: Poll?) -> Unit
-): ApiContext = sendRequestCallback<Poll?>(
+    callback: (result: AsyncResult<StopPollResult?>) -> Unit
+): ApiContext = sendRequestCallback<StopPollResult?>(
     "stopPoll",
     listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("reply_markup", replyMarkup)),
     callback
@@ -41,7 +39,7 @@ suspend fun ApiContext.stopPollAwait(
     chatId: String,
     messageId: Int,
     replyMarkup: InlineKeyboardMarkup? = null
-): Poll? = sendRequestAwait<Poll?>(
+): StopPollResult? = sendRequestAwait<StopPollResult?>(
     "stopPoll",
     listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("reply_markup", replyMarkup))
 )

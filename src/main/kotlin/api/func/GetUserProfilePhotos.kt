@@ -2,11 +2,9 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
 import api.type.UserProfilePhotos
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -20,7 +18,7 @@ fun ApiContext.getUserProfilePhotos(
     userId: Int,
     offset: Int? = null,
     limit: Int? = null
-): Future<UserProfilePhotos?> = sendRequest<UserProfilePhotos?>(
+): Future<GetUserProfilePhotosResult?> = sendRequest<GetUserProfilePhotosResult?>(
     "getUserProfilePhotos",
     listOf(Pair("user_id", userId), Pair("offset", offset), Pair("limit", limit))
 )
@@ -29,8 +27,8 @@ fun ApiContext.getUserProfilePhotos(
     userId: Int,
     offset: Int? = null,
     limit: Int? = null,
-    callback: (result: UserProfilePhotos?) -> Unit
-): ApiContext = sendRequestCallback<UserProfilePhotos?>(
+    callback: (result: AsyncResult<GetUserProfilePhotosResult?>) -> Unit
+): ApiContext = sendRequestCallback<GetUserProfilePhotosResult?>(
     "getUserProfilePhotos",
     listOf(Pair("user_id", userId), Pair("offset", offset), Pair("limit", limit)),
     callback
@@ -40,7 +38,7 @@ suspend fun ApiContext.getUserProfilePhotosAwait(
     userId: Int,
     offset: Int? = null,
     limit: Int? = null
-): UserProfilePhotos? = sendRequestAwait<UserProfilePhotos?>(
+): GetUserProfilePhotosResult? = sendRequestAwait<GetUserProfilePhotosResult?>(
     "getUserProfilePhotos",
     listOf(Pair("user_id", userId), Pair("offset", offset), Pair("limit", limit))
 )

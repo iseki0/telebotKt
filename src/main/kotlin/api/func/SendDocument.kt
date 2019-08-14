@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -23,11 +24,11 @@ fun ApiContext.sendDocument(
     document: InputFile,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
+): Future<SendDocumentResult?> = sendRequest<SendDocumentResult?>(
     "sendDocument",
     listOf(
         Pair("chat_id", chatId),
@@ -46,12 +47,12 @@ fun ApiContext.sendDocument(
     document: InputFile,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+    callback: (result: AsyncResult<SendDocumentResult?>) -> Unit
+): ApiContext = sendRequestCallback<SendDocumentResult?>(
     "sendDocument",
     listOf(
         Pair("chat_id", chatId),
@@ -71,11 +72,11 @@ suspend fun ApiContext.sendDocumentAwait(
     document: InputFile,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+): SendDocumentResult? = sendRequestAwait<SendDocumentResult?>(
     "sendDocument",
     listOf(
         Pair("chat_id", chatId),

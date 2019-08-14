@@ -3,6 +3,7 @@
 package api.func
 
 import api.*
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -15,16 +16,21 @@ import io.vertx.core.Future
 fun ApiContext.setChatPhoto(
     chatId: String,
     photo: InputFile
-): Future<Boolean?> = sendRequest<Boolean?>("setChatPhoto", listOf(Pair("chat_id", chatId), Pair("photo", photo)))
+): Future<SetChatPhotoResult?> =
+    sendRequest<SetChatPhotoResult?>("setChatPhoto", listOf(Pair("chat_id", chatId), Pair("photo", photo)))
 
 fun ApiContext.setChatPhoto(
     chatId: String,
     photo: InputFile,
-    callback: (result: Boolean?) -> Unit
-): ApiContext =
-    sendRequestCallback<Boolean?>("setChatPhoto", listOf(Pair("chat_id", chatId), Pair("photo", photo)), callback)
+    callback: (result: AsyncResult<SetChatPhotoResult?>) -> Unit
+): ApiContext = sendRequestCallback<SetChatPhotoResult?>(
+    "setChatPhoto",
+    listOf(Pair("chat_id", chatId), Pair("photo", photo)),
+    callback
+)
 
 suspend fun ApiContext.setChatPhotoAwait(
     chatId: String,
     photo: InputFile
-): Boolean? = sendRequestAwait<Boolean?>("setChatPhoto", listOf(Pair("chat_id", chatId), Pair("photo", photo)))
+): SetChatPhotoResult? =
+    sendRequestAwait<SetChatPhotoResult?>("setChatPhoto", listOf(Pair("chat_id", chatId), Pair("photo", photo)))

@@ -3,6 +3,7 @@
 package api.func
 
 import api.*
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -15,14 +16,16 @@ import io.vertx.core.Future
 fun ApiContext.setPassportDataErrors(
     userId: Int,
     errors: List<PassportElementError>
-): Future<Boolean?> =
-    sendRequest<Boolean?>("setPassportDataErrors", listOf(Pair("user_id", userId), Pair("errors", errors)))
+): Future<SetPassportDataErrorsResult?> = sendRequest<SetPassportDataErrorsResult?>(
+    "setPassportDataErrors",
+    listOf(Pair("user_id", userId), Pair("errors", errors))
+)
 
 fun ApiContext.setPassportDataErrors(
     userId: Int,
     errors: List<PassportElementError>,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
+    callback: (result: AsyncResult<SetPassportDataErrorsResult?>) -> Unit
+): ApiContext = sendRequestCallback<SetPassportDataErrorsResult?>(
     "setPassportDataErrors",
     listOf(Pair("user_id", userId), Pair("errors", errors)),
     callback
@@ -31,5 +34,7 @@ fun ApiContext.setPassportDataErrors(
 suspend fun ApiContext.setPassportDataErrorsAwait(
     userId: Int,
     errors: List<PassportElementError>
-): Boolean? =
-    sendRequestAwait<Boolean?>("setPassportDataErrors", listOf(Pair("user_id", userId), Pair("errors", errors)))
+): SetPassportDataErrorsResult? = sendRequestAwait<SetPassportDataErrorsResult?>(
+    "setPassportDataErrors",
+    listOf(Pair("user_id", userId), Pair("errors", errors))
+)

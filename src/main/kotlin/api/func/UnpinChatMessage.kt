@@ -2,10 +2,8 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -15,13 +13,16 @@ import io.vertx.core.Future
  */
 fun ApiContext.unpinChatMessage(
     chatId: String
-): Future<Boolean?> = sendRequest<Boolean?>("unpinChatMessage", listOf(Pair("chat_id", chatId)))
+): Future<UnpinChatMessageResult?> =
+    sendRequest<UnpinChatMessageResult?>("unpinChatMessage", listOf(Pair("chat_id", chatId)))
 
 fun ApiContext.unpinChatMessage(
     chatId: String,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>("unpinChatMessage", listOf(Pair("chat_id", chatId)), callback)
+    callback: (result: AsyncResult<UnpinChatMessageResult?>) -> Unit
+): ApiContext =
+    sendRequestCallback<UnpinChatMessageResult?>("unpinChatMessage", listOf(Pair("chat_id", chatId)), callback)
 
 suspend fun ApiContext.unpinChatMessageAwait(
     chatId: String
-): Boolean? = sendRequestAwait<Boolean?>("unpinChatMessage", listOf(Pair("chat_id", chatId)))
+): UnpinChatMessageResult? =
+    sendRequestAwait<UnpinChatMessageResult?>("unpinChatMessage", listOf(Pair("chat_id", chatId)))

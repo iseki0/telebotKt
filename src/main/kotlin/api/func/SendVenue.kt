@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -31,7 +32,7 @@ fun ApiContext.sendVenue(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
+): Future<SendVenueResult?> = sendRequest<SendVenueResult?>(
     "sendVenue",
     listOf(
         Pair("chat_id", chatId),
@@ -58,8 +59,8 @@ fun ApiContext.sendVenue(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+    callback: (result: AsyncResult<SendVenueResult?>) -> Unit
+): ApiContext = sendRequestCallback<SendVenueResult?>(
     "sendVenue",
     listOf(
         Pair("chat_id", chatId),
@@ -87,7 +88,7 @@ suspend fun ApiContext.sendVenueAwait(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+): SendVenueResult? = sendRequestAwait<SendVenueResult?>(
     "sendVenue",
     listOf(
         Pair("chat_id", chatId),

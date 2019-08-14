@@ -2,10 +2,8 @@
 
 package api.func
 
-import api.ApiContext
-import api.sendRequest
-import api.sendRequestAwait
-import api.sendRequestCallback
+import api.*
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -17,14 +15,16 @@ import io.vertx.core.Future
 fun ApiContext.setStickerPositionInSet(
     sticker: String,
     position: Int
-): Future<Boolean?> =
-    sendRequest<Boolean?>("setStickerPositionInSet", listOf(Pair("sticker", sticker), Pair("position", position)))
+): Future<SetStickerPositionInSetResult?> = sendRequest<SetStickerPositionInSetResult?>(
+    "setStickerPositionInSet",
+    listOf(Pair("sticker", sticker), Pair("position", position))
+)
 
 fun ApiContext.setStickerPositionInSet(
     sticker: String,
     position: Int,
-    callback: (result: Boolean?) -> Unit
-): ApiContext = sendRequestCallback<Boolean?>(
+    callback: (result: AsyncResult<SetStickerPositionInSetResult?>) -> Unit
+): ApiContext = sendRequestCallback<SetStickerPositionInSetResult?>(
     "setStickerPositionInSet",
     listOf(Pair("sticker", sticker), Pair("position", position)),
     callback
@@ -33,5 +33,7 @@ fun ApiContext.setStickerPositionInSet(
 suspend fun ApiContext.setStickerPositionInSetAwait(
     sticker: String,
     position: Int
-): Boolean? =
-    sendRequestAwait<Boolean?>("setStickerPositionInSet", listOf(Pair("sticker", sticker), Pair("position", position)))
+): SetStickerPositionInSetResult? = sendRequestAwait<SetStickerPositionInSetResult?>(
+    "setStickerPositionInSet",
+    listOf(Pair("sticker", sticker), Pair("position", position))
+)

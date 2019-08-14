@@ -3,6 +3,7 @@
 package api.func
 
 import api.*
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -15,17 +16,22 @@ import io.vertx.core.Future
  */
 fun ApiContext.sendChatAction(
     chatId: String,
-    action: ChatActionType
-): Future<Boolean?> = sendRequest<Boolean?>("sendChatAction", listOf(Pair("chat_id", chatId), Pair("action", action)))
+    action: String
+): Future<SendChatActionResult?> =
+    sendRequest<SendChatActionResult?>("sendChatAction", listOf(Pair("chat_id", chatId), Pair("action", action)))
 
 fun ApiContext.sendChatAction(
     chatId: String,
-    action: ChatActionType,
-    callback: (result: Boolean?) -> Unit
-): ApiContext =
-    sendRequestCallback<Boolean?>("sendChatAction", listOf(Pair("chat_id", chatId), Pair("action", action)), callback)
+    action: String,
+    callback: (result: AsyncResult<SendChatActionResult?>) -> Unit
+): ApiContext = sendRequestCallback<SendChatActionResult?>(
+    "sendChatAction",
+    listOf(Pair("chat_id", chatId), Pair("action", action)),
+    callback
+)
 
 suspend fun ApiContext.sendChatActionAwait(
     chatId: String,
-    action: ChatActionType
-): Boolean? = sendRequestAwait<Boolean?>("sendChatAction", listOf(Pair("chat_id", chatId), Pair("action", action)))
+    action: String
+): SendChatActionResult? =
+    sendRequestAwait<SendChatActionResult?>("sendChatAction", listOf(Pair("chat_id", chatId), Pair("action", action)))

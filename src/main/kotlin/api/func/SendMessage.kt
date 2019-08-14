@@ -4,6 +4,7 @@ package api.func
 
 import api.*
 import api.type.Message
+import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
 /**
@@ -20,12 +21,12 @@ import io.vertx.core.Future
 fun ApiContext.sendMessage(
     chatId: String,
     text: String,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableWebPagePreview: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<Message?> = sendRequest<Message?>(
+): Future<SendMessageResult?> = sendRequest<SendMessageResult?>(
     "sendMessage",
     listOf(
         Pair("chat_id", chatId),
@@ -41,13 +42,13 @@ fun ApiContext.sendMessage(
 fun ApiContext.sendMessage(
     chatId: String,
     text: String,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableWebPagePreview: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: Message?) -> Unit
-): ApiContext = sendRequestCallback<Message?>(
+    callback: (result: AsyncResult<SendMessageResult?>) -> Unit
+): ApiContext = sendRequestCallback<SendMessageResult?>(
     "sendMessage",
     listOf(
         Pair("chat_id", chatId),
@@ -64,12 +65,12 @@ fun ApiContext.sendMessage(
 suspend fun ApiContext.sendMessageAwait(
     chatId: String,
     text: String,
-    parseMode: ParseMode? = null,
+    parseMode: String? = null,
     disableWebPagePreview: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Message? = sendRequestAwait<Message?>(
+): SendMessageResult? = sendRequestAwait<SendMessageResult?>(
     "sendMessage",
     listOf(
         Pair("chat_id", chatId),
