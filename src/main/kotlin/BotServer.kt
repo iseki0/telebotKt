@@ -1,5 +1,6 @@
 import api.ApiContext
 import api.InputFile
+import api.ResultType
 import io.vertx.core.Future
 import io.vertx.core.http.HttpClientOptions
 import io.vertx.core.json.Json
@@ -21,11 +22,10 @@ class BotContextImpl : ApiContext {
 
     private val baseUrl: String = TODO()
 
-    override fun <T> doSendRequest(
+    override fun <T: ResultType?> doSendRequest(
         command: String,
         args: List<Pair<String, Any?>>,
-        resultType: Class<T>,
-        rawType: Class<*>?
+        resultType: Class<T>
     ): Future<T?> =
         Future.future { promise ->
             val url = baseUrl + command
@@ -39,7 +39,17 @@ class BotContextImpl : ApiContext {
                 }
             }
             request.sendMultipartForm(form) {
-                TODO()
+                if (it.succeeded()){
+                    try {
+                        val a=it.result().bodyAsString()
+                        val r=Json.mapper.readValue<T>(a,resultType)
+                        promise.complete(r)
+                    }catch (e:Exception){
+                        promise.fail(e)
+                    }
+                }else{
+                    promise.fail(it.cause())
+                }
             }
         }
 }

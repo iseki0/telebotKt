@@ -3,10 +3,9 @@ package api
 import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 
-inline fun <reified T> ApiContext.sendRequest(
+inline fun <reified T:ResultType?> ApiContext.sendRequest(
     command: String,
-    args: List<Pair<String, Any?>>,
-    collectionRawType: Class<*>? = null
+    args: List<Pair<String, Any?>>
 ): Future<T?> =
     doSendRequest(command, args, T::class.java)
 
