@@ -59,7 +59,7 @@ private fun <T:ResultType?> handleResult(
     try {
         val a=httpResult.bodyAsString()
         val r=Json.mapper.readValue<T>(a?: throw RuntimeException("body is null."),resultType)
-        if (r?.ok?:throw RuntimeException("json is invalid.")){
+        if (r?.ok?:throw RuntimeException("\"ok\" field isn't exists.")){
             promise.complete(r)
         }else{
             throw TelegramRequestFail(errorCode = r.errorCode ?:-1, description = r.description?:"")
