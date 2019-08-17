@@ -23,8 +23,6 @@ dependencies {
     implementation "io.vertx:vertx-lang-kotlin:4.0.0-milestone1"
     implementation group: 'io.vertx', name: 'vertx-web-client', version: '4.0.0-milestone1'
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8"
-    //compile "io.vertx:vertx-pg-client:3.8.0-SNAPSHOT"
-    //compile "io.vertx:vertx-web-client:3.8.0"
 
 }
 
