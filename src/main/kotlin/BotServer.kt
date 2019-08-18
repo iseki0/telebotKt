@@ -5,7 +5,6 @@ import io.vertx.core.Future
 import io.vertx.core.Promise
 import io.vertx.core.Vertx
 import io.vertx.core.buffer.Buffer
-import io.vertx.core.http.HttpClientOptions
 import io.vertx.core.json.Json
 import io.vertx.ext.web.client.HttpResponse
 import io.vertx.ext.web.client.WebClient
@@ -24,19 +23,19 @@ interface BotServer {
     ): Future<T?>
 }
 
-class BotServerImpl(val vertx:Vertx) :BotServer{
+class BotServerImpl(val vertx: Vertx) : BotServer {
     var webClientOptions = WebClientOptions()
     var exceptionHandler: (e: Exception) -> Unit = {}
-    val baseContext:ApiContext=BotContextImpl(this)
-    private val webClient: WebClient = WebClient.create(vertx,webClientOptions)
+    val baseContext: ApiContext = BotContextImpl(this)
+    private val webClient: WebClient = WebClient.create(vertx, webClientOptions)
 
     private val baseUrl: String = TODO()
 
-    override fun <T: ResultType?> doSendRequest(
+    override fun <T : ResultType?> doSendRequest(
         command: String,
         args: List<Pair<String, Any?>>,
         resultType: Class<T>,
-        timeout:Long
+        timeout: Long
     ): Future<T?> =
         Future.future { promise ->
             val url = baseUrl + command
@@ -54,9 +53,9 @@ class BotServerImpl(val vertx:Vertx) :BotServer{
             }
             // send request here.
             request.sendMultipartForm(form) {
-                if (it.succeeded()){
-                    handleResult(promise,it.result(),resultType)
-                }else{
+                if (it.succeeded()) {
+                    handleResult(promise, it.result(), resultType)
+                } else {
                     promise.fail(it.cause())
                 }
             }
@@ -66,27 +65,27 @@ class BotServerImpl(val vertx:Vertx) :BotServer{
 class BotContextImpl(private val botServer: BotServer) : ApiContext {
     override var timeout: Long? = null
 
-    override fun <T: ResultType?> doSendRequest(
+    override fun <T : ResultType?> doSendRequest(
         command: String,
         args: List<Pair<String, Any?>>,
         resultType: Class<T>
-    ): Future<T?> = botServer.doSendRequest(command,args,resultType,timeout?:defaultHttpTimeout(command, args))
+    ): Future<T?> = botServer.doSendRequest(command, args, resultType, timeout ?: defaultHttpTimeout(command, args))
 }
 
-private fun <T:ResultType?> handleResult(
+private fun <T : ResultType?> handleResult(
     promise: Promise<T>,
     httpResult: HttpResponse<Buffer>,
     resultType: Class<T>
-){
+) {
     try {
-        val a=httpResult.bodyAsString()
-        val r=Json.mapper.readValue<T>(a?: throw RuntimeException("body is null."),resultType)
-        if (r?.ok?:throw RuntimeException("\"ok\" field isn't exists.")){
+        val a = httpResult.bodyAsString()
+        val r = Json.mapper.readValue<T>(a ?: throw RuntimeException("body is null."), resultType)
+        if (r?.ok ?: throw RuntimeException("\"ok\" field isn't exists.")) {
             promise.complete(r)
-        }else{
-            throw TelegramRequestFail(errorCode = r.errorCode ?:-1, description = r.description?:"")
+        } else {
+            throw TelegramRequestFail(errorCode = r.errorCode ?: -1, description = r.description ?: "")
         }
-    }catch (e:Exception){
+    } catch (e: Exception) {
         promise.fail(e)
     }
 }
@@ -95,7 +94,7 @@ private fun <T:ResultType?> handleResult(
 fun defaultHttpTimeout(command: String, args: List<Pair<String, Any?>>): Long =
     when (command) {
         // command `getUpdates` request timeout must large than it's value.
-        "getUpdates" -> args.toMap()["timeout"].toString().toLong()+500
+        "getUpdates" -> args.toMap()["timeout"].toString().toLong() + 500
         else -> HTTP_REQUEST_TIMEOUT
     }
 
@@ -109,4 +108,4 @@ fun isSimpleType(o: Any?): Boolean =
         else -> false
     }
 
-class TelegramRequestFail(val errorCode:Int, val description:String):RuntimeException()
+class TelegramRequestFail(val errorCode: Int, val description: String) : RuntimeException()
