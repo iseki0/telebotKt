@@ -9,5 +9,5 @@ interface ApiContext {
         resultType: Class<T>
     ): Future<T?>
 
-    var timeout: Int?
+    var timeout: Long?
 }

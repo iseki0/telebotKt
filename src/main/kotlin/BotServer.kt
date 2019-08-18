@@ -10,7 +10,7 @@ import io.vertx.ext.web.client.HttpResponse
 import io.vertx.ext.web.client.WebClient
 import io.vertx.ext.web.multipart.MultipartForm
 
-const val HTTP_REQUEST_TIMEOUT = 5000
+const val HTTP_REQUEST_TIMEOUT = 5000L
 
 class BotServerImpl {
     var httpClientOptions = HttpClientOptions()
@@ -19,7 +19,7 @@ class BotServerImpl {
 }
 
 class BotContextImpl : ApiContext {
-    override var timeout: Int? = null
+    override var timeout: Long? = null
 
     private val webClient: WebClient = TODO()
 
@@ -32,8 +32,10 @@ class BotContextImpl : ApiContext {
     ): Future<T?> =
         Future.future { promise ->
             val url = baseUrl + command
-            val request = webClient.postAbs(baseUrl)
+            val request = webClient.postAbs(url)
             val form = MultipartForm.create()
+
+            // different type, different behavior
             args.filter { it.second != null }.forEach { (key, value) ->
                 when {
                     value is InputFile -> TODO()
@@ -41,6 +43,15 @@ class BotContextImpl : ApiContext {
                     else -> form.attribute(key, Json.mapper.writeValueAsString(value))
                 }
             }
+
+            // set context timeout, otherwise set default timeout.
+            // different API, different timeout.
+            if (timeout != null) {
+                request.timeout(timeout!!)
+            }else{
+                request.timeout(defaultHttpTimeout(command, args))
+            }
+            // send request here.
             request.sendMultipartForm(form) {
                 if (it.succeeded()){
                     handleResult(promise,it.result(),resultType)
@@ -70,9 +81,10 @@ private fun <T:ResultType?> handleResult(
 }
 
 
-fun defaultHttpTimeout(command: String, args: List<Pair<String, Any?>>): Int =
+fun defaultHttpTimeout(command: String, args: List<Pair<String, Any?>>): Long =
     when (command) {
-        "getUpdates" -> args.toMap()["timeout"].toString().toInt()
+        // command `getUpdates` request timeout must large than it's value.
+        "getUpdates" -> args.toMap()["timeout"].toString().toLong()+500
         else -> HTTP_REQUEST_TIMEOUT
     }
 
