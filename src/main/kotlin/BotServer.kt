@@ -3,37 +3,46 @@ import api.InputFile
 import api.ResultType
 import io.vertx.core.Future
 import io.vertx.core.Promise
+import io.vertx.core.Vertx
 import io.vertx.core.buffer.Buffer
 import io.vertx.core.http.HttpClientOptions
 import io.vertx.core.json.Json
 import io.vertx.ext.web.client.HttpResponse
 import io.vertx.ext.web.client.WebClient
+import io.vertx.ext.web.client.WebClientOptions
 import io.vertx.ext.web.multipart.MultipartForm
 
 const val HTTP_REQUEST_TIMEOUT = 5000L
 
-class BotServerImpl {
-    var httpClientOptions = HttpClientOptions()
-    var exceptionHandler: (e: Exception) -> Unit = {}
+interface BotServer {
 
+    fun <T : ResultType?> doSendRequest(
+        command: String,
+        args: List<Pair<String, Any?>>,
+        resultType: Class<T>,
+        timeout: Long
+    ): Future<T?>
 }
 
-class BotContextImpl : ApiContext {
-    override var timeout: Long? = null
-
-    private val webClient: WebClient = TODO()
+class BotServerImpl(val vertx:Vertx) :BotServer{
+    var webClientOptions = WebClientOptions()
+    var exceptionHandler: (e: Exception) -> Unit = {}
+    val baseContext:ApiContext=BotContextImpl(this)
+    private val webClient: WebClient = WebClient.create(vertx,webClientOptions)
 
     private val baseUrl: String = TODO()
 
     override fun <T: ResultType?> doSendRequest(
         command: String,
         args: List<Pair<String, Any?>>,
-        resultType: Class<T>
+        resultType: Class<T>,
+        timeout:Long
     ): Future<T?> =
         Future.future { promise ->
             val url = baseUrl + command
             val request = webClient.postAbs(url)
             val form = MultipartForm.create()
+            request.timeout(timeout)
 
             // different type, different behavior
             args.filter { it.second != null }.forEach { (key, value) ->
@@ -42,14 +51,6 @@ class BotContextImpl : ApiContext {
                     isSimpleType(value) -> form.attribute(key, value.toString())
                     else -> form.attribute(key, Json.mapper.writeValueAsString(value))
                 }
-            }
-
-            // set context timeout, otherwise set default timeout.
-            // different API, different timeout.
-            if (timeout != null) {
-                request.timeout(timeout!!)
-            }else{
-                request.timeout(defaultHttpTimeout(command, args))
             }
             // send request here.
             request.sendMultipartForm(form) {
@@ -60,6 +61,16 @@ class BotContextImpl : ApiContext {
                 }
             }
         }
+}
+
+class BotContextImpl(private val botServer: BotServer) : ApiContext {
+    override var timeout: Long? = null
+
+    override fun <T: ResultType?> doSendRequest(
+        command: String,
+        args: List<Pair<String, Any?>>,
+        resultType: Class<T>
+    ): Future<T?> = botServer.doSendRequest(command,args,resultType,timeout?:defaultHttpTimeout(command, args))
 }
 
 private fun <T:ResultType?> handleResult(
