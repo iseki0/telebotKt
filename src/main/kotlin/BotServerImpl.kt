@@ -15,7 +15,9 @@ import io.vertx.ext.web.multipart.MultipartForm
 const val HTTP_REQUEST_TIMEOUT = 5000L
 
 
-class BotServerImpl(val vertx: Vertx, val botKey: String) : BotServer {
+class BotServerImpl(override val vertx: Vertx, val botKey: String) : BotServer {
+    override fun getApiContext(): ApiContext = BotContextImpl(this)
+
     val handlerMap = HashMap<UpdateType, ArrayList<(Any) -> Boolean>>()
     private fun <T> putHandlerToMap(type: UpdateType, lambda: (msg: T) -> Boolean) {
         handlerMap.getOrDefault(type, ArrayList()).add(lambda as (Any) -> Boolean)

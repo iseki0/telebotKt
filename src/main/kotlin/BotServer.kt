@@ -1,8 +1,10 @@
 import api.ResultType
 import api.type.*
 import io.vertx.core.Future
+import io.vertx.core.Vertx
 
 interface BotServer {
+
 
     fun <T : ResultType?> doSendRequest(
         command: String,
@@ -24,4 +26,6 @@ interface BotServer {
     fun registerPreCheckoutQuery(lambda: (msg: PreCheckoutQuery) -> Boolean)
     fun registerPoll(lambda: (msg: Poll) -> Boolean)
 
+    fun getApiContext(): ApiContext
+    val vertx: Vertx
 }
