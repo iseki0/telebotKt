@@ -2,7 +2,11 @@
 
 package api.func
 
-import api.*
+import ApiContext
+import api.GetChatAdministratorsResult
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import api.type.ChatMember
 import io.vertx.core.AsyncResult
 import io.vertx.core.Future

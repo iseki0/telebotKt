@@ -2,6 +2,7 @@
 
 package api.func
 
+import ApiContext
 import api.*
 import api.type.Audio
 import api.type.Document

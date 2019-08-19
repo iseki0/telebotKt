@@ -2,7 +2,11 @@
 
 package api.func
 
-import api.*
+import ApiContext
+import api.SendMediaGroupResult
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import api.type.InputMediaPhoto
 import api.type.Message
 import io.vertx.core.AsyncResult

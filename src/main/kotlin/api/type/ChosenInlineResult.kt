@@ -33,4 +33,4 @@ data class ChosenInlineResult @JsonCreator constructor(
     @get:JsonProperty("query")
     @JsonProperty("query")
     val query: String
-)
+) : UpdateMsg

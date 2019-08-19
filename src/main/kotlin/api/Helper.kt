@@ -1,5 +1,6 @@
 package api
 
+import ApiContext
 import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 

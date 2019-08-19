@@ -2,6 +2,7 @@
 
 package api.func
 
+import ApiContext
 import api.*
 import api.type.MaskPosition
 import io.vertx.core.AsyncResult

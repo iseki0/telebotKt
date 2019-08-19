@@ -2,7 +2,11 @@
 
 package api.func
 
-import api.*
+import ApiContext
+import api.GetUpdatesResult
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import api.type.Update
 import io.vertx.core.AsyncResult
 import io.vertx.core.Future

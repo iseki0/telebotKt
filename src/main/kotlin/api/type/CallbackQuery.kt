@@ -41,4 +41,4 @@ data class CallbackQuery @JsonCreator constructor(
     @get:JsonProperty("game_short_name")
     @JsonProperty("game_short_name")
     val gameShortName: String? = null
-)
+) : UpdateMsg

@@ -2,7 +2,7 @@ package api
 
 import com.fasterxml.jackson.annotation.JsonValue
 
-enum class AllowedUpdate(@JsonValue val rawString: String) {
+enum class UpdateType(@JsonValue val rawString: String) {
     MESSAGE("message"),
     EDITED_MESSAGE("edited_message"),
     CHANNEL_POST("channel_post"),

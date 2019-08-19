@@ -1,5 +1,4 @@
-package api
-
+import api.ResultType
 import io.vertx.core.Future
 
 interface ApiContext {

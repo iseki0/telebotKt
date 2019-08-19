@@ -2,8 +2,8 @@
 
 package api.type
 
-import api.AllowedUpdate
 import api.HasList
+import api.UpdateType
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param[lastErrorDate] *Optional*. Unix time for the most recent error that happened when trying to deliver an update via webhook
  * @param[lastErrorMessage] *Optional*. Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook
  * @param[maxConnections] *Optional*. Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
- * @param[allowedUpdates] *Optional*. A list of update types the bot is subscribed to. Defaults to all update types
+ * @param[updateTypes] *Optional*. A list of update types the bot is subscribed to. Defaults to all update types
  */
 @HasList
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -42,5 +42,5 @@ data class WebhookInfo @JsonCreator constructor(
     val maxConnections: Int? = null,
     @get:JsonProperty("allowed_updates")
     @JsonProperty("allowed_updates")
-    val allowedUpdates: List<AllowedUpdate>? = null
+    val updateTypes: List<UpdateType>? = null
 )

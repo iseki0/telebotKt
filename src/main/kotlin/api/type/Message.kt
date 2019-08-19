@@ -202,4 +202,4 @@ data class Message @JsonCreator constructor(
     @get:JsonProperty("reply_markup")
     @JsonProperty("reply_markup")
     val replyMarkup: InlineKeyboardMarkup? = null
-)
+) : UpdateMsg

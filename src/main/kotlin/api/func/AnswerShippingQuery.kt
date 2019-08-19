@@ -2,7 +2,11 @@
 
 package api.func
 
-import api.*
+import ApiContext
+import api.AnswerShippingQueryResult
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import api.type.ShippingOption
 import api.type.Update
 import io.vertx.core.AsyncResult

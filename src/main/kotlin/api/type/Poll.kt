@@ -30,4 +30,4 @@ data class Poll @JsonCreator constructor(
     @get:JsonProperty("is_closed")
     @JsonProperty("is_closed")
     val isClosed: Boolean
-)
+) : UpdateMsg

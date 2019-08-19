@@ -33,4 +33,4 @@ data class InlineQuery @JsonCreator constructor(
     @get:JsonProperty("offset")
     @JsonProperty("offset")
     val offset: String
-)
+) : UpdateMsg

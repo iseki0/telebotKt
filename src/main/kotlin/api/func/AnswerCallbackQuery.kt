@@ -2,7 +2,11 @@
 
 package api.func
 
-import api.*
+import ApiContext
+import api.AnswerCallbackQueryResult
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import api.type.Game
 import api.type.InlineKeyboardButton
 import io.vertx.core.AsyncResult

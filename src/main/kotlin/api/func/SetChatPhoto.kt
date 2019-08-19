@@ -2,6 +2,7 @@
 
 package api.func
 
+import ApiContext
 import api.*
 import io.vertx.core.AsyncResult
 import io.vertx.core.Future

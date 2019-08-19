@@ -2,7 +2,11 @@
 
 package api.func
 
-import api.*
+import ApiContext
+import api.PinChatMessageResult
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import io.vertx.core.AsyncResult
 import io.vertx.core.Future
 

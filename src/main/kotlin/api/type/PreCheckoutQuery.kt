@@ -41,4 +41,4 @@ data class PreCheckoutQuery @JsonCreator constructor(
     @get:JsonProperty("order_info")
     @JsonProperty("order_info")
     val orderInfo: OrderInfo? = null
-)
+) : UpdateMsg

@@ -29,4 +29,4 @@ data class ShippingQuery @JsonCreator constructor(
     @get:JsonProperty("shipping_address")
     @JsonProperty("shipping_address")
     val shippingAddress: ShippingAddress
-)
+) : UpdateMsg

@@ -2,7 +2,11 @@
 
 package api.func
 
-import api.*
+import ApiContext
+import api.SendInvoiceResult
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import api.type.InlineKeyboardMarkup
 import api.type.LabeledPrice
 import api.type.Message

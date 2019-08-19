@@ -2,7 +2,11 @@
 
 package api.func
 
-import api.*
+import ApiContext
+import api.StopPollResult
+import api.sendRequest
+import api.sendRequestAwait
+import api.sendRequestCallback
 import api.type.InlineKeyboardMarkup
 import api.type.Poll
 import io.vertx.core.AsyncResult
