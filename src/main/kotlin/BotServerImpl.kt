@@ -15,8 +15,18 @@ import io.vertx.ext.web.multipart.MultipartForm
 const val HTTP_REQUEST_TIMEOUT = 5000L
 
 
-class BotServerImpl(override val vertx: Vertx, val botKey: String) : BotServer {
+class BotServerImpl(
+    override val vertx: Vertx,
+    val botKey: String,
+    val webClientOptions: WebClientOptions = WebClientOptions()
+) : BotServer {
     override fun getApiContext(): ApiContext = BotContextImpl(this)
+    var exceptionHandler: (e: Exception) -> Unit = {}
+    val baseContext: ApiContext = BotContextImpl(this)
+    private val webClient: WebClient =
+        WebClient.create(vertx, webClientOptions)
+
+    private val baseUrl: String = """https://api.telegram.org/bot$botKey"""
 
     val handlerMap = HashMap<UpdateType, ArrayList<(Any) -> Boolean>>()
     private fun <T> putHandlerToMap(type: UpdateType, lambda: (msg: T) -> Boolean) {
@@ -84,13 +94,6 @@ class BotServerImpl(override val vertx: Vertx, val botKey: String) : BotServer {
         }
     }
 
-    var webClientOptions = WebClientOptions()
-    var exceptionHandler: (e: Exception) -> Unit = {}
-    val baseContext: ApiContext = BotContextImpl(this)
-    private val webClient: WebClient =
-        WebClient.create(vertx, webClientOptions)
-
-    private val baseUrl: String = """https://api.telegram.org/bot$botKey"""
 
     override fun <T : ResultType?> doSendRequest(
         command: String,
@@ -99,18 +102,28 @@ class BotServerImpl(override val vertx: Vertx, val botKey: String) : BotServer {
         timeout: Long
     ): Future<T?> =
         Future.future { promise ->
-            val url = baseUrl + command
+            val url = "$baseUrl/$command"
             val request = webClient.postAbs(url)
-            val form = MultipartForm.create()
             request.timeout(timeout)
 
-            putArgsToForm(args, form)
-            // send request here.
-            request.sendMultipartForm(form) {
-                if (it.succeeded()) {
-                    handleResult(promise, it.result(), resultType)
-                } else {
-                    promise.fail(it.cause())
+            val targs = args.filter { it.second != null }
+            if (targs.isEmpty()) {
+                request.send {
+                    if (it.succeeded()) {
+                        handleResult(promise, it.result(), resultType)
+                    } else {
+                        promise.fail(it.cause())
+                    }
+                }
+            } else {
+                val form = MultipartForm.create()
+                putArgsToForm(targs, form)
+                request.sendMultipartForm(form) {
+                    if (it.succeeded()) {
+                        handleResult(promise, it.result(), resultType)
+                    } else {
+                        promise.fail(it.cause())
+                    }
                 }
             }
         }
@@ -118,7 +131,7 @@ class BotServerImpl(override val vertx: Vertx, val botKey: String) : BotServer {
 
 
 fun putArgsToForm(args: List<Pair<String, Any?>>, form: MultipartForm) =
-    args.filter { (_, value) -> value != null }.forEach { (key, value) ->
+    args.forEach { (key, value) ->
         when {
             value is InputFile -> {
                 if (value.file != null) {
@@ -155,7 +168,7 @@ private fun <T : ResultType?> handleResult(
 fun defaultHttpTimeout(command: String, args: List<Pair<String, Any?>>): Long =
     when (command) {
         // command `getUpdates` request timeout must large than it's value.
-        "getUpdates" -> args.toMap()["timeout"].toString().toLong() + 500
+        "getUpdates" -> args.toMap()["timeout"]?.toString()?.toLong() ?: 9500 + 500
         else -> HTTP_REQUEST_TIMEOUT
     }
 
