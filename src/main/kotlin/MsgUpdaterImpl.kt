@@ -14,14 +14,13 @@ class MsgUpdaterImpl(val botServer: BotServer, val delay: Long = 200, val timeou
     fun start() = setTimer()
 
     private fun update() {
-        botServer.getApiContext().getUpdates(offset = offset + 1, timeout = timeout) {
+        botServer.getApiContext().getUpdates(offset = offset + 1, timeout = timeout, allowedUpdates = emptyList()) {
             if (it.succeeded()) {
                 val result = it.result()!!.result!!
                 result.forEach {
                     offset = if (it.updateId > offset) it.updateId else offset
                     botServer.dispatchUpdate(it)
                 }
-                println(result.size)
             } else {
                 println(it.cause())
             }

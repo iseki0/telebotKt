@@ -176,10 +176,10 @@ fun defaultHttpTimeout(command: String, args: List<Pair<String, Any?>>): Long =
 fun isSimpleType(o: Any?): Boolean =
     when (o) {
         null -> true
-        String -> true
-        Int -> true
-        Long -> true
-        Boolean -> true
-        Double -> true
+        is String -> true
+        is Int -> true
+        is Long -> true
+        is Boolean -> true
+        is Double -> true
         else -> false
     }
