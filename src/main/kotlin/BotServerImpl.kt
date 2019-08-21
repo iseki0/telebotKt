@@ -30,7 +30,7 @@ class BotServerImpl(
 
     val handlerMap = HashMap<UpdateType, ArrayList<(Any) -> Boolean>>()
     private fun <T> putHandlerToMap(type: UpdateType, lambda: (msg: T) -> Boolean) {
-        handlerMap.getOrDefault(type, ArrayList()).add(lambda as (Any) -> Boolean)
+        handlerMap.getOrPut(type, { ArrayList() }).add(lambda as (Any) -> Boolean)
     }
 
     override fun registerEditedMessageHandler(lambda: (msg: Message) -> Boolean) =
@@ -85,6 +85,7 @@ class BotServerImpl(
                 doDispatcher(UpdateType.PRE_CHECKOUT_QUERY, update.preCheckoutQuery)
             update.poll != null ->
                 doDispatcher(UpdateType.POLL, update.poll)
+            else -> throw RuntimeException("UnknownUpdateType: $update")
         }
     }
 
@@ -168,7 +169,7 @@ private fun <T : ResultType?> handleResult(
 fun defaultHttpTimeout(command: String, args: List<Pair<String, Any?>>): Long =
     when (command) {
         // command `getUpdates` request timeout must large than it's value.
-        "getUpdates" -> args.toMap()["timeout"]?.toString()?.toLong() ?: 9500 + 500
+        "getUpdates" -> (args.toMap()["timeout"]?.toString()?.toLong() ?: 5) * 1000 + 500
         else -> HTTP_REQUEST_TIMEOUT
     }
 
@@ -177,6 +178,7 @@ fun isSimpleType(o: Any?): Boolean =
         null -> true
         String -> true
         Int -> true
+        Long -> true
         Boolean -> true
         Double -> true
         else -> false

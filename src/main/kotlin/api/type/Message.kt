@@ -180,10 +180,10 @@ data class Message @JsonCreator constructor(
     val channelChatCreated: Boolean? = null,
     @get:JsonProperty("migrate_to_chat_id")
     @JsonProperty("migrate_to_chat_id")
-    val migrateToChatId: Int? = null,
+    val migrateToChatId: Long? = null,
     @get:JsonProperty("migrate_from_chat_id")
     @JsonProperty("migrate_from_chat_id")
-    val migrateFromChatId: Int? = null,
+    val migrateFromChatId: Long? = null,
     @get:JsonProperty("pinned_message")
     @JsonProperty("pinned_message")
     val pinnedMessage: Message? = null,

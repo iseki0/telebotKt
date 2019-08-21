@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class Chat @JsonCreator constructor(
     @get:JsonProperty("id")
     @JsonProperty("id")
-    val id: Int,
+    val id: Long,
     @get:JsonProperty("type")
     @JsonProperty("type")
     val type: ChatType,
