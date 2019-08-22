@@ -8,6 +8,7 @@ class MsgUpdaterImpl(val botServer: BotServer, val delay: Long = 200, val timeou
     fun setTimer() {
         timerId = vertx.setTimer(delay) {
             update()
+            setTimer()
         }
     }
 
@@ -24,7 +25,6 @@ class MsgUpdaterImpl(val botServer: BotServer, val delay: Long = 200, val timeou
             } else {
                 println(it.cause())
             }
-            setTimer()
         }
     }
 }
