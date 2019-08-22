@@ -1,9 +1,5 @@
-# 🚧telebotKt (In working)🚧
-Unofficial Telegram bot API lib for Kotlin. (In working🚧)
-
-Continue work!
-
-
+~~# 🚧telebotKt (In working)🚧~~
+~~Unofficial Telegram bot API lib for Kotlin. (In working🚧)~~
 
 -----------
 
