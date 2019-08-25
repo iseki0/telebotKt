@@ -35,7 +35,7 @@ fun ApiContext.promoteChatMember(
     canRestrictMembers: Boolean? = null,
     canPinMessages: Boolean? = null,
     canPromoteMembers: Boolean? = null
-): Future<PromoteChatMemberResult?> = sendRequest<PromoteChatMemberResult?>(
+): Future<PromoteChatMemberResult> = sendRequest<PromoteChatMemberResult>(
     "promoteChatMember",
     listOf(
         Pair("chat_id", chatId),
@@ -62,8 +62,8 @@ fun ApiContext.promoteChatMember(
     canRestrictMembers: Boolean? = null,
     canPinMessages: Boolean? = null,
     canPromoteMembers: Boolean? = null,
-    callback: (result: AsyncResult<PromoteChatMemberResult?>) -> Unit
-): ApiContext = sendRequestCallback<PromoteChatMemberResult?>(
+    callback: (result: AsyncResult<PromoteChatMemberResult>) -> Unit
+): ApiContext = sendRequestCallback<PromoteChatMemberResult>(
     "promoteChatMember",
     listOf(
         Pair("chat_id", chatId),
@@ -91,7 +91,7 @@ suspend fun ApiContext.promoteChatMemberAwait(
     canRestrictMembers: Boolean? = null,
     canPinMessages: Boolean? = null,
     canPromoteMembers: Boolean? = null
-): PromoteChatMemberResult? = sendRequestAwait<PromoteChatMemberResult?>(
+): PromoteChatMemberResult = sendRequestAwait<PromoteChatMemberResult>(
     "promoteChatMember",
     listOf(
         Pair("chat_id", chatId),

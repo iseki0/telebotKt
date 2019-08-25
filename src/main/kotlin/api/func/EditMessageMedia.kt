@@ -24,7 +24,7 @@ fun ApiContext.editMessageMedia(
     inlineMessageId: String? = null,
     media: InputMedia,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<EditMessageMediaResultMessage?> = sendRequest<EditMessageMediaResultMessage?>(
+): Future<EditMessageMediaResultMessage> = sendRequest<EditMessageMediaResultMessage>(
     "editMessageMedia",
     listOf(
         Pair("chat_id", chatId),
@@ -41,8 +41,8 @@ fun ApiContext.editMessageMedia(
     inlineMessageId: String? = null,
     media: InputMedia,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: AsyncResult<EditMessageMediaResultMessage?>) -> Unit
-): ApiContext = sendRequestCallback<EditMessageMediaResultMessage?>(
+    callback: (result: AsyncResult<EditMessageMediaResultMessage>) -> Unit
+): ApiContext = sendRequestCallback<EditMessageMediaResultMessage>(
     "editMessageMedia",
     listOf(
         Pair("chat_id", chatId),
@@ -60,7 +60,7 @@ suspend fun ApiContext.editMessageMediaAwait(
     inlineMessageId: String? = null,
     media: InputMedia,
     replyMarkup: InlineKeyboardMarkup? = null
-): EditMessageMediaResultMessage? = sendRequestAwait<EditMessageMediaResultMessage?>(
+): EditMessageMediaResultMessage? = sendRequestAwait<EditMessageMediaResultMessage>(
     "editMessageMedia",
     listOf(
         Pair("chat_id", chatId),
@@ -76,7 +76,7 @@ fun ApiContext.editMessageMedia(
     inlineMessageId: String? = null,
     media: InputMedia,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<EditMessageMediaResultBoolean?> = sendRequest<EditMessageMediaResultBoolean?>(
+): Future<EditMessageMediaResultBoolean> = sendRequest<EditMessageMediaResultBoolean>(
     "editMessageMedia",
     listOf(
         Pair("message_id", messageId),
@@ -91,8 +91,8 @@ fun ApiContext.editMessageMedia(
     inlineMessageId: String? = null,
     media: InputMedia,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: AsyncResult<EditMessageMediaResultBoolean?>) -> Unit
-): ApiContext = sendRequestCallback<EditMessageMediaResultBoolean?>(
+    callback: (result: AsyncResult<EditMessageMediaResultBoolean>) -> Unit
+): ApiContext = sendRequestCallback<EditMessageMediaResultBoolean>(
     "editMessageMedia",
     listOf(
         Pair("message_id", messageId),
@@ -108,7 +108,7 @@ suspend fun ApiContext.editMessageMediaAwait(
     inlineMessageId: String? = null,
     media: InputMedia,
     replyMarkup: InlineKeyboardMarkup? = null
-): EditMessageMediaResultBoolean? = sendRequestAwait<EditMessageMediaResultBoolean?>(
+): EditMessageMediaResultBoolean? = sendRequestAwait<EditMessageMediaResultBoolean>(
     "editMessageMedia",
     listOf(
         Pair("message_id", messageId),

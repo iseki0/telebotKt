@@ -18,13 +18,13 @@ import io.vertx.core.Future
  */
 fun ApiContext.getFile(
     fileId: String
-): Future<GetFileResult?> = sendRequest<GetFileResult?>("getFile", listOf(Pair("file_id", fileId)))
+): Future<GetFileResult> = sendRequest<GetFileResult>("getFile", listOf(Pair("file_id", fileId)))
 
 fun ApiContext.getFile(
     fileId: String,
-    callback: (result: AsyncResult<GetFileResult?>) -> Unit
-): ApiContext = sendRequestCallback<GetFileResult?>("getFile", listOf(Pair("file_id", fileId)), callback)
+    callback: (result: AsyncResult<GetFileResult>) -> Unit
+): ApiContext = sendRequestCallback<GetFileResult>("getFile", listOf(Pair("file_id", fileId)), callback)
 
 suspend fun ApiContext.getFileAwait(
     fileId: String
-): GetFileResult? = sendRequestAwait<GetFileResult?>("getFile", listOf(Pair("file_id", fileId)))
+): GetFileResult = sendRequestAwait<GetFileResult>("getFile", listOf(Pair("file_id", fileId)))

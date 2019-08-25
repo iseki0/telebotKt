@@ -18,15 +18,15 @@ import io.vertx.core.Future
  */
 fun ApiContext.deleteChatPhoto(
     chatId: String
-): Future<DeleteChatPhotoResult?> =
-    sendRequest<DeleteChatPhotoResult?>("deleteChatPhoto", listOf(Pair("chat_id", chatId)))
+): Future<DeleteChatPhotoResult> =
+    sendRequest<DeleteChatPhotoResult>("deleteChatPhoto", listOf(Pair("chat_id", chatId)))
 
 fun ApiContext.deleteChatPhoto(
     chatId: String,
-    callback: (result: AsyncResult<DeleteChatPhotoResult?>) -> Unit
+    callback: (result: AsyncResult<DeleteChatPhotoResult>) -> Unit
 ): ApiContext =
-    sendRequestCallback<DeleteChatPhotoResult?>("deleteChatPhoto", listOf(Pair("chat_id", chatId)), callback)
+    sendRequestCallback<DeleteChatPhotoResult>("deleteChatPhoto", listOf(Pair("chat_id", chatId)), callback)
 
 suspend fun ApiContext.deleteChatPhotoAwait(
     chatId: String
-): DeleteChatPhotoResult? = sendRequestAwait<DeleteChatPhotoResult?>("deleteChatPhoto", listOf(Pair("chat_id", chatId)))
+): DeleteChatPhotoResult = sendRequestAwait<DeleteChatPhotoResult>("deleteChatPhoto", listOf(Pair("chat_id", chatId)))

@@ -18,13 +18,13 @@ import io.vertx.core.Future
  */
 fun ApiContext.getChatAdministrators(
     chatId: String
-): Future<GetChatAdministratorsResult?> =
-    sendRequest<GetChatAdministratorsResult?>("getChatAdministrators", listOf(Pair("chat_id", chatId)))
+): Future<GetChatAdministratorsResult> =
+    sendRequest<GetChatAdministratorsResult>("getChatAdministrators", listOf(Pair("chat_id", chatId)))
 
 fun ApiContext.getChatAdministrators(
     chatId: String,
-    callback: (result: AsyncResult<GetChatAdministratorsResult?>) -> Unit
-): ApiContext = sendRequestCallback<GetChatAdministratorsResult?>(
+    callback: (result: AsyncResult<GetChatAdministratorsResult>) -> Unit
+): ApiContext = sendRequestCallback<GetChatAdministratorsResult>(
     "getChatAdministrators",
     listOf(Pair("chat_id", chatId)),
     callback
@@ -32,5 +32,5 @@ fun ApiContext.getChatAdministrators(
 
 suspend fun ApiContext.getChatAdministratorsAwait(
     chatId: String
-): GetChatAdministratorsResult? =
-    sendRequestAwait<GetChatAdministratorsResult?>("getChatAdministrators", listOf(Pair("chat_id", chatId)))
+): GetChatAdministratorsResult =
+    sendRequestAwait<GetChatAdministratorsResult>("getChatAdministrators", listOf(Pair("chat_id", chatId)))

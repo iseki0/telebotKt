@@ -64,7 +64,7 @@ fun ApiContext.sendInvoice(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<SendInvoiceResult?> = sendRequest<SendInvoiceResult?>(
+): Future<SendInvoiceResult> = sendRequest<SendInvoiceResult>(
     "sendInvoice",
     listOf(
         Pair("chat_id", chatId),
@@ -117,8 +117,8 @@ fun ApiContext.sendInvoice(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: AsyncResult<SendInvoiceResult?>) -> Unit
-): ApiContext = sendRequestCallback<SendInvoiceResult?>(
+    callback: (result: AsyncResult<SendInvoiceResult>) -> Unit
+): ApiContext = sendRequestCallback<SendInvoiceResult>(
     "sendInvoice",
     listOf(
         Pair("chat_id", chatId),
@@ -172,7 +172,7 @@ suspend fun ApiContext.sendInvoiceAwait(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): SendInvoiceResult? = sendRequestAwait<SendInvoiceResult?>(
+): SendInvoiceResult = sendRequestAwait<SendInvoiceResult>(
     "sendInvoice",
     listOf(
         Pair("chat_id", chatId),

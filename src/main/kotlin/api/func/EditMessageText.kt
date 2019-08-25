@@ -25,10 +25,10 @@ fun ApiContext.editMessageText(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     text: String,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableWebPagePreview: Boolean? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<EditMessageTextResultMessage?> = sendRequest<EditMessageTextResultMessage?>(
+): Future<EditMessageTextResultMessage> = sendRequest<EditMessageTextResultMessage>(
     "editMessageText",
     listOf(
         Pair("chat_id", chatId),
@@ -46,11 +46,11 @@ fun ApiContext.editMessageText(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     text: String,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableWebPagePreview: Boolean? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: AsyncResult<EditMessageTextResultMessage?>) -> Unit
-): ApiContext = sendRequestCallback<EditMessageTextResultMessage?>(
+    callback: (result: AsyncResult<EditMessageTextResultMessage>) -> Unit
+): ApiContext = sendRequestCallback<EditMessageTextResultMessage>(
     "editMessageText",
     listOf(
         Pair("chat_id", chatId),
@@ -69,10 +69,10 @@ suspend fun ApiContext.editMessageTextAwait(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     text: String,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableWebPagePreview: Boolean? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): EditMessageTextResultMessage? = sendRequestAwait<EditMessageTextResultMessage?>(
+): EditMessageTextResultMessage? = sendRequestAwait<EditMessageTextResultMessage>(
     "editMessageText",
     listOf(
         Pair("chat_id", chatId),
@@ -90,10 +90,10 @@ fun ApiContext.editMessageText(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     text: String,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableWebPagePreview: Boolean? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<EditMessageTextResultBoolean?> = sendRequest<EditMessageTextResultBoolean?>(
+): Future<EditMessageTextResultBoolean> = sendRequest<EditMessageTextResultBoolean>(
     "editMessageText",
     listOf(
         Pair("message_id", messageId),
@@ -109,11 +109,11 @@ fun ApiContext.editMessageText(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     text: String,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableWebPagePreview: Boolean? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: AsyncResult<EditMessageTextResultBoolean?>) -> Unit
-): ApiContext = sendRequestCallback<EditMessageTextResultBoolean?>(
+    callback: (result: AsyncResult<EditMessageTextResultBoolean>) -> Unit
+): ApiContext = sendRequestCallback<EditMessageTextResultBoolean>(
     "editMessageText",
     listOf(
         Pair("message_id", messageId),
@@ -130,10 +130,10 @@ suspend fun ApiContext.editMessageTextAwait(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     text: String,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableWebPagePreview: Boolean? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): EditMessageTextResultBoolean? = sendRequestAwait<EditMessageTextResultBoolean?>(
+): EditMessageTextResultBoolean? = sendRequestAwait<EditMessageTextResultBoolean>(
     "editMessageText",
     listOf(
         Pair("message_id", messageId),

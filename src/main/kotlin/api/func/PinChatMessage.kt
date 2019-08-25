@@ -21,7 +21,7 @@ fun ApiContext.pinChatMessage(
     chatId: String,
     messageId: Int,
     disableNotification: Boolean? = null
-): Future<PinChatMessageResult?> = sendRequest<PinChatMessageResult?>(
+): Future<PinChatMessageResult> = sendRequest<PinChatMessageResult>(
     "pinChatMessage",
     listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("disable_notification", disableNotification))
 )
@@ -30,8 +30,8 @@ fun ApiContext.pinChatMessage(
     chatId: String,
     messageId: Int,
     disableNotification: Boolean? = null,
-    callback: (result: AsyncResult<PinChatMessageResult?>) -> Unit
-): ApiContext = sendRequestCallback<PinChatMessageResult?>(
+    callback: (result: AsyncResult<PinChatMessageResult>) -> Unit
+): ApiContext = sendRequestCallback<PinChatMessageResult>(
     "pinChatMessage",
     listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("disable_notification", disableNotification)),
     callback
@@ -41,7 +41,7 @@ suspend fun ApiContext.pinChatMessageAwait(
     chatId: String,
     messageId: Int,
     disableNotification: Boolean? = null
-): PinChatMessageResult? = sendRequestAwait<PinChatMessageResult?>(
+): PinChatMessageResult = sendRequestAwait<PinChatMessageResult>(
     "pinChatMessage",
     listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("disable_notification", disableNotification))
 )

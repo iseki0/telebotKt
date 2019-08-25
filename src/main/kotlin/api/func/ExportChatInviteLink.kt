@@ -17,16 +17,16 @@ import io.vertx.core.Future
  */
 fun ApiContext.exportChatInviteLink(
     chatId: String
-): Future<ExportChatInviteLinkResult?> =
-    sendRequest<ExportChatInviteLinkResult?>("exportChatInviteLink", listOf(Pair("chat_id", chatId)))
+): Future<ExportChatInviteLinkResult> =
+    sendRequest<ExportChatInviteLinkResult>("exportChatInviteLink", listOf(Pair("chat_id", chatId)))
 
 fun ApiContext.exportChatInviteLink(
     chatId: String,
-    callback: (result: AsyncResult<ExportChatInviteLinkResult?>) -> Unit
+    callback: (result: AsyncResult<ExportChatInviteLinkResult>) -> Unit
 ): ApiContext =
-    sendRequestCallback<ExportChatInviteLinkResult?>("exportChatInviteLink", listOf(Pair("chat_id", chatId)), callback)
+    sendRequestCallback<ExportChatInviteLinkResult>("exportChatInviteLink", listOf(Pair("chat_id", chatId)), callback)
 
 suspend fun ApiContext.exportChatInviteLinkAwait(
     chatId: String
-): ExportChatInviteLinkResult? =
-    sendRequestAwait<ExportChatInviteLinkResult?>("exportChatInviteLink", listOf(Pair("chat_id", chatId)))
+): ExportChatInviteLinkResult =
+    sendRequestAwait<ExportChatInviteLinkResult>("exportChatInviteLink", listOf(Pair("chat_id", chatId)))

@@ -27,7 +27,7 @@ fun ApiContext.setGameScore(
     chatId: Int,
     messageId: Int? = null,
     inlineMessageId: String? = null
-): Future<SetGameScoreResultMessage?> = sendRequest<SetGameScoreResultMessage?>(
+): Future<SetGameScoreResultMessage> = sendRequest<SetGameScoreResultMessage>(
     "setGameScore",
     listOf(
         Pair("user_id", userId),
@@ -48,8 +48,8 @@ fun ApiContext.setGameScore(
     chatId: Int,
     messageId: Int? = null,
     inlineMessageId: String? = null,
-    callback: (result: AsyncResult<SetGameScoreResultMessage?>) -> Unit
-): ApiContext = sendRequestCallback<SetGameScoreResultMessage?>(
+    callback: (result: AsyncResult<SetGameScoreResultMessage>) -> Unit
+): ApiContext = sendRequestCallback<SetGameScoreResultMessage>(
     "setGameScore",
     listOf(
         Pair("user_id", userId),
@@ -71,7 +71,7 @@ suspend fun ApiContext.setGameScoreAwait(
     chatId: Int,
     messageId: Int? = null,
     inlineMessageId: String? = null
-): SetGameScoreResultMessage? = sendRequestAwait<SetGameScoreResultMessage?>(
+): SetGameScoreResultMessage? = sendRequestAwait<SetGameScoreResultMessage>(
     "setGameScore",
     listOf(
         Pair("user_id", userId),
@@ -91,7 +91,7 @@ fun ApiContext.setGameScore(
     disableEditMessage: Boolean? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null
-): Future<SetGameScoreResultBoolean?> = sendRequest<SetGameScoreResultBoolean?>(
+): Future<SetGameScoreResultBoolean> = sendRequest<SetGameScoreResultBoolean>(
     "setGameScore",
     listOf(
         Pair("user_id", userId),
@@ -110,8 +110,8 @@ fun ApiContext.setGameScore(
     disableEditMessage: Boolean? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null,
-    callback: (result: AsyncResult<SetGameScoreResultBoolean?>) -> Unit
-): ApiContext = sendRequestCallback<SetGameScoreResultBoolean?>(
+    callback: (result: AsyncResult<SetGameScoreResultBoolean>) -> Unit
+): ApiContext = sendRequestCallback<SetGameScoreResultBoolean>(
     "setGameScore",
     listOf(
         Pair("user_id", userId),
@@ -131,7 +131,7 @@ suspend fun ApiContext.setGameScoreAwait(
     disableEditMessage: Boolean? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null
-): SetGameScoreResultBoolean? = sendRequestAwait<SetGameScoreResultBoolean?>(
+): SetGameScoreResultBoolean? = sendRequestAwait<SetGameScoreResultBoolean>(
     "setGameScore",
     listOf(
         Pair("user_id", userId),

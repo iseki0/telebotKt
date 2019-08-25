@@ -25,11 +25,11 @@ fun ApiContext.sendDocument(
     document: InputFile,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<SendDocumentResult?> = sendRequest<SendDocumentResult?>(
+): Future<SendDocumentResult> = sendRequest<SendDocumentResult>(
     "sendDocument",
     listOf(
         Pair("chat_id", chatId),
@@ -48,12 +48,12 @@ fun ApiContext.sendDocument(
     document: InputFile,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: AsyncResult<SendDocumentResult?>) -> Unit
-): ApiContext = sendRequestCallback<SendDocumentResult?>(
+    callback: (result: AsyncResult<SendDocumentResult>) -> Unit
+): ApiContext = sendRequestCallback<SendDocumentResult>(
     "sendDocument",
     listOf(
         Pair("chat_id", chatId),
@@ -73,11 +73,11 @@ suspend fun ApiContext.sendDocumentAwait(
     document: InputFile,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): SendDocumentResult? = sendRequestAwait<SendDocumentResult?>(
+): SendDocumentResult = sendRequestAwait<SendDocumentResult>(
     "sendDocument",
     listOf(
         Pair("chat_id", chatId),

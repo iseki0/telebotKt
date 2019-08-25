@@ -23,7 +23,7 @@ fun ApiContext.addStickerToSet(
     pngSticker: InputFile,
     emojis: String,
     maskPosition: MaskPosition? = null
-): Future<AddStickerToSetResult?> = sendRequest<AddStickerToSetResult?>(
+): Future<AddStickerToSetResult> = sendRequest<AddStickerToSetResult>(
     "addStickerToSet",
     listOf(
         Pair("user_id", userId),
@@ -40,8 +40,8 @@ fun ApiContext.addStickerToSet(
     pngSticker: InputFile,
     emojis: String,
     maskPosition: MaskPosition? = null,
-    callback: (result: AsyncResult<AddStickerToSetResult?>) -> Unit
-): ApiContext = sendRequestCallback<AddStickerToSetResult?>(
+    callback: (result: AsyncResult<AddStickerToSetResult>) -> Unit
+): ApiContext = sendRequestCallback<AddStickerToSetResult>(
     "addStickerToSet",
     listOf(
         Pair("user_id", userId),
@@ -59,7 +59,7 @@ suspend fun ApiContext.addStickerToSetAwait(
     pngSticker: InputFile,
     emojis: String,
     maskPosition: MaskPosition? = null
-): AddStickerToSetResult? = sendRequestAwait<AddStickerToSetResult?>(
+): AddStickerToSetResult = sendRequestAwait<AddStickerToSetResult>(
     "addStickerToSet",
     listOf(
         Pair("user_id", userId),

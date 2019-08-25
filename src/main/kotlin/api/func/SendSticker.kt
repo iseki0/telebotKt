@@ -23,7 +23,7 @@ fun ApiContext.sendSticker(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<SendStickerResult?> = sendRequest<SendStickerResult?>(
+): Future<SendStickerResult> = sendRequest<SendStickerResult>(
     "sendSticker",
     listOf(
         Pair("chat_id", chatId),
@@ -40,8 +40,8 @@ fun ApiContext.sendSticker(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: AsyncResult<SendStickerResult?>) -> Unit
-): ApiContext = sendRequestCallback<SendStickerResult?>(
+    callback: (result: AsyncResult<SendStickerResult>) -> Unit
+): ApiContext = sendRequestCallback<SendStickerResult>(
     "sendSticker",
     listOf(
         Pair("chat_id", chatId),
@@ -59,7 +59,7 @@ suspend fun ApiContext.sendStickerAwait(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): SendStickerResult? = sendRequestAwait<SendStickerResult?>(
+): SendStickerResult = sendRequestAwait<SendStickerResult>(
     "sendSticker",
     listOf(
         Pair("chat_id", chatId),

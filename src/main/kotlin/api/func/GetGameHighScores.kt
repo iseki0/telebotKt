@@ -25,7 +25,7 @@ fun ApiContext.getGameHighScores(
     chatId: Int? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null
-): Future<GetGameHighScoresResult?> = sendRequest<GetGameHighScoresResult?>(
+): Future<GetGameHighScoresResult> = sendRequest<GetGameHighScoresResult>(
     "getGameHighScores",
     listOf(
         Pair("user_id", userId),
@@ -40,8 +40,8 @@ fun ApiContext.getGameHighScores(
     chatId: Int? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null,
-    callback: (result: AsyncResult<GetGameHighScoresResult?>) -> Unit
-): ApiContext = sendRequestCallback<GetGameHighScoresResult?>(
+    callback: (result: AsyncResult<GetGameHighScoresResult>) -> Unit
+): ApiContext = sendRequestCallback<GetGameHighScoresResult>(
     "getGameHighScores",
     listOf(
         Pair("user_id", userId),
@@ -57,7 +57,7 @@ suspend fun ApiContext.getGameHighScoresAwait(
     chatId: Int? = null,
     messageId: Int? = null,
     inlineMessageId: String? = null
-): GetGameHighScoresResult? = sendRequestAwait<GetGameHighScoresResult?>(
+): GetGameHighScoresResult = sendRequestAwait<GetGameHighScoresResult>(
     "getGameHighScores",
     listOf(
         Pair("user_id", userId),

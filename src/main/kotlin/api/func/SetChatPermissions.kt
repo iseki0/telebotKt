@@ -20,7 +20,7 @@ import io.vertx.core.Future
 fun ApiContext.setChatPermissions(
     chatId: String,
     permissions: ChatPermissions
-): Future<SetChatPermissionsResult?> = sendRequest<SetChatPermissionsResult?>(
+): Future<SetChatPermissionsResult> = sendRequest<SetChatPermissionsResult>(
     "setChatPermissions",
     listOf(Pair("chat_id", chatId), Pair("permissions", permissions))
 )
@@ -28,8 +28,8 @@ fun ApiContext.setChatPermissions(
 fun ApiContext.setChatPermissions(
     chatId: String,
     permissions: ChatPermissions,
-    callback: (result: AsyncResult<SetChatPermissionsResult?>) -> Unit
-): ApiContext = sendRequestCallback<SetChatPermissionsResult?>(
+    callback: (result: AsyncResult<SetChatPermissionsResult>) -> Unit
+): ApiContext = sendRequestCallback<SetChatPermissionsResult>(
     "setChatPermissions",
     listOf(Pair("chat_id", chatId), Pair("permissions", permissions)),
     callback
@@ -38,7 +38,7 @@ fun ApiContext.setChatPermissions(
 suspend fun ApiContext.setChatPermissionsAwait(
     chatId: String,
     permissions: ChatPermissions
-): SetChatPermissionsResult? = sendRequestAwait<SetChatPermissionsResult?>(
+): SetChatPermissionsResult = sendRequestAwait<SetChatPermissionsResult>(
     "setChatPermissions",
     listOf(Pair("chat_id", chatId), Pair("permissions", permissions))
 )

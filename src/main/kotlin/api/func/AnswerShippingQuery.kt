@@ -25,7 +25,7 @@ fun ApiContext.answerShippingQuery(
     ok: Boolean,
     shippingOptions: List<ShippingOption>? = null,
     errorMessage: String? = null
-): Future<AnswerShippingQueryResult?> = sendRequest<AnswerShippingQueryResult?>(
+): Future<AnswerShippingQueryResult> = sendRequest<AnswerShippingQueryResult>(
     "answerShippingQuery",
     listOf(
         Pair("shipping_query_id", shippingQueryId),
@@ -40,8 +40,8 @@ fun ApiContext.answerShippingQuery(
     ok: Boolean,
     shippingOptions: List<ShippingOption>? = null,
     errorMessage: String? = null,
-    callback: (result: AsyncResult<AnswerShippingQueryResult?>) -> Unit
-): ApiContext = sendRequestCallback<AnswerShippingQueryResult?>(
+    callback: (result: AsyncResult<AnswerShippingQueryResult>) -> Unit
+): ApiContext = sendRequestCallback<AnswerShippingQueryResult>(
     "answerShippingQuery",
     listOf(
         Pair("shipping_query_id", shippingQueryId),
@@ -57,7 +57,7 @@ suspend fun ApiContext.answerShippingQueryAwait(
     ok: Boolean,
     shippingOptions: List<ShippingOption>? = null,
     errorMessage: String? = null
-): AnswerShippingQueryResult? = sendRequestAwait<AnswerShippingQueryResult?>(
+): AnswerShippingQueryResult = sendRequestAwait<AnswerShippingQueryResult>(
     "answerShippingQuery",
     listOf(
         Pair("shipping_query_id", shippingQueryId),

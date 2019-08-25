@@ -25,7 +25,7 @@ fun ApiContext.sendMediaGroup(
     media: List<InputMediaPhoto>,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null
-): Future<SendMediaGroupResult?> = sendRequest<SendMediaGroupResult?>(
+): Future<SendMediaGroupResult> = sendRequest<SendMediaGroupResult>(
     "sendMediaGroup",
     listOf(
         Pair("chat_id", chatId),
@@ -40,8 +40,8 @@ fun ApiContext.sendMediaGroup(
     media: List<InputMediaPhoto>,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
-    callback: (result: AsyncResult<SendMediaGroupResult?>) -> Unit
-): ApiContext = sendRequestCallback<SendMediaGroupResult?>(
+    callback: (result: AsyncResult<SendMediaGroupResult>) -> Unit
+): ApiContext = sendRequestCallback<SendMediaGroupResult>(
     "sendMediaGroup",
     listOf(
         Pair("chat_id", chatId),
@@ -57,7 +57,7 @@ suspend fun ApiContext.sendMediaGroupAwait(
     media: List<InputMediaPhoto>,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null
-): SendMediaGroupResult? = sendRequestAwait<SendMediaGroupResult?>(
+): SendMediaGroupResult = sendRequestAwait<SendMediaGroupResult>(
     "sendMediaGroup",
     listOf(
         Pair("chat_id", chatId),

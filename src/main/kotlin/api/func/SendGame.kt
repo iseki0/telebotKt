@@ -27,7 +27,7 @@ fun ApiContext.sendGame(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<SendGameResult?> = sendRequest<SendGameResult?>(
+): Future<SendGameResult> = sendRequest<SendGameResult>(
     "sendGame",
     listOf(
         Pair("chat_id", chatId),
@@ -44,8 +44,8 @@ fun ApiContext.sendGame(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: AsyncResult<SendGameResult?>) -> Unit
-): ApiContext = sendRequestCallback<SendGameResult?>(
+    callback: (result: AsyncResult<SendGameResult>) -> Unit
+): ApiContext = sendRequestCallback<SendGameResult>(
     "sendGame",
     listOf(
         Pair("chat_id", chatId),
@@ -63,7 +63,7 @@ suspend fun ApiContext.sendGameAwait(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): SendGameResult? = sendRequestAwait<SendGameResult?>(
+): SendGameResult = sendRequestAwait<SendGameResult>(
     "sendGame",
     listOf(
         Pair("chat_id", chatId),

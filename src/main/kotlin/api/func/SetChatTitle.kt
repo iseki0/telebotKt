@@ -20,14 +20,14 @@ import io.vertx.core.Future
 fun ApiContext.setChatTitle(
     chatId: String,
     title: String
-): Future<SetChatTitleResult?> =
-    sendRequest<SetChatTitleResult?>("setChatTitle", listOf(Pair("chat_id", chatId), Pair("title", title)))
+): Future<SetChatTitleResult> =
+    sendRequest<SetChatTitleResult>("setChatTitle", listOf(Pair("chat_id", chatId), Pair("title", title)))
 
 fun ApiContext.setChatTitle(
     chatId: String,
     title: String,
-    callback: (result: AsyncResult<SetChatTitleResult?>) -> Unit
-): ApiContext = sendRequestCallback<SetChatTitleResult?>(
+    callback: (result: AsyncResult<SetChatTitleResult>) -> Unit
+): ApiContext = sendRequestCallback<SetChatTitleResult>(
     "setChatTitle",
     listOf(Pair("chat_id", chatId), Pair("title", title)),
     callback
@@ -36,5 +36,5 @@ fun ApiContext.setChatTitle(
 suspend fun ApiContext.setChatTitleAwait(
     chatId: String,
     title: String
-): SetChatTitleResult? =
-    sendRequestAwait<SetChatTitleResult?>("setChatTitle", listOf(Pair("chat_id", chatId), Pair("title", title)))
+): SetChatTitleResult =
+    sendRequestAwait<SetChatTitleResult>("setChatTitle", listOf(Pair("chat_id", chatId), Pair("title", title)))

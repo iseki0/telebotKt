@@ -27,7 +27,7 @@ fun ApiContext.sendLocation(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<SendLocationResult?> = sendRequest<SendLocationResult?>(
+): Future<SendLocationResult> = sendRequest<SendLocationResult>(
     "sendLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -48,8 +48,8 @@ fun ApiContext.sendLocation(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: AsyncResult<SendLocationResult?>) -> Unit
-): ApiContext = sendRequestCallback<SendLocationResult?>(
+    callback: (result: AsyncResult<SendLocationResult>) -> Unit
+): ApiContext = sendRequestCallback<SendLocationResult>(
     "sendLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -71,7 +71,7 @@ suspend fun ApiContext.sendLocationAwait(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): SendLocationResult? = sendRequestAwait<SendLocationResult?>(
+): SendLocationResult = sendRequestAwait<SendLocationResult>(
     "sendLocation",
     listOf(
         Pair("chat_id", chatId),

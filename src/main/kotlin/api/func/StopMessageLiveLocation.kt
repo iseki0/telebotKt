@@ -22,7 +22,7 @@ fun ApiContext.stopMessageLiveLocation(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<StopMessageLiveLocationResultMessage?> = sendRequest<StopMessageLiveLocationResultMessage?>(
+): Future<StopMessageLiveLocationResultMessage> = sendRequest<StopMessageLiveLocationResultMessage>(
     "stopMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -37,8 +37,8 @@ fun ApiContext.stopMessageLiveLocation(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: AsyncResult<StopMessageLiveLocationResultMessage?>) -> Unit
-): ApiContext = sendRequestCallback<StopMessageLiveLocationResultMessage?>(
+    callback: (result: AsyncResult<StopMessageLiveLocationResultMessage>) -> Unit
+): ApiContext = sendRequestCallback<StopMessageLiveLocationResultMessage>(
     "stopMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -54,7 +54,7 @@ suspend fun ApiContext.stopMessageLiveLocationAwait(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): StopMessageLiveLocationResultMessage? = sendRequestAwait<StopMessageLiveLocationResultMessage?>(
+): StopMessageLiveLocationResultMessage? = sendRequestAwait<StopMessageLiveLocationResultMessage>(
     "stopMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -68,7 +68,7 @@ fun ApiContext.stopMessageLiveLocation(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<StopMessageLiveLocationResultBoolean?> = sendRequest<StopMessageLiveLocationResultBoolean?>(
+): Future<StopMessageLiveLocationResultBoolean> = sendRequest<StopMessageLiveLocationResultBoolean>(
     "stopMessageLiveLocation",
     listOf(Pair("message_id", messageId), Pair("inline_message_id", inlineMessageId), Pair("reply_markup", replyMarkup))
 )
@@ -77,8 +77,8 @@ fun ApiContext.stopMessageLiveLocation(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: AsyncResult<StopMessageLiveLocationResultBoolean?>) -> Unit
-): ApiContext = sendRequestCallback<StopMessageLiveLocationResultBoolean?>(
+    callback: (result: AsyncResult<StopMessageLiveLocationResultBoolean>) -> Unit
+): ApiContext = sendRequestCallback<StopMessageLiveLocationResultBoolean>(
     "stopMessageLiveLocation",
     listOf(
         Pair("message_id", messageId),
@@ -92,7 +92,7 @@ suspend fun ApiContext.stopMessageLiveLocationAwait(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): StopMessageLiveLocationResultBoolean? = sendRequestAwait<StopMessageLiveLocationResultBoolean?>(
+): StopMessageLiveLocationResultBoolean? = sendRequestAwait<StopMessageLiveLocationResultBoolean>(
     "stopMessageLiveLocation",
     listOf(Pair("message_id", messageId), Pair("inline_message_id", inlineMessageId), Pair("reply_markup", replyMarkup))
 )

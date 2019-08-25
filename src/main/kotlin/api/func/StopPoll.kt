@@ -23,7 +23,7 @@ fun ApiContext.stopPoll(
     chatId: String,
     messageId: Int,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<StopPollResult?> = sendRequest<StopPollResult?>(
+): Future<StopPollResult> = sendRequest<StopPollResult>(
     "stopPoll",
     listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("reply_markup", replyMarkup))
 )
@@ -32,8 +32,8 @@ fun ApiContext.stopPoll(
     chatId: String,
     messageId: Int,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: AsyncResult<StopPollResult?>) -> Unit
-): ApiContext = sendRequestCallback<StopPollResult?>(
+    callback: (result: AsyncResult<StopPollResult>) -> Unit
+): ApiContext = sendRequestCallback<StopPollResult>(
     "stopPoll",
     listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("reply_markup", replyMarkup)),
     callback
@@ -43,7 +43,7 @@ suspend fun ApiContext.stopPollAwait(
     chatId: String,
     messageId: Int,
     replyMarkup: InlineKeyboardMarkup? = null
-): StopPollResult? = sendRequestAwait<StopPollResult?>(
+): StopPollResult = sendRequestAwait<StopPollResult>(
     "stopPoll",
     listOf(Pair("chat_id", chatId), Pair("message_id", messageId), Pair("reply_markup", replyMarkup))
 )

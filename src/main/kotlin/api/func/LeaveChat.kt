@@ -17,13 +17,13 @@ import io.vertx.core.Future
  */
 fun ApiContext.leaveChat(
     chatId: String
-): Future<LeaveChatResult?> = sendRequest<LeaveChatResult?>("leaveChat", listOf(Pair("chat_id", chatId)))
+): Future<LeaveChatResult> = sendRequest<LeaveChatResult>("leaveChat", listOf(Pair("chat_id", chatId)))
 
 fun ApiContext.leaveChat(
     chatId: String,
-    callback: (result: AsyncResult<LeaveChatResult?>) -> Unit
-): ApiContext = sendRequestCallback<LeaveChatResult?>("leaveChat", listOf(Pair("chat_id", chatId)), callback)
+    callback: (result: AsyncResult<LeaveChatResult>) -> Unit
+): ApiContext = sendRequestCallback<LeaveChatResult>("leaveChat", listOf(Pair("chat_id", chatId)), callback)
 
 suspend fun ApiContext.leaveChatAwait(
     chatId: String
-): LeaveChatResult? = sendRequestAwait<LeaveChatResult?>("leaveChat", listOf(Pair("chat_id", chatId)))
+): LeaveChatResult = sendRequestAwait<LeaveChatResult>("leaveChat", listOf(Pair("chat_id", chatId)))

@@ -23,11 +23,11 @@ fun ApiContext.sendPhoto(
     chatId: String,
     photo: InputFile,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<SendPhotoResult?> = sendRequest<SendPhotoResult?>(
+): Future<SendPhotoResult> = sendRequest<SendPhotoResult>(
     "sendPhoto",
     listOf(
         Pair("chat_id", chatId),
@@ -44,12 +44,12 @@ fun ApiContext.sendPhoto(
     chatId: String,
     photo: InputFile,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: AsyncResult<SendPhotoResult?>) -> Unit
-): ApiContext = sendRequestCallback<SendPhotoResult?>(
+    callback: (result: AsyncResult<SendPhotoResult>) -> Unit
+): ApiContext = sendRequestCallback<SendPhotoResult>(
     "sendPhoto",
     listOf(
         Pair("chat_id", chatId),
@@ -67,11 +67,11 @@ suspend fun ApiContext.sendPhotoAwait(
     chatId: String,
     photo: InputFile,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): SendPhotoResult? = sendRequestAwait<SendPhotoResult?>(
+): SendPhotoResult = sendRequestAwait<SendPhotoResult>(
     "sendPhoto",
     listOf(
         Pair("chat_id", chatId),

@@ -18,13 +18,13 @@ import io.vertx.core.Future
  */
 fun ApiContext.getStickerSet(
     name: String
-): Future<GetStickerSetResult?> = sendRequest<GetStickerSetResult?>("getStickerSet", listOf(Pair("name", name)))
+): Future<GetStickerSetResult> = sendRequest<GetStickerSetResult>("getStickerSet", listOf(Pair("name", name)))
 
 fun ApiContext.getStickerSet(
     name: String,
-    callback: (result: AsyncResult<GetStickerSetResult?>) -> Unit
-): ApiContext = sendRequestCallback<GetStickerSetResult?>("getStickerSet", listOf(Pair("name", name)), callback)
+    callback: (result: AsyncResult<GetStickerSetResult>) -> Unit
+): ApiContext = sendRequestCallback<GetStickerSetResult>("getStickerSet", listOf(Pair("name", name)), callback)
 
 suspend fun ApiContext.getStickerSetAwait(
     name: String
-): GetStickerSetResult? = sendRequestAwait<GetStickerSetResult?>("getStickerSet", listOf(Pair("name", name)))
+): GetStickerSetResult = sendRequestAwait<GetStickerSetResult>("getStickerSet", listOf(Pair("name", name)))

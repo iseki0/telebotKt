@@ -28,7 +28,7 @@ fun ApiContext.sendAudio(
     chatId: String,
     audio: InputFile,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     duration: Int? = null,
     performer: String? = null,
     title: String? = null,
@@ -36,7 +36,7 @@ fun ApiContext.sendAudio(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<SendAudioResult?> = sendRequest<SendAudioResult?>(
+): Future<SendAudioResult> = sendRequest<SendAudioResult>(
     "sendAudio",
     listOf(
         Pair("chat_id", chatId),
@@ -57,7 +57,7 @@ fun ApiContext.sendAudio(
     chatId: String,
     audio: InputFile,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     duration: Int? = null,
     performer: String? = null,
     title: String? = null,
@@ -65,8 +65,8 @@ fun ApiContext.sendAudio(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: AsyncResult<SendAudioResult?>) -> Unit
-): ApiContext = sendRequestCallback<SendAudioResult?>(
+    callback: (result: AsyncResult<SendAudioResult>) -> Unit
+): ApiContext = sendRequestCallback<SendAudioResult>(
     "sendAudio",
     listOf(
         Pair("chat_id", chatId),
@@ -88,7 +88,7 @@ suspend fun ApiContext.sendAudioAwait(
     chatId: String,
     audio: InputFile,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     duration: Int? = null,
     performer: String? = null,
     title: String? = null,
@@ -96,7 +96,7 @@ suspend fun ApiContext.sendAudioAwait(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): SendAudioResult? = sendRequestAwait<SendAudioResult?>(
+): SendAudioResult = sendRequestAwait<SendAudioResult>(
     "sendAudio",
     listOf(
         Pair("chat_id", chatId),

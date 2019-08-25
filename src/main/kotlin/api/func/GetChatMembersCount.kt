@@ -17,16 +17,16 @@ import io.vertx.core.Future
  */
 fun ApiContext.getChatMembersCount(
     chatId: String
-): Future<GetChatMembersCountResult?> =
-    sendRequest<GetChatMembersCountResult?>("getChatMembersCount", listOf(Pair("chat_id", chatId)))
+): Future<GetChatMembersCountResult> =
+    sendRequest<GetChatMembersCountResult>("getChatMembersCount", listOf(Pair("chat_id", chatId)))
 
 fun ApiContext.getChatMembersCount(
     chatId: String,
-    callback: (result: AsyncResult<GetChatMembersCountResult?>) -> Unit
+    callback: (result: AsyncResult<GetChatMembersCountResult>) -> Unit
 ): ApiContext =
-    sendRequestCallback<GetChatMembersCountResult?>("getChatMembersCount", listOf(Pair("chat_id", chatId)), callback)
+    sendRequestCallback<GetChatMembersCountResult>("getChatMembersCount", listOf(Pair("chat_id", chatId)), callback)
 
 suspend fun ApiContext.getChatMembersCountAwait(
     chatId: String
-): GetChatMembersCountResult? =
-    sendRequestAwait<GetChatMembersCountResult?>("getChatMembersCount", listOf(Pair("chat_id", chatId)))
+): GetChatMembersCountResult =
+    sendRequestAwait<GetChatMembersCountResult>("getChatMembersCount", listOf(Pair("chat_id", chatId)))

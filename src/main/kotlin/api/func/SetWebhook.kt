@@ -22,7 +22,7 @@ fun ApiContext.setWebhook(
     certificate: InputFile? = null,
     maxConnections: Int? = null,
     allowedUpdates: List<String>? = null
-): Future<SetWebhookResult?> = sendRequest<SetWebhookResult?>(
+): Future<SetWebhookResult> = sendRequest<SetWebhookResult>(
     "setWebhook",
     listOf(
         Pair("url", url),
@@ -37,8 +37,8 @@ fun ApiContext.setWebhook(
     certificate: InputFile? = null,
     maxConnections: Int? = null,
     allowedUpdates: List<String>? = null,
-    callback: (result: AsyncResult<SetWebhookResult?>) -> Unit
-): ApiContext = sendRequestCallback<SetWebhookResult?>(
+    callback: (result: AsyncResult<SetWebhookResult>) -> Unit
+): ApiContext = sendRequestCallback<SetWebhookResult>(
     "setWebhook",
     listOf(
         Pair("url", url),
@@ -54,7 +54,7 @@ suspend fun ApiContext.setWebhookAwait(
     certificate: InputFile? = null,
     maxConnections: Int? = null,
     allowedUpdates: List<String>? = null
-): SetWebhookResult? = sendRequestAwait<SetWebhookResult?>(
+): SetWebhookResult = sendRequestAwait<SetWebhookResult>(
     "setWebhook",
     listOf(
         Pair("url", url),

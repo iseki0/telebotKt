@@ -19,7 +19,7 @@ import io.vertx.core.Future
 fun ApiContext.setChatDescription(
     chatId: String,
     description: String? = null
-): Future<SetChatDescriptionResult?> = sendRequest<SetChatDescriptionResult?>(
+): Future<SetChatDescriptionResult> = sendRequest<SetChatDescriptionResult>(
     "setChatDescription",
     listOf(Pair("chat_id", chatId), Pair("description", description))
 )
@@ -27,8 +27,8 @@ fun ApiContext.setChatDescription(
 fun ApiContext.setChatDescription(
     chatId: String,
     description: String? = null,
-    callback: (result: AsyncResult<SetChatDescriptionResult?>) -> Unit
-): ApiContext = sendRequestCallback<SetChatDescriptionResult?>(
+    callback: (result: AsyncResult<SetChatDescriptionResult>) -> Unit
+): ApiContext = sendRequestCallback<SetChatDescriptionResult>(
     "setChatDescription",
     listOf(Pair("chat_id", chatId), Pair("description", description)),
     callback
@@ -37,7 +37,7 @@ fun ApiContext.setChatDescription(
 suspend fun ApiContext.setChatDescriptionAwait(
     chatId: String,
     description: String? = null
-): SetChatDescriptionResult? = sendRequestAwait<SetChatDescriptionResult?>(
+): SetChatDescriptionResult = sendRequestAwait<SetChatDescriptionResult>(
     "setChatDescription",
     listOf(Pair("chat_id", chatId), Pair("description", description))
 )

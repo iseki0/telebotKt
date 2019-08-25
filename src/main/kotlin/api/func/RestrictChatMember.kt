@@ -24,7 +24,7 @@ fun ApiContext.restrictChatMember(
     userId: Int,
     permissions: ChatPermissions,
     untilDate: Int? = null
-): Future<RestrictChatMemberResult?> = sendRequest<RestrictChatMemberResult?>(
+): Future<RestrictChatMemberResult> = sendRequest<RestrictChatMemberResult>(
     "restrictChatMember",
     listOf(
         Pair("chat_id", chatId),
@@ -39,8 +39,8 @@ fun ApiContext.restrictChatMember(
     userId: Int,
     permissions: ChatPermissions,
     untilDate: Int? = null,
-    callback: (result: AsyncResult<RestrictChatMemberResult?>) -> Unit
-): ApiContext = sendRequestCallback<RestrictChatMemberResult?>(
+    callback: (result: AsyncResult<RestrictChatMemberResult>) -> Unit
+): ApiContext = sendRequestCallback<RestrictChatMemberResult>(
     "restrictChatMember",
     listOf(
         Pair("chat_id", chatId),
@@ -56,7 +56,7 @@ suspend fun ApiContext.restrictChatMemberAwait(
     userId: Int,
     permissions: ChatPermissions,
     untilDate: Int? = null
-): RestrictChatMemberResult? = sendRequestAwait<RestrictChatMemberResult?>(
+): RestrictChatMemberResult = sendRequestAwait<RestrictChatMemberResult>(
     "restrictChatMember",
     listOf(
         Pair("chat_id", chatId),

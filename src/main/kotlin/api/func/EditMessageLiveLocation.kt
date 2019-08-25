@@ -26,7 +26,7 @@ fun ApiContext.editMessageLiveLocation(
     latitude: Double,
     longitude: Double,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<EditMessageLiveLocationResultMessage?> = sendRequest<EditMessageLiveLocationResultMessage?>(
+): Future<EditMessageLiveLocationResultMessage> = sendRequest<EditMessageLiveLocationResultMessage>(
     "editMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -45,8 +45,8 @@ fun ApiContext.editMessageLiveLocation(
     latitude: Double,
     longitude: Double,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: AsyncResult<EditMessageLiveLocationResultMessage?>) -> Unit
-): ApiContext = sendRequestCallback<EditMessageLiveLocationResultMessage?>(
+    callback: (result: AsyncResult<EditMessageLiveLocationResultMessage>) -> Unit
+): ApiContext = sendRequestCallback<EditMessageLiveLocationResultMessage>(
     "editMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -66,7 +66,7 @@ suspend fun ApiContext.editMessageLiveLocationAwait(
     latitude: Double,
     longitude: Double,
     replyMarkup: InlineKeyboardMarkup? = null
-): EditMessageLiveLocationResultMessage? = sendRequestAwait<EditMessageLiveLocationResultMessage?>(
+): EditMessageLiveLocationResultMessage? = sendRequestAwait<EditMessageLiveLocationResultMessage>(
     "editMessageLiveLocation",
     listOf(
         Pair("chat_id", chatId),
@@ -84,7 +84,7 @@ fun ApiContext.editMessageLiveLocation(
     latitude: Double,
     longitude: Double,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<EditMessageLiveLocationResultBoolean?> = sendRequest<EditMessageLiveLocationResultBoolean?>(
+): Future<EditMessageLiveLocationResultBoolean> = sendRequest<EditMessageLiveLocationResultBoolean>(
     "editMessageLiveLocation",
     listOf(
         Pair("message_id", messageId),
@@ -101,8 +101,8 @@ fun ApiContext.editMessageLiveLocation(
     latitude: Double,
     longitude: Double,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: AsyncResult<EditMessageLiveLocationResultBoolean?>) -> Unit
-): ApiContext = sendRequestCallback<EditMessageLiveLocationResultBoolean?>(
+    callback: (result: AsyncResult<EditMessageLiveLocationResultBoolean>) -> Unit
+): ApiContext = sendRequestCallback<EditMessageLiveLocationResultBoolean>(
     "editMessageLiveLocation",
     listOf(
         Pair("message_id", messageId),
@@ -120,7 +120,7 @@ suspend fun ApiContext.editMessageLiveLocationAwait(
     latitude: Double,
     longitude: Double,
     replyMarkup: InlineKeyboardMarkup? = null
-): EditMessageLiveLocationResultBoolean? = sendRequestAwait<EditMessageLiveLocationResultBoolean?>(
+): EditMessageLiveLocationResultBoolean? = sendRequestAwait<EditMessageLiveLocationResultBoolean>(
     "editMessageLiveLocation",
     listOf(
         Pair("message_id", messageId),

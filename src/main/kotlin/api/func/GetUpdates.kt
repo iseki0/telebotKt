@@ -24,7 +24,7 @@ fun ApiContext.getUpdates(
     limit: Int? = null,
     timeout: Int? = null,
     allowedUpdates: List<String>? = null
-): Future<GetUpdatesResult?> = sendRequest<GetUpdatesResult?>(
+): Future<GetUpdatesResult> = sendRequest<GetUpdatesResult>(
     "getUpdates",
     listOf(
         Pair("offset", offset),
@@ -39,8 +39,8 @@ fun ApiContext.getUpdates(
     limit: Int? = null,
     timeout: Int? = null,
     allowedUpdates: List<String>? = null,
-    callback: (result: AsyncResult<GetUpdatesResult?>) -> Unit
-): ApiContext = sendRequestCallback<GetUpdatesResult?>(
+    callback: (result: AsyncResult<GetUpdatesResult>) -> Unit
+): ApiContext = sendRequestCallback<GetUpdatesResult>(
     "getUpdates",
     listOf(
         Pair("offset", offset),
@@ -56,7 +56,7 @@ suspend fun ApiContext.getUpdatesAwait(
     limit: Int? = null,
     timeout: Int? = null,
     allowedUpdates: List<String>? = null
-): GetUpdatesResult? = sendRequestAwait<GetUpdatesResult?>(
+): GetUpdatesResult = sendRequestAwait<GetUpdatesResult>(
     "getUpdates",
     listOf(
         Pair("offset", offset),

@@ -22,7 +22,7 @@ fun ApiContext.editMessageReplyMarkup(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<EditMessageReplyMarkupResultMessage?> = sendRequest<EditMessageReplyMarkupResultMessage?>(
+): Future<EditMessageReplyMarkupResultMessage> = sendRequest<EditMessageReplyMarkupResultMessage>(
     "editMessageReplyMarkup",
     listOf(
         Pair("chat_id", chatId),
@@ -37,8 +37,8 @@ fun ApiContext.editMessageReplyMarkup(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: AsyncResult<EditMessageReplyMarkupResultMessage?>) -> Unit
-): ApiContext = sendRequestCallback<EditMessageReplyMarkupResultMessage?>(
+    callback: (result: AsyncResult<EditMessageReplyMarkupResultMessage>) -> Unit
+): ApiContext = sendRequestCallback<EditMessageReplyMarkupResultMessage>(
     "editMessageReplyMarkup",
     listOf(
         Pair("chat_id", chatId),
@@ -54,7 +54,7 @@ suspend fun ApiContext.editMessageReplyMarkupAwait(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): EditMessageReplyMarkupResultMessage? = sendRequestAwait<EditMessageReplyMarkupResultMessage?>(
+): EditMessageReplyMarkupResultMessage = sendRequestAwait<EditMessageReplyMarkupResultMessage>(
     "editMessageReplyMarkup",
     listOf(
         Pair("chat_id", chatId),
@@ -68,7 +68,7 @@ fun ApiContext.editMessageReplyMarkup(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): Future<EditMessageReplyMarkupResultBoolean?> = sendRequest<EditMessageReplyMarkupResultBoolean?>(
+): Future<EditMessageReplyMarkupResultBoolean> = sendRequest<EditMessageReplyMarkupResultBoolean>(
     "editMessageReplyMarkup",
     listOf(Pair("message_id", messageId), Pair("inline_message_id", inlineMessageId), Pair("reply_markup", replyMarkup))
 )
@@ -77,8 +77,8 @@ fun ApiContext.editMessageReplyMarkup(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null,
-    callback: (result: AsyncResult<EditMessageReplyMarkupResultBoolean?>) -> Unit
-): ApiContext = sendRequestCallback<EditMessageReplyMarkupResultBoolean?>(
+    callback: (result: AsyncResult<EditMessageReplyMarkupResultBoolean>) -> Unit
+): ApiContext = sendRequestCallback<EditMessageReplyMarkupResultBoolean>(
     "editMessageReplyMarkup",
     listOf(
         Pair("message_id", messageId),
@@ -92,7 +92,7 @@ suspend fun ApiContext.editMessageReplyMarkupAwait(
     messageId: Int? = null,
     inlineMessageId: String? = null,
     replyMarkup: InlineKeyboardMarkup? = null
-): EditMessageReplyMarkupResultBoolean? = sendRequestAwait<EditMessageReplyMarkupResultBoolean?>(
+): EditMessageReplyMarkupResultBoolean? = sendRequestAwait<EditMessageReplyMarkupResultBoolean>(
     "editMessageReplyMarkup",
     listOf(Pair("message_id", messageId), Pair("inline_message_id", inlineMessageId), Pair("reply_markup", replyMarkup))
 )

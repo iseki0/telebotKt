@@ -24,7 +24,7 @@ fun ApiContext.forwardMessage(
     fromChatId: String,
     disableNotification: Boolean? = null,
     messageId: Int
-): Future<ForwardMessageResult?> = sendRequest<ForwardMessageResult?>(
+): Future<ForwardMessageResult> = sendRequest<ForwardMessageResult>(
     "forwardMessage",
     listOf(
         Pair("chat_id", chatId),
@@ -39,8 +39,8 @@ fun ApiContext.forwardMessage(
     fromChatId: String,
     disableNotification: Boolean? = null,
     messageId: Int,
-    callback: (result: AsyncResult<ForwardMessageResult?>) -> Unit
-): ApiContext = sendRequestCallback<ForwardMessageResult?>(
+    callback: (result: AsyncResult<ForwardMessageResult>) -> Unit
+): ApiContext = sendRequestCallback<ForwardMessageResult>(
     "forwardMessage",
     listOf(
         Pair("chat_id", chatId),
@@ -56,7 +56,7 @@ suspend fun ApiContext.forwardMessageAwait(
     fromChatId: String,
     disableNotification: Boolean? = null,
     messageId: Int
-): ForwardMessageResult? = sendRequestAwait<ForwardMessageResult?>(
+): ForwardMessageResult = sendRequestAwait<ForwardMessageResult>(
     "forwardMessage",
     listOf(
         Pair("chat_id", chatId),

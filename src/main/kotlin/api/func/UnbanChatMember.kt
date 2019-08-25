@@ -19,14 +19,14 @@ import io.vertx.core.Future
 fun ApiContext.unbanChatMember(
     chatId: String,
     userId: Int
-): Future<UnbanChatMemberResult?> =
-    sendRequest<UnbanChatMemberResult?>("unbanChatMember", listOf(Pair("chat_id", chatId), Pair("user_id", userId)))
+): Future<UnbanChatMemberResult> =
+    sendRequest<UnbanChatMemberResult>("unbanChatMember", listOf(Pair("chat_id", chatId), Pair("user_id", userId)))
 
 fun ApiContext.unbanChatMember(
     chatId: String,
     userId: Int,
-    callback: (result: AsyncResult<UnbanChatMemberResult?>) -> Unit
-): ApiContext = sendRequestCallback<UnbanChatMemberResult?>(
+    callback: (result: AsyncResult<UnbanChatMemberResult>) -> Unit
+): ApiContext = sendRequestCallback<UnbanChatMemberResult>(
     "unbanChatMember",
     listOf(Pair("chat_id", chatId), Pair("user_id", userId)),
     callback
@@ -35,7 +35,7 @@ fun ApiContext.unbanChatMember(
 suspend fun ApiContext.unbanChatMemberAwait(
     chatId: String,
     userId: Int
-): UnbanChatMemberResult? = sendRequestAwait<UnbanChatMemberResult?>(
+): UnbanChatMemberResult = sendRequestAwait<UnbanChatMemberResult>(
     "unbanChatMember",
     listOf(Pair("chat_id", chatId), Pair("user_id", userId))
 )

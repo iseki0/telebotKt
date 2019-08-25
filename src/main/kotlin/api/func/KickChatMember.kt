@@ -22,7 +22,7 @@ fun ApiContext.kickChatMember(
     chatId: String,
     userId: Int,
     untilDate: Int? = null
-): Future<KickChatMemberResult?> = sendRequest<KickChatMemberResult?>(
+): Future<KickChatMemberResult> = sendRequest<KickChatMemberResult>(
     "kickChatMember",
     listOf(Pair("chat_id", chatId), Pair("user_id", userId), Pair("until_date", untilDate))
 )
@@ -31,8 +31,8 @@ fun ApiContext.kickChatMember(
     chatId: String,
     userId: Int,
     untilDate: Int? = null,
-    callback: (result: AsyncResult<KickChatMemberResult?>) -> Unit
-): ApiContext = sendRequestCallback<KickChatMemberResult?>(
+    callback: (result: AsyncResult<KickChatMemberResult>) -> Unit
+): ApiContext = sendRequestCallback<KickChatMemberResult>(
     "kickChatMember",
     listOf(Pair("chat_id", chatId), Pair("user_id", userId), Pair("until_date", untilDate)),
     callback
@@ -42,7 +42,7 @@ suspend fun ApiContext.kickChatMemberAwait(
     chatId: String,
     userId: Int,
     untilDate: Int? = null
-): KickChatMemberResult? = sendRequestAwait<KickChatMemberResult?>(
+): KickChatMemberResult = sendRequestAwait<KickChatMemberResult>(
     "kickChatMember",
     listOf(Pair("chat_id", chatId), Pair("user_id", userId), Pair("until_date", untilDate))
 )

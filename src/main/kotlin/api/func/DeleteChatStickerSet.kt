@@ -17,16 +17,16 @@ import io.vertx.core.Future
  */
 fun ApiContext.deleteChatStickerSet(
     chatId: String
-): Future<DeleteChatStickerSetResult?> =
-    sendRequest<DeleteChatStickerSetResult?>("deleteChatStickerSet", listOf(Pair("chat_id", chatId)))
+): Future<DeleteChatStickerSetResult> =
+    sendRequest<DeleteChatStickerSetResult>("deleteChatStickerSet", listOf(Pair("chat_id", chatId)))
 
 fun ApiContext.deleteChatStickerSet(
     chatId: String,
-    callback: (result: AsyncResult<DeleteChatStickerSetResult?>) -> Unit
+    callback: (result: AsyncResult<DeleteChatStickerSetResult>) -> Unit
 ): ApiContext =
-    sendRequestCallback<DeleteChatStickerSetResult?>("deleteChatStickerSet", listOf(Pair("chat_id", chatId)), callback)
+    sendRequestCallback<DeleteChatStickerSetResult>("deleteChatStickerSet", listOf(Pair("chat_id", chatId)), callback)
 
 suspend fun ApiContext.deleteChatStickerSetAwait(
     chatId: String
-): DeleteChatStickerSetResult? =
-    sendRequestAwait<DeleteChatStickerSetResult?>("deleteChatStickerSet", listOf(Pair("chat_id", chatId)))
+): DeleteChatStickerSetResult =
+    sendRequestAwait<DeleteChatStickerSetResult>("deleteChatStickerSet", listOf(Pair("chat_id", chatId)))

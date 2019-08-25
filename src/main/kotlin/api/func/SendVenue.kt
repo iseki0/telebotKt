@@ -33,7 +33,7 @@ fun ApiContext.sendVenue(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<SendVenueResult?> = sendRequest<SendVenueResult?>(
+): Future<SendVenueResult> = sendRequest<SendVenueResult>(
     "sendVenue",
     listOf(
         Pair("chat_id", chatId),
@@ -60,8 +60,8 @@ fun ApiContext.sendVenue(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: AsyncResult<SendVenueResult?>) -> Unit
-): ApiContext = sendRequestCallback<SendVenueResult?>(
+    callback: (result: AsyncResult<SendVenueResult>) -> Unit
+): ApiContext = sendRequestCallback<SendVenueResult>(
     "sendVenue",
     listOf(
         Pair("chat_id", chatId),
@@ -89,7 +89,7 @@ suspend fun ApiContext.sendVenueAwait(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): SendVenueResult? = sendRequestAwait<SendVenueResult?>(
+): SendVenueResult = sendRequestAwait<SendVenueResult>(
     "sendVenue",
     listOf(
         Pair("chat_id", chatId),

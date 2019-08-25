@@ -29,7 +29,7 @@ fun ApiContext.sendContact(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<SendContactResult?> = sendRequest<SendContactResult?>(
+): Future<SendContactResult> = sendRequest<SendContactResult>(
     "sendContact",
     listOf(
         Pair("chat_id", chatId),
@@ -52,8 +52,8 @@ fun ApiContext.sendContact(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: AsyncResult<SendContactResult?>) -> Unit
-): ApiContext = sendRequestCallback<SendContactResult?>(
+    callback: (result: AsyncResult<SendContactResult>) -> Unit
+): ApiContext = sendRequestCallback<SendContactResult>(
     "sendContact",
     listOf(
         Pair("chat_id", chatId),
@@ -77,7 +77,7 @@ suspend fun ApiContext.sendContactAwait(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): SendContactResult? = sendRequestAwait<SendContactResult?>(
+): SendContactResult = sendRequestAwait<SendContactResult>(
     "sendContact",
     listOf(
         Pair("chat_id", chatId),

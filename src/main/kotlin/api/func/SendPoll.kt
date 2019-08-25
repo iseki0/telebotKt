@@ -25,7 +25,7 @@ fun ApiContext.sendPoll(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<SendPollResult?> = sendRequest<SendPollResult?>(
+): Future<SendPollResult> = sendRequest<SendPollResult>(
     "sendPoll",
     listOf(
         Pair("chat_id", chatId),
@@ -44,8 +44,8 @@ fun ApiContext.sendPoll(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: AsyncResult<SendPollResult?>) -> Unit
-): ApiContext = sendRequestCallback<SendPollResult?>(
+    callback: (result: AsyncResult<SendPollResult>) -> Unit
+): ApiContext = sendRequestCallback<SendPollResult>(
     "sendPoll",
     listOf(
         Pair("chat_id", chatId),
@@ -65,7 +65,7 @@ suspend fun ApiContext.sendPollAwait(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): SendPollResult? = sendRequestAwait<SendPollResult?>(
+): SendPollResult = sendRequestAwait<SendPollResult>(
     "sendPoll",
     listOf(
         Pair("chat_id", chatId),

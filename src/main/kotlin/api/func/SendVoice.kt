@@ -26,12 +26,12 @@ fun ApiContext.sendVoice(
     chatId: String,
     voice: InputFile,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     duration: Int? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<SendVoiceResult?> = sendRequest<SendVoiceResult?>(
+): Future<SendVoiceResult> = sendRequest<SendVoiceResult>(
     "sendVoice",
     listOf(
         Pair("chat_id", chatId),
@@ -49,13 +49,13 @@ fun ApiContext.sendVoice(
     chatId: String,
     voice: InputFile,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     duration: Int? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: AsyncResult<SendVoiceResult?>) -> Unit
-): ApiContext = sendRequestCallback<SendVoiceResult?>(
+    callback: (result: AsyncResult<SendVoiceResult>) -> Unit
+): ApiContext = sendRequestCallback<SendVoiceResult>(
     "sendVoice",
     listOf(
         Pair("chat_id", chatId),
@@ -74,12 +74,12 @@ suspend fun ApiContext.sendVoiceAwait(
     chatId: String,
     voice: InputFile,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     duration: Int? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): SendVoiceResult? = sendRequestAwait<SendVoiceResult?>(
+): SendVoiceResult = sendRequestAwait<SendVoiceResult>(
     "sendVoice",
     listOf(
         Pair("chat_id", chatId),

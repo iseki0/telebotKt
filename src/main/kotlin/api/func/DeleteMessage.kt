@@ -26,14 +26,14 @@ import io.vertx.core.Future
 fun ApiContext.deleteMessage(
     chatId: String,
     messageId: Int
-): Future<DeleteMessageResult?> =
-    sendRequest<DeleteMessageResult?>("deleteMessage", listOf(Pair("chat_id", chatId), Pair("message_id", messageId)))
+): Future<DeleteMessageResult> =
+    sendRequest<DeleteMessageResult>("deleteMessage", listOf(Pair("chat_id", chatId), Pair("message_id", messageId)))
 
 fun ApiContext.deleteMessage(
     chatId: String,
     messageId: Int,
-    callback: (result: AsyncResult<DeleteMessageResult?>) -> Unit
-): ApiContext = sendRequestCallback<DeleteMessageResult?>(
+    callback: (result: AsyncResult<DeleteMessageResult>) -> Unit
+): ApiContext = sendRequestCallback<DeleteMessageResult>(
     "deleteMessage",
     listOf(Pair("chat_id", chatId), Pair("message_id", messageId)),
     callback
@@ -42,7 +42,7 @@ fun ApiContext.deleteMessage(
 suspend fun ApiContext.deleteMessageAwait(
     chatId: String,
     messageId: Int
-): DeleteMessageResult? = sendRequestAwait<DeleteMessageResult?>(
+): DeleteMessageResult = sendRequestAwait<DeleteMessageResult>(
     "deleteMessage",
     listOf(Pair("chat_id", chatId), Pair("message_id", messageId))
 )

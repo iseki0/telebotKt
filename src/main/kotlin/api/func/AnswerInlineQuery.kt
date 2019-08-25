@@ -28,7 +28,7 @@ fun ApiContext.answerInlineQuery(
     nextOffset: String? = null,
     switchPmText: String? = null,
     switchPmParameter: String? = null
-): Future<AnswerInlineQueryResult?> = sendRequest<AnswerInlineQueryResult?>(
+): Future<AnswerInlineQueryResult> = sendRequest<AnswerInlineQueryResult>(
     "answerInlineQuery",
     listOf(
         Pair("inline_query_id", inlineQueryId),
@@ -49,8 +49,8 @@ fun ApiContext.answerInlineQuery(
     nextOffset: String? = null,
     switchPmText: String? = null,
     switchPmParameter: String? = null,
-    callback: (result: AsyncResult<AnswerInlineQueryResult?>) -> Unit
-): ApiContext = sendRequestCallback<AnswerInlineQueryResult?>(
+    callback: (result: AsyncResult<AnswerInlineQueryResult>) -> Unit
+): ApiContext = sendRequestCallback<AnswerInlineQueryResult>(
     "answerInlineQuery",
     listOf(
         Pair("inline_query_id", inlineQueryId),
@@ -72,7 +72,7 @@ suspend fun ApiContext.answerInlineQueryAwait(
     nextOffset: String? = null,
     switchPmText: String? = null,
     switchPmParameter: String? = null
-): AnswerInlineQueryResult? = sendRequestAwait<AnswerInlineQueryResult?>(
+): AnswerInlineQueryResult = sendRequestAwait<AnswerInlineQueryResult>(
     "answerInlineQuery",
     listOf(
         Pair("inline_query_id", inlineQueryId),

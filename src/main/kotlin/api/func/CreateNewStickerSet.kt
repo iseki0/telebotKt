@@ -27,7 +27,7 @@ fun ApiContext.createNewStickerSet(
     emojis: String,
     containsMasks: Boolean? = null,
     maskPosition: MaskPosition? = null
-): Future<CreateNewStickerSetResult?> = sendRequest<CreateNewStickerSetResult?>(
+): Future<CreateNewStickerSetResult> = sendRequest<CreateNewStickerSetResult>(
     "createNewStickerSet",
     listOf(
         Pair("user_id", userId),
@@ -48,8 +48,8 @@ fun ApiContext.createNewStickerSet(
     emojis: String,
     containsMasks: Boolean? = null,
     maskPosition: MaskPosition? = null,
-    callback: (result: AsyncResult<CreateNewStickerSetResult?>) -> Unit
-): ApiContext = sendRequestCallback<CreateNewStickerSetResult?>(
+    callback: (result: AsyncResult<CreateNewStickerSetResult>) -> Unit
+): ApiContext = sendRequestCallback<CreateNewStickerSetResult>(
     "createNewStickerSet",
     listOf(
         Pair("user_id", userId),
@@ -71,7 +71,7 @@ suspend fun ApiContext.createNewStickerSetAwait(
     emojis: String,
     containsMasks: Boolean? = null,
     maskPosition: MaskPosition? = null
-): CreateNewStickerSetResult? = sendRequestAwait<CreateNewStickerSetResult?>(
+): CreateNewStickerSetResult = sendRequestAwait<CreateNewStickerSetResult>(
     "createNewStickerSet",
     listOf(
         Pair("user_id", userId),

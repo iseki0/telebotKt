@@ -17,7 +17,7 @@ import io.vertx.core.Future
 fun ApiContext.uploadStickerFile(
     userId: Int,
     pngSticker: InputFile
-): Future<UploadStickerFileResult?> = sendRequest<UploadStickerFileResult?>(
+): Future<UploadStickerFileResult> = sendRequest<UploadStickerFileResult>(
     "uploadStickerFile",
     listOf(Pair("user_id", userId), Pair("png_sticker", pngSticker))
 )
@@ -25,8 +25,8 @@ fun ApiContext.uploadStickerFile(
 fun ApiContext.uploadStickerFile(
     userId: Int,
     pngSticker: InputFile,
-    callback: (result: AsyncResult<UploadStickerFileResult?>) -> Unit
-): ApiContext = sendRequestCallback<UploadStickerFileResult?>(
+    callback: (result: AsyncResult<UploadStickerFileResult>) -> Unit
+): ApiContext = sendRequestCallback<UploadStickerFileResult>(
     "uploadStickerFile",
     listOf(Pair("user_id", userId), Pair("png_sticker", pngSticker)),
     callback
@@ -35,7 +35,7 @@ fun ApiContext.uploadStickerFile(
 suspend fun ApiContext.uploadStickerFileAwait(
     userId: Int,
     pngSticker: InputFile
-): UploadStickerFileResult? = sendRequestAwait<UploadStickerFileResult?>(
+): UploadStickerFileResult = sendRequestAwait<UploadStickerFileResult>(
     "uploadStickerFile",
     listOf(Pair("user_id", userId), Pair("png_sticker", pngSticker))
 )

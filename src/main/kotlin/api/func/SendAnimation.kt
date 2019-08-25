@@ -31,11 +31,11 @@ fun ApiContext.sendAnimation(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<SendAnimationResult?> = sendRequest<SendAnimationResult?>(
+): Future<SendAnimationResult> = sendRequest<SendAnimationResult>(
     "sendAnimation",
     listOf(
         Pair("chat_id", chatId),
@@ -60,12 +60,12 @@ fun ApiContext.sendAnimation(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: AsyncResult<SendAnimationResult?>) -> Unit
-): ApiContext = sendRequestCallback<SendAnimationResult?>(
+    callback: (result: AsyncResult<SendAnimationResult>) -> Unit
+): ApiContext = sendRequestCallback<SendAnimationResult>(
     "sendAnimation",
     listOf(
         Pair("chat_id", chatId),
@@ -91,11 +91,11 @@ suspend fun ApiContext.sendAnimationAwait(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): SendAnimationResult? = sendRequestAwait<SendAnimationResult?>(
+): SendAnimationResult = sendRequestAwait<SendAnimationResult>(
     "sendAnimation",
     listOf(
         Pair("chat_id", chatId),

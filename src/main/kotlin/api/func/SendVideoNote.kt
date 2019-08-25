@@ -29,7 +29,7 @@ fun ApiContext.sendVideoNote(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<SendVideoNoteResult?> = sendRequest<SendVideoNoteResult?>(
+): Future<SendVideoNoteResult> = sendRequest<SendVideoNoteResult>(
     "sendVideoNote",
     listOf(
         Pair("chat_id", chatId),
@@ -52,8 +52,8 @@ fun ApiContext.sendVideoNote(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: AsyncResult<SendVideoNoteResult?>) -> Unit
-): ApiContext = sendRequestCallback<SendVideoNoteResult?>(
+    callback: (result: AsyncResult<SendVideoNoteResult>) -> Unit
+): ApiContext = sendRequestCallback<SendVideoNoteResult>(
     "sendVideoNote",
     listOf(
         Pair("chat_id", chatId),
@@ -77,7 +77,7 @@ suspend fun ApiContext.sendVideoNoteAwait(
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): SendVideoNoteResult? = sendRequestAwait<SendVideoNoteResult?>(
+): SendVideoNoteResult = sendRequestAwait<SendVideoNoteResult>(
     "sendVideoNote",
     listOf(
         Pair("chat_id", chatId),

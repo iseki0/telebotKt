@@ -21,14 +21,14 @@ import io.vertx.core.Future
 fun ApiContext.sendChatAction(
     chatId: String,
     action: String
-): Future<SendChatActionResult?> =
-    sendRequest<SendChatActionResult?>("sendChatAction", listOf(Pair("chat_id", chatId), Pair("action", action)))
+): Future<SendChatActionResult> =
+    sendRequest<SendChatActionResult>("sendChatAction", listOf(Pair("chat_id", chatId), Pair("action", action)))
 
 fun ApiContext.sendChatAction(
     chatId: String,
     action: String,
-    callback: (result: AsyncResult<SendChatActionResult?>) -> Unit
-): ApiContext = sendRequestCallback<SendChatActionResult?>(
+    callback: (result: AsyncResult<SendChatActionResult>) -> Unit
+): ApiContext = sendRequestCallback<SendChatActionResult>(
     "sendChatAction",
     listOf(Pair("chat_id", chatId), Pair("action", action)),
     callback
@@ -37,5 +37,5 @@ fun ApiContext.sendChatAction(
 suspend fun ApiContext.sendChatActionAwait(
     chatId: String,
     action: String
-): SendChatActionResult? =
-    sendRequestAwait<SendChatActionResult?>("sendChatAction", listOf(Pair("chat_id", chatId), Pair("action", action)))
+): SendChatActionResult =
+    sendRequestAwait<SendChatActionResult>("sendChatAction", listOf(Pair("chat_id", chatId), Pair("action", action)))

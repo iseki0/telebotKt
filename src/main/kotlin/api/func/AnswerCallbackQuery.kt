@@ -28,7 +28,7 @@ fun ApiContext.answerCallbackQuery(
     showAlert: Boolean? = null,
     url: String? = null,
     cacheTime: Int? = null
-): Future<AnswerCallbackQueryResult?> = sendRequest<AnswerCallbackQueryResult?>(
+): Future<AnswerCallbackQueryResult> = sendRequest<AnswerCallbackQueryResult>(
     "answerCallbackQuery",
     listOf(
         Pair("callback_query_id", callbackQueryId),
@@ -45,8 +45,8 @@ fun ApiContext.answerCallbackQuery(
     showAlert: Boolean? = null,
     url: String? = null,
     cacheTime: Int? = null,
-    callback: (result: AsyncResult<AnswerCallbackQueryResult?>) -> Unit
-): ApiContext = sendRequestCallback<AnswerCallbackQueryResult?>(
+    callback: (result: AsyncResult<AnswerCallbackQueryResult>) -> Unit
+): ApiContext = sendRequestCallback<AnswerCallbackQueryResult>(
     "answerCallbackQuery",
     listOf(
         Pair("callback_query_id", callbackQueryId),
@@ -64,7 +64,7 @@ suspend fun ApiContext.answerCallbackQueryAwait(
     showAlert: Boolean? = null,
     url: String? = null,
     cacheTime: Int? = null
-): AnswerCallbackQueryResult? = sendRequestAwait<AnswerCallbackQueryResult?>(
+): AnswerCallbackQueryResult = sendRequestAwait<AnswerCallbackQueryResult>(
     "answerCallbackQuery",
     listOf(
         Pair("callback_query_id", callbackQueryId),

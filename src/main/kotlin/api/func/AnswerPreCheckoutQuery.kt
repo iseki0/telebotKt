@@ -22,7 +22,7 @@ fun ApiContext.answerPreCheckoutQuery(
     preCheckoutQueryId: String,
     ok: Boolean,
     errorMessage: String? = null
-): Future<AnswerPreCheckoutQueryResult?> = sendRequest<AnswerPreCheckoutQueryResult?>(
+): Future<AnswerPreCheckoutQueryResult> = sendRequest<AnswerPreCheckoutQueryResult>(
     "answerPreCheckoutQuery",
     listOf(Pair("pre_checkout_query_id", preCheckoutQueryId), Pair("ok", ok), Pair("error_message", errorMessage))
 )
@@ -31,8 +31,8 @@ fun ApiContext.answerPreCheckoutQuery(
     preCheckoutQueryId: String,
     ok: Boolean,
     errorMessage: String? = null,
-    callback: (result: AsyncResult<AnswerPreCheckoutQueryResult?>) -> Unit
-): ApiContext = sendRequestCallback<AnswerPreCheckoutQueryResult?>(
+    callback: (result: AsyncResult<AnswerPreCheckoutQueryResult>) -> Unit
+): ApiContext = sendRequestCallback<AnswerPreCheckoutQueryResult>(
     "answerPreCheckoutQuery",
     listOf(Pair("pre_checkout_query_id", preCheckoutQueryId), Pair("ok", ok), Pair("error_message", errorMessage)),
     callback
@@ -42,7 +42,7 @@ suspend fun ApiContext.answerPreCheckoutQueryAwait(
     preCheckoutQueryId: String,
     ok: Boolean,
     errorMessage: String? = null
-): AnswerPreCheckoutQueryResult? = sendRequestAwait<AnswerPreCheckoutQueryResult?>(
+): AnswerPreCheckoutQueryResult = sendRequestAwait<AnswerPreCheckoutQueryResult>(
     "answerPreCheckoutQuery",
     listOf(Pair("pre_checkout_query_id", preCheckoutQueryId), Pair("ok", ok), Pair("error_message", errorMessage))
 )

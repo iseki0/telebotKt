@@ -22,7 +22,7 @@ fun ApiContext.getUserProfilePhotos(
     userId: Int,
     offset: Int? = null,
     limit: Int? = null
-): Future<GetUserProfilePhotosResult?> = sendRequest<GetUserProfilePhotosResult?>(
+): Future<GetUserProfilePhotosResult> = sendRequest<GetUserProfilePhotosResult>(
     "getUserProfilePhotos",
     listOf(Pair("user_id", userId), Pair("offset", offset), Pair("limit", limit))
 )
@@ -31,8 +31,8 @@ fun ApiContext.getUserProfilePhotos(
     userId: Int,
     offset: Int? = null,
     limit: Int? = null,
-    callback: (result: AsyncResult<GetUserProfilePhotosResult?>) -> Unit
-): ApiContext = sendRequestCallback<GetUserProfilePhotosResult?>(
+    callback: (result: AsyncResult<GetUserProfilePhotosResult>) -> Unit
+): ApiContext = sendRequestCallback<GetUserProfilePhotosResult>(
     "getUserProfilePhotos",
     listOf(Pair("user_id", userId), Pair("offset", offset), Pair("limit", limit)),
     callback
@@ -42,7 +42,7 @@ suspend fun ApiContext.getUserProfilePhotosAwait(
     userId: Int,
     offset: Int? = null,
     limit: Int? = null
-): GetUserProfilePhotosResult? = sendRequestAwait<GetUserProfilePhotosResult?>(
+): GetUserProfilePhotosResult = sendRequestAwait<GetUserProfilePhotosResult>(
     "getUserProfilePhotos",
     listOf(Pair("user_id", userId), Pair("offset", offset), Pair("limit", limit))
 )

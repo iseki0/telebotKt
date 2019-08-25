@@ -33,12 +33,12 @@ fun ApiContext.sendVideo(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     supportsStreaming: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): Future<SendVideoResult?> = sendRequest<SendVideoResult?>(
+): Future<SendVideoResult> = sendRequest<SendVideoResult>(
     "sendVideo",
     listOf(
         Pair("chat_id", chatId),
@@ -64,13 +64,13 @@ fun ApiContext.sendVideo(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     supportsStreaming: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null,
-    callback: (result: AsyncResult<SendVideoResult?>) -> Unit
-): ApiContext = sendRequestCallback<SendVideoResult?>(
+    callback: (result: AsyncResult<SendVideoResult>) -> Unit
+): ApiContext = sendRequestCallback<SendVideoResult>(
     "sendVideo",
     listOf(
         Pair("chat_id", chatId),
@@ -97,12 +97,12 @@ suspend fun ApiContext.sendVideoAwait(
     height: Int? = null,
     thumb: InputFile? = null,
     caption: String? = null,
-    parseMode: String? = null,
+    parseMode: ParseMode? = null,
     supportsStreaming: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
     replyMarkup: ReplyMarkup? = null
-): SendVideoResult? = sendRequestAwait<SendVideoResult?>(
+): SendVideoResult = sendRequestAwait<SendVideoResult>(
     "sendVideo",
     listOf(
         Pair("chat_id", chatId),
