@@ -17,7 +17,7 @@ class BotImpl(
     override val vertx: Vertx
 ) : ApiContext, Bot {
     override var updateHandler: (update: Update) -> Unit = {}
-    val context = vertx.orCreateContext
+    val context = vertx.orCreateContext!!
     val webClient = WebClient.create(vertx, botOption.webClientOptions)!!
     val urlGenerator = botOption.botServerInfo.urlGenerator
     override val mapper: ObjectMapper by lazy {
