@@ -1,5 +1,6 @@
 import api.InputFile
 import api.ParseMode
+import api.type.Update
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.vertx.core.Vertx
 import org.junit.jupiter.api.Assertions.*
@@ -9,6 +10,9 @@ import java.io.File
 internal class ParseRequestKtTest {
 
     val server = object : Bot {
+        override var updateHandler: (update: Update) -> Unit
+            get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+            set(value) {}
         override val botOption: BotOption
             get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         override val vertx: Vertx
@@ -26,7 +30,7 @@ internal class ParseRequestKtTest {
             Pair("fileid", InputFile(fileId = "fileid")),
             Pair("list", listOf(ParseMode.HTML, ParseMode.MARKDOWN)),
             Pair("obj", object {
-                val a = "a";
+                val a = "a"
                 val b = "b"
             })
         )

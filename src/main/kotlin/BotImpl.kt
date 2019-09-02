@@ -1,4 +1,5 @@
 import api.ResultType
+import api.type.Update
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.vertx.core.AsyncResult
 import io.vertx.core.Future
@@ -15,15 +16,14 @@ class BotImpl(
     override val botOption: BotOption,
     override val vertx: Vertx
 ) : ApiContext, Bot {
-
-    private val thread = Thread.currentThread()
+    override var updateHandler: (update: Update) -> Unit = {}
     val context = vertx.orCreateContext
     val webClient = WebClient.create(vertx, botOption.webClientOptions)!!
     val urlGenerator = botOption.botServerInfo.urlGenerator
     override val mapper: ObjectMapper by lazy {
-        check(thread == Thread.currentThread()) { "mapper is init in wrong thread. current: ${Thread.currentThread()}, correct: $thread" }
         getObjectMapper()
     }
+
 
     override fun <T : ResultType> doSendRequest(
         command: String,
@@ -60,12 +60,15 @@ class BotImpl(
         response: AsyncResult<HttpResponse<Buffer>>,
         resultType: Class<T>
     ): T =
-        if (response.failed()) {
-            throw response.cause()
-        } else {
-            val r = mapper.readValue(response.result().bodyAsString(), resultType)
-            if (r.ok) r else throw TelegramRequestFail(r)
-        }
+        response
+            .takeIf { it.succeeded() }?.let {
+                mapper.readValue(it.result().bodyAsString(), resultType).let {
+                    it.takeIf { it.ok } ?: throw TelegramRequestFail(
+                        errorCode = it.errorCode ?: -1,
+                        description = it.description ?: "No description."
+                    )
+                }
+            } ?: throw response.cause()
 }
 
 
