@@ -22,7 +22,7 @@ import io.vertx.core.Future
 fun ApiContext.sendMessage(
     chatId: String,
     text: String,
-    parseMode: ParseMode? = null,
+    parseMode: ParseMode? = autoDetectParseMode(text),
     disableWebPagePreview: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
@@ -43,7 +43,7 @@ fun ApiContext.sendMessage(
 fun ApiContext.sendMessage(
     chatId: String,
     text: String,
-    parseMode: ParseMode? = null,
+    parseMode: ParseMode? = autoDetectParseMode(text),
     disableWebPagePreview: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,
@@ -66,7 +66,7 @@ fun ApiContext.sendMessage(
 suspend fun ApiContext.sendMessageAwait(
     chatId: String,
     text: String,
-    parseMode: ParseMode? = null,
+    parseMode: ParseMode? = autoDetectParseMode(text),
     disableWebPagePreview: Boolean? = null,
     disableNotification: Boolean? = null,
     replyToMessageId: Int? = null,

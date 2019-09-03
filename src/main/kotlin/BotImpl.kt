@@ -1,4 +1,5 @@
 import api.ResultType
+import api.okOrThrow
 import api.type.Update
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.vertx.core.AsyncResult
@@ -48,11 +49,7 @@ class BotImpl(
         val form = fillRequestForm(args)
         val timeout = defaultTimeout(command, args)
         webClient.postAbs(urlGenerator(botOption.botKey, command)).timeout(timeout).sendMultipartForm(form) {
-            try {
-                promise.tryComplete(parseResponse(it, resultType))
-            } catch (e: Exception) {
-                promise.tryFail(e)
-            }
+            promise.failOnThrowOrSuccess { parseResponse(it, resultType) }
         }
     }
 
@@ -60,15 +57,9 @@ class BotImpl(
         response: AsyncResult<HttpResponse<Buffer>>,
         resultType: Class<T>
     ): T =
-        response
-            .takeIf { it.succeeded() }?.let {
-                mapper.readValue(it.result().bodyAsString(), resultType).let {
-                    it.takeIf { it.ok } ?: throw TelegramRequestFail(
-                        errorCode = it.errorCode ?: -1,
-                        description = it.description ?: "No description."
-                    )
-                }
-            } ?: throw response.cause()
+        response.takeIf { it.succeeded() }?.let {
+            mapper.readValue(it.result().bodyAsString(), resultType).apply { okOrThrow() }
+        } ?: throw response.cause()
 }
 
 
@@ -76,4 +67,11 @@ fun defaultTimeout(command: String, args: List<Pair<String, Any?>>): Long =
     when (command) {
         "getUpdates" -> ((args.toMap()["timeout"] as? Int ?: 25) + 5) * 1000L
         else -> 30 * 1000L
+    }
+
+inline fun <T> Promise<T>.failOnThrowOrSuccess(lambda: () -> T) =
+    try {
+        tryComplete(lambda.invoke())
+    } catch (e: Exception) {
+        tryFail(e)
     }

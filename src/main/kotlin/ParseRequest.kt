@@ -22,7 +22,6 @@ fun Bot.fillRequestForm(args: List<Pair<String, Any?>>): MultipartForm {
                     }
                 }
                 else -> {
-
                     val json = mapper.writeValueAsString(value)
                     form.attribute(key, json)
                 }
